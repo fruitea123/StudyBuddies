@@ -1,4 +1,4 @@
 package interface_adapter.make_invitation;
 
-public class MakeinvitationViewModel {
+public class MakeInvitationState {
 }

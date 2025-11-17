@@ -1,5 +1,5 @@
 package use_case.make_invitation;
 
-public interface MakeinvitationInputBoundary {
+public interface MakeInvitationInputBoundary {
     void execute();
 }
