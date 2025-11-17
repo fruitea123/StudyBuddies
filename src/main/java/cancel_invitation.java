@@ -42,6 +42,31 @@ public class cancel_invitation {
 
 
     }
+    public void delete()
+    {
+        //Delete invitation from onwer invitation page
+        invitationsCollection.deleteOne(and(  eq("startTime", startTime),
+                        eq("endTime", endTime),
+                        eq("ownername", ownername)
+                )
+        );
+        //remove the same invitation from every user's invitation page
+        usersCollection.updateMany(
+                elemMatch("invitations",
+                        and(
+                                eq("startTime", startTime),
+                                eq("endTime", endTime)
+                        )
+                ),
+                pull("invitations",
+                        and(
+                                eq("startTime", startTime),
+                                eq("endTime", endTime)
+                        )
+                )
+        );
+
+    }
 
 
 
