@@ -1,29 +1,49 @@
 package use_case.signup;
 
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * The Input Data for the Signup Use Case.
  */
 public class SignupInputData {
 
-    private final String username;
+    private final String email;
     private final String password;
     private final String repeatPassword;
+    private final String firstName;
+    private final String lastName;
+    private final LocalDate DOB;
+    private final int programNumber;
+    private final List<String> programs;
+    private final String pfp;
+    private final String description;
 
-    public SignupInputData(String username, String password, String repeatPassword) {
-        this.username = username;
+    public SignupInputData(String email, String password, String repeatPassword, String firstName, String lastName, LocalDate DOB, int programNumber, List<String> programs, String description, String pfp) {
+        this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.DOB = DOB;
+        this.programNumber = programNumber;
+        this.programs = programs;
+        this.pfp = pfp;
+        this.description = description;
     }
 
-    String getUsername() {
-        return username;
+    String getEmail() {
+        return email;
     }
-
-    String getPassword() {
-        return password;
+    String getPassword1() { return password;}
+    String getPassword2() { return repeatPassword;}
+    String getFirstName() {
+        return firstName;
     }
-
-    public String getRepeatPassword() {
-        return repeatPassword;
-    }
+    String getLastInitial() { return lastName; }
+    LocalDate getDOB() { return DOB; }
+    int getProgramNumber() { return programNumber; }
+    List<String> getPrograms() { return programs; }
+    String getPfp() { return pfp; }
+    String getDescription() { return description; }
 }
