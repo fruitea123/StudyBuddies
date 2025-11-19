@@ -12,9 +12,8 @@ public class MakeInvitationPresenter implements MakeInvitationOutputBoundary {
 
     @Override
     public void presentSuccess(MakeInvitationOutputData response) {
-        vm.setFailMessage("");
+        vm.setFailMessage(""); // clean the message for the last time
         vm.setSuccessMessage(response.getMessage());
-
     }
 
     @Override
