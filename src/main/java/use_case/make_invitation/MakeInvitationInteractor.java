@@ -63,7 +63,10 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                     .build();
 
             // save to DB
-//            invitationDAO.save(inv);
+            if (invitationDAO.existsOverlap(r.getCourse(), date, start, end)) {
+                throw new IllegalArgumentException("An invitation at this time already exists.");
+            }
+            invitationDAO.save(inv);
 
             userPresenter.presentSuccess(new MakeInvitationOutputData(inv, "Invitation created."));
         } catch (Exception ex) {
