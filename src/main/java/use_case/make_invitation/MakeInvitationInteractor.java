@@ -1,6 +1,8 @@
 package use_case.make_invitation;
 
 import entity.Invitation;
+import entity.User;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.ZoneId;
@@ -9,11 +11,14 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
 
     private final MakeInvitationDataAccessInterface invitationDAO;
     private final MakeInvitationOutputBoundary userPresenter;
+    private final CurrentUserGateway currentUser;
 
     public MakeInvitationInteractor(MakeInvitationDataAccessInterface invitationDAO,
-                                    MakeInvitationOutputBoundary userPresenter) {
+                                    MakeInvitationOutputBoundary userPresenter,
+                                    CurrentUserGateway currentUser) {
         this.invitationDAO = invitationDAO;
         this.userPresenter = userPresenter;
+        this.currentUser = currentUser;
     }
 
     @Override
@@ -50,6 +55,10 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
             if (capacity <= 2){
                 throw new IllegalArgumentException("Capacity must be greater than 2");
             }
+            User owner = currentUser.getCurrentUser();
+            if (owner == null) {
+                throw new IllegalStateException("Not logged in");
+            }
 
             Invitation inv = Invitation.builder()
                     .course(r.getCourse())
@@ -60,6 +69,7 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                     .mode(r.getMode())              // "ONLINE" / "IN_PERSON"
                     .location(r.getLocation())
                     .capacity(capacity)
+                    .owner(owner)
                     .build();
 
             // save to DB
