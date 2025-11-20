@@ -60,6 +60,10 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                 throw new IllegalStateException("Not logged in");
             }
 
+            if (invitationDAO.ownerHasOverlap(owner, date, start, end)) {
+                throw new IllegalArgumentException("You already have another invitation in this time slot.");
+            }
+
             Invitation inv = Invitation.builder()
                     .course(r.getCourse())
                     .description(r.getDescription())
