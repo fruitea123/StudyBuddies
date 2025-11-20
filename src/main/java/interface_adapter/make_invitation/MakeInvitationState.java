@@ -1,18 +1,14 @@
-// interface_adapter/make_invitation/MakeInvitationViewState.java
 package interface_adapter.make_invitation;
 
 public class MakeInvitationState {
-    public final String successMessage;
-    public final String errorMessage;
-    public final boolean navigateBackToProfile; //saved for switch pages
+    private String successMessage = "";
+    private String errorMessage = "";
 
-    public MakeInvitationState(String successMessage, String errorMessage, boolean navigateBackToProfile) {
-        this.successMessage = successMessage;
-        this.errorMessage = errorMessage;
-        this.navigateBackToProfile = navigateBackToProfile;
-    }
+    public String getSuccessMessage() { return successMessage; }
+    public void setSuccessMessage(String successMessage) { this.successMessage = nonNull(successMessage); }
 
-    public static MakeInvitationState empty() {
-        return new MakeInvitationState("", "", false);
-    }
+    public String getErrorMessage() { return errorMessage; }
+    public void setErrorMessage(String errorMessage) { this.errorMessage = nonNull(errorMessage); }
+
+    private static String nonNull(String s) { return s == null ? "" : s; }
 }

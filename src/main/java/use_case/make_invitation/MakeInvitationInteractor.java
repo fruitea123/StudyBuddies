@@ -32,6 +32,9 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
             if (date == null) throw new IllegalArgumentException("Date required");
 
             // check valid date/time
+            if (!start.isBefore(end)){
+                throw new IllegalArgumentException("Start must be before end");
+            }
             ZoneId zone = ZoneId.systemDefault();
             LocalDate today = LocalDate.now(zone);
             if (date.isBefore(today)) {
@@ -42,9 +45,6 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
             }
             if (start == null || end == null) {
                 throw new IllegalArgumentException("Start/End required");
-            }
-            if (!start.isBefore(end)){
-                throw new IllegalArgumentException("Start must be before end");
             }
 
             // occupancy convert to capacity if needed

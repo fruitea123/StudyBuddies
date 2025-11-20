@@ -4,16 +4,21 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class MakeInvitationViewModel {
+
+    public static final String STATE_PROPERTY = "state";
+
     private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private MakeInvitationState state = MakeInvitationState.empty();
+    private final MakeInvitationState state = new MakeInvitationState();
 
-    public void addPropertyChangeListener(PropertyChangeListener l) { pcs.addPropertyChangeListener(l); }
-    public void removePropertyChangeListener(PropertyChangeListener l) { pcs.removePropertyChangeListener(l); }
+    public MakeInvitationState getState() {
+        return state;
+    }
 
-    public MakeInvitationState getState() { return state; }
+    public void addPropertyChangeListener(PropertyChangeListener l) {
+        pcs.addPropertyChangeListener(l);
+    }
 
-    public void setState(MakeInvitationState newState) {
-        this.state = newState;
-        pcs.firePropertyChange("state", null, newState);
+    public void firePropertyChanged() {
+        pcs.firePropertyChange(STATE_PROPERTY, null, state);
     }
 }
