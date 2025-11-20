@@ -4,29 +4,16 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 
 public class MakeInvitationViewModel {
-    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
+    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
+    private MakeInvitationState state = MakeInvitationState.empty();
 
-    private String successMessage = "";
-    private String failMessage = "";
+    public void addPropertyChangeListener(PropertyChangeListener l) { pcs.addPropertyChangeListener(l); }
+    public void removePropertyChangeListener(PropertyChangeListener l) { pcs.removePropertyChangeListener(l); }
 
-    public String getSuccessMessage() {
-        return successMessage;
-    }
-    public void setSuccessMessage(String successMessage) {
-        this.successMessage = successMessage;
-    }
-    public String getFailMessage() {
-        return failMessage;
-    }
-    public void setFailMessage(String failMessage) {
-        this.failMessage = failMessage;
-    }
+    public MakeInvitationState getState() { return state; }
 
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        support.addPropertyChangeListener(listener);
+    public void setState(MakeInvitationState newState) {
+        this.state = newState;
+        pcs.firePropertyChange("state", null, newState);
     }
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        support.removePropertyChangeListener(listener);
-    }
-
 }

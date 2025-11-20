@@ -6,19 +6,15 @@ import use_case.make_invitation.MakeInvitationOutputData;
 public class MakeInvitationPresenter implements MakeInvitationOutputBoundary {
     private final MakeInvitationViewModel vm;
 
-    public MakeInvitationPresenter(MakeInvitationViewModel vm) {
-        this.vm = vm;
-    }
+    public MakeInvitationPresenter(MakeInvitationViewModel vm) { this.vm = vm; }
 
     @Override
-    public void presentSuccess(MakeInvitationOutputData response) {
-        vm.setFailMessage(""); // clean the message for the last time
-        vm.setSuccessMessage(response.getMessage());
+    public void presentSuccess(MakeInvitationOutputData out) {
+        vm.setState(new MakeInvitationState(out.getMessage(), "", true));
     }
 
     @Override
     public void presentFailure(String errorMessage) {
-        vm.setSuccessMessage("");
-        vm.setFailMessage(errorMessage);
+        vm.setState(new MakeInvitationState("", errorMessage, false));
     }
 }
