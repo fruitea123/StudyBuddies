@@ -13,17 +13,15 @@ public class MakeInvitationPresenter implements MakeInvitationOutputBoundary {
 
     @Override
     public void presentSuccess(MakeInvitationOutputData out) {
-        // 取状态对象，设置成功消息，清空错误消息
         MakeInvitationState s = vm.getState();
         s.setSuccessMessage(out.getMessage());
         s.setErrorMessage("");
-        // 通知 View：state 更新了
+        // notify view to update
         vm.firePropertyChanged();
     }
 
     @Override
     public void presentFailure(String errorMessage) {
-        // 设置错误消息，清空成功消息
         MakeInvitationState s = vm.getState();
         s.setSuccessMessage("");
         s.setErrorMessage(errorMessage);
