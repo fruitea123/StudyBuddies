@@ -1,5 +1,6 @@
 package interface_adapter.make_invitation;
 
+// This class only holds the messages for MakeInvitationView
 public class MakeInvitationState {
     private String successMessage = "";
     private String errorMessage = "";

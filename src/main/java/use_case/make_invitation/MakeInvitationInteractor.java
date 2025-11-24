@@ -24,28 +24,34 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
     @Override
     public void execute(MakeInvitationInputData r) {
         try {
-            if (r.getCourse() == null || r.getCourse().isBlank())
-                throw new IllegalArgumentException("Course required");
             LocalDate date = r.getDate();
             LocalTime start = r.getStartTime();
             LocalTime end = r.getEndTime();
+
+            if (r.getCourse() == null || r.getCourse().isBlank())
+                throw new IllegalArgumentException("Course required");
+
             if (date == null) throw new IllegalArgumentException("Date required");
 
             // check valid date/time
+            if (start == null || end == null) {
+                throw new IllegalArgumentException("Start/End required");
+            }
+
             if (!start.isBefore(end)){
                 throw new IllegalArgumentException("Start must be before end");
             }
+
             ZoneId zone = ZoneId.systemDefault();
             LocalDate today = LocalDate.now(zone);
+
             if (date.isBefore(today)) {
                 throw new IllegalArgumentException("Date cannot be in the past");
             }
             if (date.equals(today) && start.isBefore(LocalTime.now(zone))) {
                 throw new IllegalArgumentException("Start time cannot be in the past");
             }
-            if (start == null || end == null) {
-                throw new IllegalArgumentException("Start/End required");
-            }
+
 
             // occupancy convert to capacity if needed
             int capacity = 2;
