@@ -77,4 +77,9 @@ public class InMemoryInvitationDataAccessObject
                                 LocalTime bStart, LocalTime bEnd) {
         return aStart.isBefore(bEnd) && bStart.isBefore(aEnd);
     }
+
+    // add for testing
+    public List<Invitation> getAllInvitations() {
+        return Collections.unmodifiableList(invitations);
+    }
 }

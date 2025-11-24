@@ -79,7 +79,7 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         endSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
         endSpinner.setEditor(new JSpinner.DateEditor(endSpinner, "HH:mm"));
 
-        capacitySpinner.setModel(new SpinnerNumberModel(3, 1, 50, 1));
+        capacitySpinner.setModel(new SpinnerNumberModel(2, 2, 50, 1));
     }
 
     private void setupModeToggle() {

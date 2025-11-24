@@ -66,7 +66,7 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
             if (r.getOccupancy() != null){
                 capacity = r.getOccupancy().intValue();
             }
-            if (capacity <= 2){
+            if (capacity < 2){
                 throw new IllegalArgumentException("Capacity must be greater than 2");
             }
             User owner = currentUser.getCurrentUser();
