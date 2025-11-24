@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * A simple entity representing a user. Users have a username (email),
  * password, first name, last name, the programs they are enrolled in,
- * and a profile photo.
+ * a profile photo, and a description.
  */
 public class User {
 
@@ -18,7 +18,7 @@ public class User {
     private final String description;
 
     /**
-     * Creates a new user with the given non-empty name and non-empty password.
+     * Creates a new user with the given non-empty email, password, firstName, lastName, and programs.
      * @param email the username
      * @param password the password
      * @param firstName the first name
