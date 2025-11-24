@@ -31,6 +31,14 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
             if (r.getCourse() == null || r.getCourse().isBlank())
                 throw new IllegalArgumentException("Course required");
 
+            if (r.getDescription() != null){
+                String trimmed =  r.getDescription().trim();
+                if (trimmed.length() > 150){
+                    throw new IllegalArgumentException(
+                            "Description must be at most 150 characters long");
+                }
+            }
+
             if (date == null) throw new IllegalArgumentException("Date required");
 
             // check valid date/time
