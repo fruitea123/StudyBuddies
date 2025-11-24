@@ -1,11 +1,12 @@
 package view;
 
 import interface_adapter.make_invitation.MakeInvitationController;
-import interface_adapter.make_invitation.MakeInvitationViewModel;
 import interface_adapter.make_invitation.MakeInvitationState;
+import interface_adapter.make_invitation.MakeInvitationViewModel;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
@@ -17,62 +18,107 @@ import java.util.Date;
 
 public class MakeInvitationView extends JPanel implements PropertyChangeListener {
 
-    private JPanel rootPanel;
-    private JTextField courseField;
-    private JTextField descriptionField;
-    private JSpinner   dateSpinner;
-    private JSpinner   startSpinner;
-    private JSpinner   endSpinner;
-    private JRadioButton onlineRadioButton;
-    private JRadioButton inPersonRadioButton;
-    private JTextField   locationField;
-    private JSpinner     capacitySpinner;
-    private JButton      confirmButton;
-    private JLabel       messageLabel;
+    private final String viewName = "make invitation";
 
-    private final MakeInvitationViewModel vm;
+    private final MakeInvitationViewModel viewModel;
+    private MakeInvitationController controller;
 
-    public MakeInvitationView(MakeInvitationController controller,
-                              MakeInvitationViewModel vm) {
-        this.vm = vm;
+    private final JTextField courseField        = new JTextField(20);
+    private final JTextField descriptionField   = new JTextField(30);
+    private final JSpinner   dateSpinner        = new JSpinner();
+    private final JSpinner   startSpinner       = new JSpinner();
+    private final JSpinner   endSpinner         = new JSpinner();
+    private final JRadioButton onlineRadioButton    = new JRadioButton("Online");
+    private final JRadioButton inPersonRadioButton  = new JRadioButton("In person");
+    private final JTextField   locationField    = new JTextField(20);
+    private final JSpinner     capacitySpinner  = new JSpinner();
+    private final JLabel       messageLabel     = new JLabel(" ");
 
-        setLayout(new BorderLayout());
-        add(rootPanel, BorderLayout.CENTER);
+    private final JButton confirmButton = new JButton("Create Invitation");
+
+    public MakeInvitationView(MakeInvitationViewModel viewModel) {
+        this.viewModel = viewModel;
+        this.viewModel.addPropertyChangeListener(this);
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
+
+        JLabel title = new JLabel("Create Your Invitation");
+        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JPanel coursePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        coursePanel.add(new JLabel("Course:"));
+        coursePanel.add(courseField);
+
+        JPanel descPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        descPanel.add(new JLabel("Description (optional):"));
+        descPanel.add(descriptionField);
+
+        JPanel datePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        datePanel.add(new JLabel("Date:"));
+        datePanel.add(dateSpinner);
+
+        JPanel timePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        timePanel.add(new JLabel("Start:"));
+        timePanel.add(startSpinner);
+        timePanel.add(new JLabel("End:"));
+        timePanel.add(endSpinner);
+
+        JPanel modePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        ButtonGroup modeGroup = new ButtonGroup();
+        modeGroup.add(onlineRadioButton);
+        modeGroup.add(inPersonRadioButton);
+        onlineRadioButton.setSelected(true);
+        locationField.setEnabled(false);
+
+        modePanel.add(new JLabel("Mode:"));
+        modePanel.add(onlineRadioButton);
+        modePanel.add(inPersonRadioButton);
+        modePanel.add(new JLabel("Location:"));
+        modePanel.add(locationField);
+
+        JPanel capacityPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        capacityPanel.add(new JLabel("Max occupancy:"));
+        capacityPanel.add(capacitySpinner);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        buttonPanel.add(confirmButton);
+
+        JPanel messagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        messagePanel.add(messageLabel);
+
+        title.setAlignmentX(Component.LEFT_ALIGNMENT);
+        coursePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        descPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        datePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        timePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        modePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        capacityPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        add(title);
+        add(coursePanel);
+        add(descPanel);
+        add(datePanel);
+        add(timePanel);
+        add(modePanel);
+        add(capacityPanel);
+        add(buttonPanel);
+        add(messagePanel);
 
         setupSpinners();
         setupModeToggle();
 
-        vm.addPropertyChangeListener(this);
-
-        wireEvents(controller);
-    }
-
-    private void wireEvents(MakeInvitationController controller) {
-        confirmButton.addActionListener(run(e -> {
-            messageLabel.setText(" ");
-
-            ZoneId zone = ZoneId.systemDefault();
-            LocalDate date  = ((Date) dateSpinner.getValue()).toInstant().atZone(zone).toLocalDate();
-            LocalTime start = ((Date) startSpinner.getValue()).toInstant().atZone(zone).toLocalTime();
-            LocalTime end   = ((Date) endSpinner.getValue()).toInstant().atZone(zone).toLocalTime();
-
-            String mode = onlineRadioButton.isSelected() ? "ONLINE"
-                    : (inPersonRadioButton.isSelected() ? "IN_PERSON" : "");
-
-            controller.onConfirm(
-                    courseField.getText(),
-                    descriptionField.getText(),
-                    date, start, end,
-                    mode, locationField.getText(),
-                    (Integer) capacitySpinner.getValue()
-            );
-        }));
+        wireEvents();
     }
 
     private void setupSpinners() {
+        //date spinner
         dateSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
 
+        //time spinner
         startSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
         startSpinner.setEditor(new JSpinner.DateEditor(startSpinner, "HH:mm"));
 
@@ -83,27 +129,60 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
     }
 
     private void setupModeToggle() {
-        ButtonGroup g = new ButtonGroup();
-        g.add(onlineRadioButton);
-        g.add(inPersonRadioButton);
-        onlineRadioButton.setSelected(true);
-        locationField.setEnabled(false);
-
         onlineRadioButton.addActionListener(e -> locationField.setEnabled(false));
         inPersonRadioButton.addActionListener(e -> locationField.setEnabled(true));
     }
 
-    private ActionListener run(ActionListener a) { return a; }
+    private void wireEvents() {
+        confirmButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (controller == null) {
+                    return;
+                }
+                messageLabel.setText(" ");
 
+                ZoneId zone = ZoneId.systemDefault();
+                LocalDate date  = ((Date) dateSpinner.getValue())
+                        .toInstant().atZone(zone).toLocalDate();
+                LocalTime start = ((Date) startSpinner.getValue())
+                        .toInstant().atZone(zone).toLocalTime();
+                LocalTime end   = ((Date) endSpinner.getValue())
+                        .toInstant().atZone(zone).toLocalTime();
+
+                String mode = onlineRadioButton.isSelected() ? "ONLINE"
+                        : (inPersonRadioButton.isSelected() ? "IN_PERSON" : "");
+
+                //pass the input to controller
+                controller.onConfirm(
+                        courseField.getText(),
+                        descriptionField.getText(),
+                        date, start, end,
+                        mode, locationField.getText(),
+                        (Integer) capacitySpinner.getValue()
+                );
+            }
+        });
+    }
+
+    public void setMakeInvitationController(MakeInvitationController controller) {
+        this.controller = controller;
+    }
+
+    public String getViewName() {
+        return viewName;
+    }
+
+    // ViewModel -> update view
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
         if (!MakeInvitationViewModel.STATE_PROPERTY.equals(evt.getPropertyName())) {
             return;
         }
-        MakeInvitationState s = vm.getState();
+        MakeInvitationState state = viewModel.getState();
 
-        String ok = s.getSuccessMessage();
-        String bad = s.getErrorMessage();
+        String ok  = state.getSuccessMessage();
+        String bad = state.getErrorMessage();
 
         if (ok != null && !ok.isBlank()) {
             messageLabel.setForeground(new Color(0, 128, 0));
