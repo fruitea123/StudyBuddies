@@ -55,7 +55,7 @@ public class User {
         this.description = description;
     }
 
-    public String getName() {
+    public String getEmail() {
         return email;
     }
 

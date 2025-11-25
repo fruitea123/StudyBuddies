@@ -13,7 +13,7 @@ public interface LogoutUserDataAccessInterface {
 
     /**
      * Sets the username indicating who is the current user of the application.
-     * @param username the new current username
+     * @param email the new current username
      */
-    void setCurrentUsername(String username);
+    void setCurrentUsername(String email);
 }
