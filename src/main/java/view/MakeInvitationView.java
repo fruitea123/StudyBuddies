@@ -40,11 +40,15 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         this.viewModel = viewModel;
         this.viewModel.addPropertyChangeListener(this);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new BorderLayout());
         setBorder(BorderFactory.createEmptyBorder(15, 20, 15, 20));
 
         JLabel title = new JLabel("Create Your Invitation");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        titlePanel.add(title);
+
+        JPanel centerColumn = new JPanel();
+        centerColumn.setLayout(new BoxLayout(centerColumn, BoxLayout.Y_AXIS));
 
         JPanel coursePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         coursePanel.add(new JLabel("Course:"));
@@ -81,31 +85,27 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         capacityPanel.add(new JLabel("Max occupancy:"));
         capacityPanel.add(capacitySpinner);
 
-        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        centerColumn.add(coursePanel);
+        centerColumn.add(descPanel);
+        centerColumn.add(datePanel);
+        centerColumn.add(timePanel);
+        centerColumn.add(modePanel);
+        centerColumn.add(capacityPanel);
+
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         buttonPanel.add(confirmButton);
 
-        JPanel messagePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel messagePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         messagePanel.add(messageLabel);
 
-        title.setAlignmentX(Component.LEFT_ALIGNMENT);
-        coursePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        descPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        datePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        timePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        modePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        capacityPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        buttonPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
-        messagePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        JPanel bottomPanel = new JPanel();
+        bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+        bottomPanel.add(buttonPanel);
+        bottomPanel.add(messagePanel);
 
-        add(title);
-        add(coursePanel);
-        add(descPanel);
-        add(datePanel);
-        add(timePanel);
-        add(modePanel);
-        add(capacityPanel);
-        add(buttonPanel);
-        add(messagePanel);
+        add(titlePanel, BorderLayout.NORTH);
+        add(centerColumn, BorderLayout.CENTER);
+        add(bottomPanel, BorderLayout.SOUTH);
 
         setupSpinners();
         setupModeToggle();
@@ -117,13 +117,20 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         //date spinner
         dateSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
+//        ((JSpinner.DefaultEditor) dateSpinner.getEditor())
+//                .getTextField().setText("");
 
         //time spinner
         startSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
         startSpinner.setEditor(new JSpinner.DateEditor(startSpinner, "HH:mm"));
+//        ((JSpinner.DefaultEditor) startSpinner.getEditor())
+//                .getTextField().setText("");
+
 
         endSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
         endSpinner.setEditor(new JSpinner.DateEditor(endSpinner, "HH:mm"));
+//        ((JSpinner.DefaultEditor) endSpinner.getEditor())
+//                .getTextField().setText("");
 
         capacitySpinner.setModel(new SpinnerNumberModel(2, 2, 50, 1));
     }
@@ -154,6 +161,8 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
                         : (inPersonRadioButton.isSelected() ? "IN_PERSON" : "");
 
                 //pass the input to controller
+                // System.out.println("[VIEW→CTRL] course=" + course + ", date=" + date + ", start=" + start + ", end=" + end);
+
                 controller.onConfirm(
                         courseField.getText(),
                         descriptionField.getText(),

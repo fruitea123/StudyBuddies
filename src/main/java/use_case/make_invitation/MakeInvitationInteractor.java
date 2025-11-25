@@ -35,7 +35,7 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                 String trimmed =  r.getDescription().trim();
                 if (trimmed.length() > 150){
                     throw new IllegalArgumentException(
-                            "Description must be at most 150 characters long");
+                            "Description must be at most 150 characters");
                 }
             }
 
@@ -60,14 +60,18 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                 throw new IllegalArgumentException("Start time cannot be in the past");
             }
 
-
             // occupancy convert to capacity if needed
             int capacity = 2;
             if (r.getOccupancy() != null){
                 capacity = r.getOccupancy().intValue();
             }
             if (capacity < 2){
-                throw new IllegalArgumentException("Capacity must be greater than 2");
+                throw new IllegalArgumentException("Capacity must be at least 2");
+            }
+            if ("IN_PERSON".equals(r.getMode())){
+                if(r.getLocation() == null || r.getLocation().isBlank()){
+                    throw new IllegalArgumentException("Location is required for in-person invitations");
+                }
             }
             User owner = currentUser.getCurrentUser();
             if (owner == null) {

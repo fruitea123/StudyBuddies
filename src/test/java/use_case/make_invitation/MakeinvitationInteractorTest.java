@@ -483,4 +483,45 @@ class MakeInvitationInteractorTest {
                 presenter.lastError);
         assertEquals(0, dao.getAllInvitations().size());
     }
+    @Test
+    void failure_whenInPersonWithoutLocation() {
+        InMemoryInvitationDataAccessObject dao =
+                new InMemoryInvitationDataAccessObject();
+        TestPresenter presenter = new TestPresenter();
+        TestCurrentUserGateway currentUser = new TestCurrentUserGateway();
+        currentUser.setCurrentUser(makeUser("alice"));
+
+        MakeInvitationInteractor interactor =
+                new MakeInvitationInteractor(dao, presenter, currentUser);
+
+        LocalDate tomorrow = LocalDate.now().plusDays(1);
+
+        MakeInvitationInputData base =
+                makeValidRequest(
+                        tomorrow,
+                        LocalTime.of(10, 0),
+                        LocalTime.of(11, 0),
+                        3,
+                        "desc"
+                );
+
+        MakeInvitationInputData req = new MakeInvitationInputData(
+                base.getCourse(),
+                base.getDescription(),
+                base.getDate(),
+                base.getStartTime(),
+                base.getEndTime(),
+                "IN_PERSON",
+                "",
+                base.getOccupancy()
+        );
+
+        interactor.execute(req);
+
+
+        assertEquals("Location is required for in-person invitations",
+                presenter.lastError);
+        assertNull(presenter.lastSuccess);
+        assertEquals(0, dao.getAllInvitations().size());
+    }
 }

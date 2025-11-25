@@ -15,44 +15,44 @@ public class MakeInvitationDemoMain {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // 1. DAO：用内存实现
+            // DAO：用内存实现
             InMemoryInvitationDataAccessObject invitationDAO =
                     new InMemoryInvitationDataAccessObject();
 
-            // 2. 当前用户 gateway，并设置一个假用户
+            // 当前用户 gateway，并设置一个假用户
             SessionCurrentUserGateway currentUserGateway =
                     new SessionCurrentUserGateway();
             currentUserGateway.setCurrentUser(new User("alice", "password"));
 
-            // 3. ViewModel
+            // ViewModel
             MakeInvitationViewModel vm = new MakeInvitationViewModel();
 
-            // 4. Presenter
+            // Presenter
             MakeInvitationOutputBoundary presenter =
                     new MakeInvitationPresenter(vm);
 
-            // 5. Interactor
+            // Interactor
             MakeInvitationInputBoundary interactor =
                     new MakeInvitationInteractor(
                             invitationDAO,
                             presenter,
                             currentUserGateway);
 
-            // 6. Controller
+            // Controller
             MakeInvitationController controller =
                     new MakeInvitationController(interactor);
 
-            // 7. View（注意：构造函数只传 vm）
+            // View（注意：构造函数只传 vm）
             MakeInvitationView view = new MakeInvitationView(vm);
             // 再单独把 controller 塞进去（和 SignupView 一样的模式）
             view.setMakeInvitationController(controller);
 
-            // 8. 放进 JFrame 里展示出来
-            JFrame frame = new JFrame("Make Invitation Demo");
+            // 放进 JFrame 里展示出来
+            JFrame frame = new JFrame("Make Invitatio");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setContentPane(view);
             frame.pack();
-            frame.setLocationRelativeTo(null); // 居中
+            frame.setLocationRelativeTo(null);
             frame.setVisible(true);
         });
     }
