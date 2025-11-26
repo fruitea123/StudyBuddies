@@ -3,9 +3,9 @@ package entity;
 import java.util.List;
 
 /**
- * A simple entity representing a user. Users have a username (email),
+ * An entity representing a user. Users have a username (email),
  * password, first name, last name, the programs they are enrolled in,
- * a profile photo, and a description.
+ * a profile photo (represented by an index), and a description.
  */
 public class User {
 
