@@ -24,9 +24,6 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
     @Override
     public void execute(MakeInvitationInputData r) {
         try {
-            LocalDate date = r.getDate();
-            LocalTime start = r.getStartTime();
-            LocalTime end = r.getEndTime();
 
             if (r.getCourse() == null || r.getCourse().isBlank())
                 throw new IllegalArgumentException("Course required");
@@ -38,6 +35,10 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                             "Description must be at most 150 characters");
                 }
             }
+
+            LocalDate date = r.getDate();
+            LocalTime start = r.getStartTime();
+            LocalTime end = r.getEndTime();
 
             if (date == null) throw new IllegalArgumentException("Date required");
 
@@ -88,13 +89,13 @@ public class MakeInvitationInteractor implements MakeInvitationInputBoundary {
                     .date(date)
                     .startTime(start)
                     .endTime(end)
-                    .mode(r.getMode())              // "ONLINE" / "IN_PERSON"
+                    .mode(r.getMode())
                     .location(r.getLocation())
                     .capacity(capacity)
                     .owner(owner)
                     .build();
 
-            // save to DB
+
             if (invitationDAO.existsOverlap(r.getCourse(), date, start, end)) {
                 throw new IllegalArgumentException("An invitation at this time already exists.");
             }
