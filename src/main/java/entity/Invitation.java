@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Invitation {
 
-    public static final String MODE_ONLINE = "On Line";
+    public static final String MODE_ONLINE = "OnLine";
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 2;
 
