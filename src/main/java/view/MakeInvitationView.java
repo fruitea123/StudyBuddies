@@ -117,20 +117,14 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         //date spinner
         dateSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.DAY_OF_MONTH));
         dateSpinner.setEditor(new JSpinner.DateEditor(dateSpinner, "yyyy-MM-dd"));
-//        ((JSpinner.DefaultEditor) dateSpinner.getEditor())
-//                .getTextField().setText("");
 
         //time spinner
         startSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
         startSpinner.setEditor(new JSpinner.DateEditor(startSpinner, "HH:mm"));
-//        ((JSpinner.DefaultEditor) startSpinner.getEditor())
-//                .getTextField().setText("");
 
 
         endSpinner.setModel(new SpinnerDateModel(new Date(), null, null, Calendar.MINUTE));
         endSpinner.setEditor(new JSpinner.DateEditor(endSpinner, "HH:mm"));
-//        ((JSpinner.DefaultEditor) endSpinner.getEditor())
-//                .getTextField().setText("");
 
         capacitySpinner.setModel(new SpinnerNumberModel(2, 2, 50, 1));
     }
@@ -179,13 +173,14 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
     }
 
     public String getViewName() {
-        return viewName;
+
+        return viewModel.getViewName();
     }
 
     // ViewModel -> update view
     @Override
     public void propertyChange(PropertyChangeEvent evt) {
-        if (!MakeInvitationViewModel.STATE_PROPERTY.equals(evt.getPropertyName())) {
+        if (!"state".equals(evt.getPropertyName())) {
             return;
         }
         MakeInvitationState state = viewModel.getState();

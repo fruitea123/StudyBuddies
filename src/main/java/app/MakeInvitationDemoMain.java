@@ -48,7 +48,7 @@ public class MakeInvitationDemoMain {
             view.setMakeInvitationController(controller);
 
             // 放进 JFrame 里展示出来
-            JFrame frame = new JFrame("Make Invitatio");
+            JFrame frame = new JFrame("Make Invitation");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setContentPane(view);
             frame.pack();
