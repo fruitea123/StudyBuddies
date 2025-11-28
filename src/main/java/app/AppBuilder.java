@@ -4,7 +4,7 @@ import data_access.FileUserDataAccessObject;
 import data_access.PasswordHasher;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.ChangePasswordController;
+//import interface_adapter.logged_in.ChangePasswordController;
 import interface_adapter.logged_in.ChangePasswordPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
@@ -15,8 +15,8 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
+//import use_case.change_password.ChangePasswordInputBoundary;
+//import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
@@ -30,7 +30,7 @@ import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupPasswordHasher;
 import view.LoggedInView;
 import view.LoginView;
-import view.SignupView;
+//import view.SignupViewSample;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -52,7 +52,7 @@ public class AppBuilder {
     // DAO version using a shared external database
     // final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
 
-    private SignupView signupView;
+//    private SignupViewSample signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -65,8 +65,8 @@ public class AppBuilder {
 
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
-        cardPanel.add(signupView, signupView.getViewName());
+//        signupView = new SignupViewSample(signupViewModel);
+//        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
 
@@ -97,7 +97,7 @@ public class AppBuilder {
                         userFactory
                 );
         SignupController controller = new SignupController(userSignupInteractor);
-        signupView.setSignupController(controller);
+//        signupView.setSignupController(controller);
         return this;
     }
 
@@ -116,11 +116,11 @@ public class AppBuilder {
         final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
                 loggedInViewModel);
 
-        final ChangePasswordInputBoundary changePasswordInteractor =
-                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-
-        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordInteractor);
-        loggedInView.setChangePasswordController(changePasswordController);
+//        final ChangePasswordInputBoundary changePasswordInteractor =
+//                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
+//
+//        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordInteractor);
+//        loggedInView.setChangePasswordController(changePasswordController);
         return this;
     }
 
@@ -146,7 +146,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+//        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;

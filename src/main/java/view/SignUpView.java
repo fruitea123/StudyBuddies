@@ -4,8 +4,8 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import java.awt.*;
 
-public class SignupView extends JPanel {
-    public SignupView() {
+public class SignUpView extends JPanel {
+    public SignUpView() {
 
         setLayout(new BorderLayout());
 
@@ -156,7 +156,7 @@ public class SignupView extends JPanel {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Sign Up Form");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new SignupView());
+        frame.add(new SignUpView());
         frame.setSize(450, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);

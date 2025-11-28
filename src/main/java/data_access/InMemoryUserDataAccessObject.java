@@ -23,13 +23,13 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private String currentUsername;
 
     @Override
-    public boolean existsByName(String identifier) {
+    public boolean existsByEmail(String identifier) {
         return users.containsKey(identifier);
     }
 
     @Override
     public void save(User user) {
-        users.put(user.getName(), user);
+        users.put(user.getEmail(), user);
     }
 
     @Override
@@ -50,7 +50,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public void changePassword(User user) {
         // Replace the old entry with the new password
-        users.put(user.getName(), user);
+        users.put(user.getEmail(), user);
     }
 
 }
