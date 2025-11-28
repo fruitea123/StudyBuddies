@@ -1,6 +1,7 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.MongoInvitationDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.ChangePasswordController;
@@ -28,7 +29,7 @@ import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import interface_adapter.make_invitation.*;
 import use_case.make_invitation.*;
-import data_access.InMemoryInvitationDataAccessObject; // change after implemented MongoDB
+//import data_access.InMemoryInvitationDataAccessObject; // change after implemented MongoDB
 import view.*;
 
 import javax.swing.*;
@@ -58,8 +59,8 @@ public class AppBuilder {
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
     private MakeInvitationView makeInvitationView;
-    private final InMemoryInvitationDataAccessObject invitationDataAccessObject =
-            new InMemoryInvitationDataAccessObject();
+    private final MongoInvitationDataAccessObject invitationDataAccessObject =
+            new MongoInvitationDataAccessObject();
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
 
