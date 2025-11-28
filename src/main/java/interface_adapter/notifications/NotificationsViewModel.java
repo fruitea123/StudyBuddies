@@ -9,7 +9,7 @@ import java.util.List;
 
 public class NotificationsViewModel {
 
-    // 看你们项目的其他 ViewModel 用什么 property name，可以照抄
+
     public static final String STATE_PROPERTY = "notificationsState";
 
     private final PropertyChangeSupport support = new PropertyChangeSupport(this);
@@ -75,7 +75,7 @@ public class NotificationsViewModel {
         support.removePropertyChangeListener(listener);
     }
 
-    // 这招比较偷懒：每次更新都 fire 一次“整体状态变了”
+
     private void fireStateChanged() {
         support.firePropertyChange(STATE_PROPERTY, null, null);
     }

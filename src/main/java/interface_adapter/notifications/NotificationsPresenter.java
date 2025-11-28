@@ -46,13 +46,11 @@ public class NotificationsPresenter implements ViewNotificationsOutputBoundary {
             viewModel.setInfoMessage(null);
         }
 
-        // 若你们项目习惯用一个显式方法，比如 viewModel.firePropertyChanged()，也可以在这里再调一次
-        // viewModel.fireStateChanged(); // 如果你自己额外加了这个 public 方法
+
     }
 
     private String formatTime(LocalDateTime time) {
-        // 简单一点就 toString，也可以用 formatter
-        // return time.toString();
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
         return time.format(formatter);
     }
