@@ -102,7 +102,7 @@ public class InvitationBuilder {
     public List<User> getParticipants(){
         return participants;
     }
-    public String getInvitationID(){ return invitationID; }
+    public String getinvitationID(){ return invitationID; }
 
     public Invitation build() {
         return new Invitation(this);
