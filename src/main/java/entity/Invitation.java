@@ -21,6 +21,7 @@ public class Invitation {
     private final int capacity;
     private final User owner;
     private final List<User> participants;
+    private final String invitationID;
 
     Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
@@ -42,6 +43,7 @@ public class Invitation {
         }
         this.participants = Collections.unmodifiableList(new ArrayList<>(set));
         // delete repeated participants
+        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -135,6 +137,7 @@ public class Invitation {
     public List<User> getParticipants() {
         return participants;
     }
+    public String getInvitationID() { return invitationID; }
 
     public int participantsCount() {
         return participants.size();
