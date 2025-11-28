@@ -28,7 +28,7 @@ import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
 import view.LoggedInView;
 import view.LoginView;
-import view.SignupView;
+import view.SignUpView;
 import view.ViewManager;
 
 import javax.swing.*;
@@ -50,7 +50,7 @@ public class AppBuilder {
     // DAO version using a shared external database
     // final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
 
-    private SignupView signupView;
+    private SignUpView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -63,8 +63,9 @@ public class AppBuilder {
 
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
-        cardPanel.add(signupView, signupView.getViewName());
+//        signupView = new SignUpView(signupViewModel);
+        signupView = new SignUpView();
+//        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
 
@@ -89,7 +90,7 @@ public class AppBuilder {
                 userDataAccessObject, signupOutputBoundary, userFactory);
 
         SignupController controller = new SignupController(userSignupInteractor);
-        signupView.setSignupController(controller);
+//        signupView.setSignupController(controller);
         return this;
     }
 
@@ -138,7 +139,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+//        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
