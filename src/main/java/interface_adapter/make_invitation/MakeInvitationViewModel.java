@@ -10,7 +10,7 @@ public class MakeInvitationViewModel extends ViewModel<MakeInvitationState> {
     // title for view
     public static final String TITLE = "Make Invitation";
     public MakeInvitationViewModel() {
-        super("make invitation");
+        super(VIEW_NAME);
         this.setState(new MakeInvitationState());
     }
 

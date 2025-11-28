@@ -26,6 +26,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import interface_adapter.make_invitation.*;
+import use_case.make_invitation.*;
+import data_access.InMemoryInvitationDataAccessObject; // change after implemented MongoDB
 import view.*;
 
 import javax.swing.*;
@@ -53,6 +56,12 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private MakeInvitationViewModel makeInvitationViewModel;
+    private MakeInvitationView makeInvitationView;
+    private final InMemoryInvitationDataAccessObject invitationDataAccessObject =
+            new InMemoryInvitationDataAccessObject();
+    private final SessionCurrentUserGateway sessionCurrentUserGateway =
+            new SessionCurrentUserGateway();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -78,6 +87,14 @@ public class AppBuilder {
         cardPanel.add(loggedInView, loggedInView.getViewName());
         return this;
     }
+
+    public AppBuilder addMakeInvitationView() {
+        makeInvitationViewModel = new MakeInvitationViewModel();
+        makeInvitationView = new MakeInvitationView(makeInvitationViewModel);
+        cardPanel.add(makeInvitationView, makeInvitationView.getViewName());
+        return this;
+    }
+
 
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
@@ -126,6 +143,27 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    public AppBuilder addMakeInvitationUseCase() {
+        // updates MakeInvitationViewModel
+        MakeInvitationOutputBoundary invitationOutputBoundary =
+                new MakeInvitationPresenter (makeInvitationViewModel);
+        // add parameter viewManagerModel, loggedInViewModel so presenter can go back to profile later
+
+        MakeInvitationInputBoundary invitationInteractor =
+                new MakeInvitationInteractor(
+                        invitationDataAccessObject,
+                        invitationOutputBoundary,
+                        sessionCurrentUserGateway
+                );
+
+        MakeInvitationController makeInvitationController =
+                new MakeInvitationController(invitationInteractor);
+
+        makeInvitationView.setMakeInvitationController(makeInvitationController);
+
         return this;
     }
 

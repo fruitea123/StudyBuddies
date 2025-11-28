@@ -17,7 +17,6 @@ public class MakeInvitationPresenter implements MakeInvitationOutputBoundary {
         s.setSuccessMessage(out.getMessage());
         s.setErrorMessage("");
         // notify view to update
-//        vm.firePropertyChanged();
         vm.setState(s);
         vm.firePropertyChange();
     }
@@ -27,7 +26,6 @@ public class MakeInvitationPresenter implements MakeInvitationOutputBoundary {
         MakeInvitationState s = vm.getState();
         s.setSuccessMessage("");
         s.setErrorMessage(errorMessage);
-//
         vm.setState(s);
         vm.firePropertyChange();
     }
