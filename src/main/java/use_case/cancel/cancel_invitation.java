@@ -23,12 +23,9 @@ public class cancel_invitation {
     private String startTime;
     private String endTime;
 
-    // ---------------------------
-    //       CONNECT TO ATLAS
-    // ---------------------------
-    public cancel_invitation() {
 
-        // ⭐ IMPORTANT: replace username + password
+    //Connect to Atlas
+    public cancel_invitation() {
         String connectionString =
                 "mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
 
@@ -43,7 +40,7 @@ public class cancel_invitation {
 
         MongoClient client = MongoClients.create(settings);
 
-        // ⭐ DATABASE NAME used in your project
+
         MongoDatabase db = client.getDatabase("StudyPool");
 
         invitationsCollection = db.getCollection("StudyPool");
@@ -56,9 +53,7 @@ public class cancel_invitation {
     public void setStartTime(String startTime) { this.startTime = startTime; }
     public void setEndTime(String endTime) { this.endTime = endTime; }
 
-    // -------------------------------------------------
-    //   CANCEL ONLY FOR THE NORMAL USER ("LEAVE")
-    // -------------------------------------------------
+    //   cancel only for normal user
     public void leave() {
 
         // First — find the exact invitation from DB
@@ -85,9 +80,7 @@ public class cancel_invitation {
         System.out.println("✅ User " + username + " left the invitation.");
     }
 
-    // -------------------------------------------------
-    //        DELETE INVITATION (OWNER ONLY)
-    // -------------------------------------------------
+   //delete invitation for the owner only
     public void delete() {
 
         // First, fetch invitation from DB
@@ -104,7 +97,7 @@ public class cancel_invitation {
             return;
         }
 
-        // 1️⃣ Delete invitation from Invitations collection
+        //Delete invitation from invitations collection
         invitationsCollection.deleteOne(
                 and(
                         eq("ownername", ownername),
@@ -113,7 +106,7 @@ public class cancel_invitation {
                 )
         );
 
-        // 2️⃣ Remove from ALL users who accepted it
+       //remove all users who accepted it
         usersCollection.updateMany(
                 elemMatch("invitations",
                         and(
