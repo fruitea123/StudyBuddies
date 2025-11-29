@@ -1,7 +1,7 @@
 package app;
 
-import data_access.FileUserDataAccessObject;
-import data_access.MongoInvitationDataAccessObject;
+import data_access.*;
+import entity.Notification;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 //import interface_adapter.logged_in.ChangePasswordController;
@@ -46,9 +46,6 @@ import use_case.make_invitation.*;
 import view.*;
 
 
-import data_access.NotificationDataAccessObject;
-import data_access.InMemoryNotificationDataAccessObject;
-
 import interface_adapter.notifications.NotificationsController;
 import interface_adapter.notifications.NotificationsPresenter;
 import interface_adapter.notifications.NotificationsViewModel;
@@ -60,23 +57,11 @@ import use_case.notifications.CurrentUserIdProvider;
 
 import view.NotificationsView;
 
-
-import data_access.NotificationDataAccessObject;
-import data_access.InMemoryNotificationDataAccessObject;
-
-import interface_adapter.notifications.NotificationsController;
-import interface_adapter.notifications.NotificationsPresenter;
-import interface_adapter.notifications.NotificationsViewModel;
-
-import use_case.notifications.ViewNotificationsInputBoundary;
-import use_case.notifications.ViewNotificationsInteractor;
-import use_case.notifications.ViewNotificationsOutputBoundary;
-import use_case.notifications.CurrentUserIdProvider;
-
-import view.NotificationsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Optional;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -102,8 +87,14 @@ public class AppBuilder {
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
     private MakeInvitationView makeInvitationView;
+
     private final MongoInvitationDataAccessObject invitationDataAccessObject =
             new MongoInvitationDataAccessObject();
+    private final InvitationDAO invitationDAO =
+            new InvitationDAO(DBAccess.getDatabase());
+    private final NotificationDataAccessObject notificationDataAccessObject =
+            new InMemoryNotificationDataAccessObject();
+
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
     private NotificationsView notificationsView;
@@ -308,7 +299,7 @@ public class AppBuilder {
         CurrentUserIdProvider currentUserIdProvider = new CurrentUserIdProvider() {
             @Override
             public String getCurrentUserId() {
-                return pro.getUsername();
+                return profileViewModel.getState().getUsername();
             }
         };
 
