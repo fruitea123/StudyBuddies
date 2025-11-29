@@ -9,6 +9,18 @@
     <artifactId>StudyBuddies</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-bom</artifactId>
+                <version>5.6.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
 
         <!-- JSON -->
@@ -53,6 +65,8 @@
             <artifactId>google-api-client</artifactId>
             <version>2.3.0</version>
         </dependency>
+
+
 
         <!-- Google HTTP client -->
         <dependency>
