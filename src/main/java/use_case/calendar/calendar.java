@@ -65,12 +65,13 @@ public class calendar {
                 .build();
     }
 
-    // ----------------- Insert events from MongoDB -----------------
+    //insert events from mongodb
     public static void insertSampleEvents() throws Exception {
 
-        // ----------------- MONGODB CONNECTION -----------------
+        //mongodb connection
         String connectionString =
-                "mongodb+srv://jessicaanirisaihan_db_user:<db_password>@studybuddiestest.5iradb0.mongodb.net/?appName=StudyBuddiesTest";
+                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?appName=StudyBuddiesTest";
+
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -102,7 +103,7 @@ public class calendar {
             String end   = doc.getString("endTime");
 
             if (course == null || date == null || start == null || end == null) {
-                System.out.println("Skipping document (missing fields): " + doc.toJson());
+                //System.out.println("Skipping document (missing fields): " + doc.toJson());
                 continue;
             }
 
