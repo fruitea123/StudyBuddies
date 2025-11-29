@@ -33,12 +33,11 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
     private FilterController filterController;
 
 
-    public StudyPoolView(StudyPoolViewModel studyPoolViewModel, ProfileViewModel profileViewModel,
-                         AcceptInvitationController acceptController, FilterController filterController) {
+    public StudyPoolView(StudyPoolViewModel studyPoolViewModel, ProfileViewModel profileViewModel) {
         this.studyPoolViewModel = studyPoolViewModel;
         this.profileViewModel = profileViewModel;
-        this.acceptController = acceptController;
-        this.filterController = filterController;
+//        this.acceptController = acceptController;
+//        this.filterController = filterController;
         studyPoolViewModel.addPropertyChangeListener(this);
 
         final JLabel title = new JLabel(studyPoolViewModel.TITLE_LABEL);
@@ -104,6 +103,10 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
     public void setAcceptController(AcceptInvitationController controller) {
             this.acceptController = controller;
         }
+
+    public void setFilterController(FilterController controller) {
+        this.filterController = controller;
+    }
 
 
 

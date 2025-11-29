@@ -12,6 +12,9 @@ public class Main {
 //                .addLoggedInView()
                 .addMakeInvitationView()
                 .addNotificationsView()
+                .addFilterView()
+                .addStudyPoolView()
+                .addProfileView()
                 .addSignupUseCase()
                 .addLoginUseCase()
 //                .addLogoutUseCase()
@@ -19,6 +22,7 @@ public class Main {
                 .addMakeInvitationUseCase()
                 .addMakeInvitationNavigation()
                 .addNotificationsUseCase()
+                .addFilterUseCase()
                 .build();
 
         application.pack();
