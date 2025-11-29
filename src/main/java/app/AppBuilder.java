@@ -12,6 +12,7 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -27,6 +28,10 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import view.LoggedInView;
+import view.LoginView;
+import view.SignUpView;
+import view.ViewManager;
 import interface_adapter.make_invitation.*;
 import use_case.make_invitation.*;
 //import data_access.InMemoryInvitationDataAccessObject; // change after implemented MongoDB
@@ -66,10 +71,10 @@ public class AppBuilder {
     // DAO version using a shared external database
     // final DBUserDataAccessObject userDataAccessObject = new DBUserDataAccessObject(userFactory);
 
-    private SignupView signupView;
+    private SignUpView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
-    private LoggedInViewModel loggedInViewModel;
+    private ProfileViewModel profileViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
@@ -88,8 +93,9 @@ public class AppBuilder {
 
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
-        cardPanel.add(signupView, signupView.getViewName());
+//        signupView = new SignUpView(signupViewModel);
+        signupView = new SignUpView();
+//        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
 
@@ -100,12 +106,12 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
-        return this;
-    }
+//    public AppBuilder addLoggedInView() {
+//        loggedInViewModel = new LoggedInViewModel();
+//        loggedInView = new LoggedInView(loggedInViewModel);
+//        cardPanel.add(loggedInView, loggedInView.getViewName());
+//        return this;
+//    }
 
     public AppBuilder addMakeInvitationView() {
         makeInvitationViewModel = new MakeInvitationViewModel();
@@ -136,13 +142,13 @@ public class AppBuilder {
                 userDataAccessObject, signupOutputBoundary, userFactory);
 
         SignupController controller = new SignupController(userSignupInteractor);
-        signupView.setSignupController(controller);
+//        signupView.setSignupController(controller);
         return this;
     }
 
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
@@ -240,7 +246,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+//        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
