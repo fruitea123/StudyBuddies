@@ -27,7 +27,7 @@ public class cancel_invitation {
     //Connect to Atlas
     public cancel_invitation() {
         String connectionString =
-                "mongodb+srv://YOUR_USERNAME:YOUR_PASSWORD@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
+                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?appName=StudyBuddiesTest";
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -77,7 +77,7 @@ public class cancel_invitation {
                 )
         );
 
-        System.out.println("✅ User " + username + " left the invitation.");
+        System.out.println("User " + username + " left the invitation.");
     }
 
    //delete invitation for the owner only
@@ -122,6 +122,6 @@ public class cancel_invitation {
                 )
         );
 
-        System.out.println("✅ Invitation deleted for owner + removed from all users.");
+        System.out.println("Invitation deleted for owner + removed from all users.");
     }
 }
