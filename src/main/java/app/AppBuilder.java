@@ -7,6 +7,9 @@ import interface_adapter.ViewManagerModel;
 //import interface_adapter.logged_in.ChangePasswordController;
 //import interface_adapter.logged_in.ChangePasswordPresenter;
 //import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.accept.AcceptInvitationController;
+import interface_adapter.filter.FilterController;
+import interface_adapter.filter.FilterViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
@@ -19,6 +22,7 @@ import interface_adapter.signup.SignupViewModel;
 //import use_case.change_password.ChangePasswordInputBoundary;
 //import use_case.change_password.ChangePasswordInteractor;
 //import use_case.change_password.ChangePasswordOutputBoundary;
+import interface_adapter.study_pool.StudyPoolViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -90,7 +94,7 @@ public class AppBuilder {
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private ProfileViewModel profileViewModel;
-//    private LoggedInView loggedInView;
+    //    private LoggedInView loggedInView;
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
     private MakeInvitationView makeInvitationView;
@@ -100,6 +104,16 @@ public class AppBuilder {
             new SessionCurrentUserGateway();
     private NotificationsView notificationsView;
     private NotificationsViewModel notificationsViewModel;
+
+    private FilterView filterView;
+    private FilterViewModel filterViewModel;
+
+    private StudyPoolView studyPoolView;
+    private StudyPoolViewModel studyPoolViewModel;
+//    AcceptInvitationController acceptController, FilterController filterController
+    private AcceptInvitationController acceptController;
+    private FilterController filterController;
+
 
 
     public AppBuilder() {
@@ -147,6 +161,29 @@ public class AppBuilder {
         cardPanel.add(notificationsView, notificationsView.getViewName());
         return this;
     }
+
+
+    public AppBuilder addFilterView() {
+        filterViewModel = new FilterViewModel();
+        filterView = new FilterView(filterViewModel);
+        cardPanel.add(filterView, filterView.getViewName());
+        return this;
+    }
+
+    public AppBuilder addStudyPoolView() {
+        studyPoolViewModel = new StudyPoolViewModel();
+        profileViewModel = new ProfileViewModel();
+        acceptController = new AcceptInvitationController();
+        filterController = new FilterController();
+
+        studyPoolView = new StudyPoolView(studyPoolViewModel, profileViewModel,
+                acceptController, filterController);
+        cardPanel.add(notificationsView, notificationsView.getViewName());
+        return this;
+    }
+
+
+
 
 
     public AppBuilder addSignupUseCase() {

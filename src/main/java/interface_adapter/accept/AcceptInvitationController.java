@@ -6,8 +6,8 @@ import use_case.accept.AcceptInvitationInputData;
 public class AcceptInvitationController {
     private final AcceptInvitationInputBoundary inputBoundary;
 
-    public AcceptInvitationController(AcceptInvitationInputBoundary inputBoundary) {
-        this.inputBoundary = inputBoundary;
+    public AcceptInvitationController(AcceptInvitationInputBoundary acceptInvitationInputBoundary) {
+        this.inputBoundary = acceptInvitationInputBoundary;
     }
 
     public void acceptInvitation(String invitationId, String username) {
