@@ -9,7 +9,6 @@ public interface NotificationDataAccessObject {
 
     List<Notification> findByUserId(String userId);
 
-    // 如果暂时不想做“只看未读”，这个方法可以先留空实现，或者以后再加
     List<Notification> findUnreadByUserId(String userId);
 
     Optional<Notification> findById(String notificationId);
