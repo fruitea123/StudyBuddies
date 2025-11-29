@@ -21,6 +21,8 @@ public class StudyPoolAccessTest {
 
             Document doc = collection.find(eq("course", "")).first();
             if (doc != null) {
+                String doc2 = doc.toJson();
+                System.out.println(doc.toJson());
                 System.out.println(doc.toJson());
             } else {
                 System.out.println("No matching documents found.");
