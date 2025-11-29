@@ -6,7 +6,7 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Invitation {
-    private ObjectId id;
+    private String id;
     private String course;
     private String description;
     private LocalDate date;
@@ -21,7 +21,7 @@ public class Invitation {
     // Constructors, getters, setters
     public Invitation() {}
 
-    public ObjectId getId() {
+    public String getId() {
         return id;
     }
 
@@ -65,8 +65,7 @@ public class Invitation {
         return participants;
     }
 
-    // ===== Setters =====
-    public void setId(ObjectId id) {
+    public void setId(String id) {
         this.id = id;
     }
 
