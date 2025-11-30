@@ -198,7 +198,7 @@ public class AppBuilder {
                 signupUserDataAccessObject, signupOutputBoundary, userFactory);
 
         SignupController controller = new SignupController(userSignupInteractor, viewManagerModel, loginView);
-//        signupView.setSignupController(controller);
+        signupView.setSignupController(controller);
         return this;
     }
 
