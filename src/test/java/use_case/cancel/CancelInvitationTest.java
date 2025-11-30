@@ -1,8 +1,8 @@
 package use_case.cancel;
 
 import data_access.MongoCancelInvitationDAO;
-
-public class CancelInvitationTest {
+//test
+public class CancelInvitationTest {//cancel invitation test
 
     public static void main(String[] args) {
 

@@ -1,5 +1,5 @@
 package data_access;
-
+//imports
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
@@ -11,11 +11,10 @@ import use_case.cancel.CancelInvitationDataAccessInterface;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.pull;
-
 public class MongoCancelInvitationDAO implements CancelInvitationDataAccessInterface {
 
-    private final MongoCollection<Document> studyPoolCollection;
-
+    private final MongoCollection<Document> studyPoolCollection;//Collection
+    //database connection
     public MongoCancelInvitationDAO() {
 
         String connectionString =

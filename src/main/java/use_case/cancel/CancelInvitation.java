@@ -1,8 +1,8 @@
 package use_case.cancel;
-
+//imports
 import org.bson.Document;
-
-public class CancelInvitation {
+//cancel invitation class
+public class CancelInvitation {//Cancel invitation
 
     private final CancelInvitationDataAccessInterface dataAccess;
     private String username;
