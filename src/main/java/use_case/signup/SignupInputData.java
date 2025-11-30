@@ -16,10 +16,13 @@ public class SignupInputData {
     private final LocalDate DOB;
     private final int programNumber;
     private final List<String> programs;
-    private final String pfp;
+    private final int pfp;
     private final String description;
 
-    public SignupInputData(String email, String password, String repeatPassword, String firstName, String lastName, LocalDate DOB, int programNumber, List<String> programs, String description, String pfp) {
+    public SignupInputData(
+            String email, String password, String repeatPassword,
+            String firstName, String lastName, LocalDate DOB,
+            int programNumber, List<String> programs, String description, int pfp) {
         this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;
@@ -40,10 +43,10 @@ public class SignupInputData {
     String getFirstName() {
         return firstName;
     }
-    String getLastInitial() { return lastName; }
+    String getLastName() { return lastName; }
     LocalDate getDOB() { return DOB; }
     int getProgramNumber() { return programNumber; }
     List<String> getPrograms() { return programs; }
-    String getPfp() { return pfp; }
+    int getPfp() { return pfp; }
     String getDescription() { return description; }
 }
