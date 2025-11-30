@@ -96,11 +96,11 @@ public class CancelInvitation {
         CancelInvitation test = new CancelInvitation();
 
 
-        test.setOwnerName("John");
+        test.setOwnerName("john");//testing
         test.delete();
 
 
-        test.setUsername("max");
+        test.setUsername("max");//testing
         test.leave();
 
         System.out.println("Test complete.");
