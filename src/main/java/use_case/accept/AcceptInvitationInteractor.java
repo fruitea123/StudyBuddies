@@ -1,28 +1,56 @@
 package use_case.accept;
 
-import entity.Invitation;
-import entity.InvitationBuilder;
+import com.mongodb.ConnectionString;
+import com.mongodb.MongoClientSettings;
+import com.mongodb.ServerApi;
+import com.mongodb.ServerApiVersion;
+import com.mongodb.client.MongoClient;
+import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import org.bson.Document;
+import org.bson.types.ObjectId;
 
-// application/AcceptInvitationInteractor.java
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Updates.addToSet;
+
 public class AcceptInvitationInteractor {
-    private final AcceptInvitationUserDataAccessInterface dataAccess;
+    private final MongoCollection<Document> studyPoolCollection;
 
-    public AcceptInvitationInteractor(AcceptInvitationUserDataAccessInterface dataAccess) {
-        this.dataAccess = dataAccess;
+    /**
+     * Connects to MongoDB and initializes the StudyPool collection.
+     */
+    public AcceptInvitationInteractor() {
+        String connectionString =
+                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
+
+        ServerApi serverApi = ServerApi.builder()
+                .version(ServerApiVersion.V1)
+                .build();
+
+        MongoClientSettings settings = MongoClientSettings.builder()
+                .applyConnectionString(new ConnectionString(connectionString))
+                .serverApi(serverApi)
+                .build();
+
+        MongoClient client = MongoClients.create(settings);
+        MongoDatabase db = client.getDatabase("StudyPool");
+        studyPoolCollection = db.getCollection("StudyPool");
     }
 
-    public AcceptInvitationOutputData execute(AcceptInvitationInputData inputData) {
-        // 1. Check timing conflict
-        Invitation invitation = dataAccess.fetchInvitationById(inputData.getInvitationId());
-        if (dataAccess.hasTimingConflict(inputData.getUsername(), invitation.getStartTime(), invitation.getEndTime())) {
-            return new AcceptInvitationOutputData(false, "conflict with timings");
+    /**
+     * Accepts the invitation by adding username to the participants of the owner's session.
+     * Makes changes on backend only, no output returned.
+     */
+    public void acceptInvitation(String sessionOwner, String username) {
+        Document session = studyPoolCollection.find(eq("owner", sessionOwner)).first();
+
+        if (session == null) {
+            // Session not found, silently ignore or you can throw an exception if you prefer
+            return;
         }
-        boolean addResult = dataAccess.addUserToInvitation(
-                inputData.getUsername(), inputData.getInvitationId(), invitation);
-        if (addResult) {
-            return new AcceptInvitationOutputData(true, "Invitation accepted!");
-        } else {
-            return new AcceptInvitationOutputData(false, "Failed to accept invitation.");
-        }
+
+        ObjectId id = session.getObjectId("_id");
+        studyPoolCollection.updateOne(eq("_id", id), addToSet("participants", username));
     }
 }
