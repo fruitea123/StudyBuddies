@@ -28,7 +28,7 @@ public class InvitationDAO {
         }
         return list;
     }
-
+//can delete useless (just there bc i generated them as filteration examples
     public Invitation findById(String id) {
         Document doc = collection.find(Filters.eq("_id", new ObjectId(id))).first();
         if (doc == null) return null;
