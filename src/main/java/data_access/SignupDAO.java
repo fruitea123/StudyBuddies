@@ -10,7 +10,7 @@ import org.bson.Document;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
-import static com.mongodb.client.model.Filters.eq
+import static com.mongodb.client.model.Filters.eq;
 
         public class SignupDAO implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
