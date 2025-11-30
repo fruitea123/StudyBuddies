@@ -9,12 +9,11 @@ public class ProfileViewModel extends ViewModel<profileState> {
         setState(new profileState());
     }
 
-//    public String getViewName() {
-//    }
-//
-//    public profileState getState() {
-//    }
-//
-//    public void firePropertyChange() {
-//    }
+    public String getViewName() { return "profile"; }
+
+    @Override
+    public profileState getState() { return super.getState(); }
+
+    @Override
+    public void firePropertyChange() { super.firePropertyChange(); }
 }
