@@ -24,6 +24,7 @@ public class SignUpView extends JPanel {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
+        mainPanel.setPreferredSize(new Dimension(600, 1000));
 
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -69,10 +70,10 @@ public class SignUpView extends JPanel {
         birthdayLabel.setBounds(50, 255, 200, 25);
         mainPanel.add(birthdayLabel);
 
-        String[] days = new String[31];
+        String[] days = new String[32];
         days[0] = "Day";
+        for (int i = 1; i <= 31; i++) days[i] = String.valueOf(i);
         JComboBox<String> dayBox = new JComboBox<>(days);
-        for (int i = 1; i <= 31; i++) days[i - 1] = String.valueOf(i);
         dayBox.setBounds(50, 280, 140, 30);
         mainPanel.add(dayBox);
 
