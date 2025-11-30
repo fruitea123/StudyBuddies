@@ -12,6 +12,7 @@ public class Test {
     public static void main(String[] args) {
         testFindAll();
     }
+
     public static void testFindAll() {
         DBAccess dbAccess = new DBAccess();
         MongoDatabase db = dbAccess.getDatabase();

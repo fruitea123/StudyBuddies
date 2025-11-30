@@ -18,8 +18,8 @@ public class DBInvitationMapper {
         // Convert String to LocalDate
         inv.setDate(LocalDate.parse(doc.getString("date")));
 
-        inv.setStartTime(LocalTime.parse(doc.getString("startTime")));
-        inv.setEndTime(LocalTime.parse(doc.getString("endTime")));
+        inv.setStartTime(LocalTime.parse(doc.getString("start_time")));
+        inv.setEndTime(LocalTime.parse(doc.getString("end_time")));
         inv.setMode(doc.getString("mode"));
         inv.setLocation(doc.getString("location"));
         inv.setCapacity(Integer.parseInt(doc.getString("capacity")));
@@ -30,7 +30,6 @@ public class DBInvitationMapper {
 
         return inv;
     }
-
 
 }
 
