@@ -11,7 +11,7 @@ import com.mongodb.client.MongoDatabase;
 public class DBAccess {
 
     private static final String URI = "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?appName=StudyBuddiesTest";
-    private static final String DB_NAME = "StudyBuddiesTest";
+    private static final String DB_NAME = "StudyPool";
 
     public static MongoDatabase getDatabase() {
         ServerApi serverApi = ServerApi.builder()

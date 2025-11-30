@@ -18,7 +18,7 @@ public class InvitationDAO {
     private final MongoCollection<Document> collection;
 
     public InvitationDAO(MongoDatabase db) {
-        this.collection = db.getCollection("invitations");
+        this.collection = db.getCollection("StudyPool");
     }
 
     public List<Invitation> findAll() {
