@@ -3,7 +3,7 @@ package use_case.cancel;
 import org.bson.Document;
 
 public interface CancelInvitationDataAccessInterface {
-//Interface
+
 
         Document findInvitationByParticipant(String username);
 

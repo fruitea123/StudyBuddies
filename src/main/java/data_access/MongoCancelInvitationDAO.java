@@ -1,5 +1,5 @@
 package data_access;
-//impports
+//imports
 import com.mongodb.ConnectionString;
 import com.mongodb.MongoClientSettings;
 import com.mongodb.ServerApi;
