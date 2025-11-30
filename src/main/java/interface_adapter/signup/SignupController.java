@@ -3,6 +3,9 @@ package interface_adapter.signup;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
 
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * Controller for the Signup Use Case.
  */
@@ -17,12 +20,23 @@ public class SignupController {
     /**
      * Executes the Signup Use Case.
      * @param username the username to sign up
-     * @param password1 the password
-     * @param password2 the password repeated
+     * @param password the password
+     * @param repeatPassword the password repeated
      */
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username, String password, String repeatPassword,
+                        String firstName, String lastName, LocalDate DOB,
+                        int programNumber, List<String> programs, String description, int pfp) {
         final SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2);
+                        username,
+                        password,
+                        repeatPassword,
+                        firstName,
+                        lastName,
+                        DOB,
+                        programNumber,
+                        programs,
+                        description,
+                        pfp);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
