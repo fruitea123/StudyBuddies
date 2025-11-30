@@ -2,7 +2,7 @@ package use_case.cancel;
 
 import org.bson.Document;
 
-public class CancelInvitation {//cancel invitation
+public class CancelInvitation {//Cancel invitation
 
     private final CancelInvitationDataAccessInterface dataAccess;
     private String username;

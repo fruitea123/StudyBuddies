@@ -13,7 +13,7 @@ import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.pull;
 public class MongoCancelInvitationDAO implements CancelInvitationDataAccessInterface {
 
-    private final MongoCollection<Document> studyPoolCollection;//collection
+    private final MongoCollection<Document> studyPoolCollection;//Collection
 
     public MongoCancelInvitationDAO() {
 
