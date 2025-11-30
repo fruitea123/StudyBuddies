@@ -93,8 +93,10 @@ public class calendar {
                 System.out.println("Skipping invalid document: " + doc.toJson());
                 continue;
             }
-            String startIso = date + "T" + start + ":00-05:00";
-            String endIso   = date + "T" + end   + ":00-05:00";
+            String startFixed = start.length() == 5 ? start + ":00" : start;
+            String endFixed = end.length() == 5 ? end + ":00" : end;
+            String startIso = date + "T" + startFixed + "-05:00";
+            String endIso = date + "T" + endFixed + "-05:00";
 
             Event event = new Event()
                     .setSummary(course)
