@@ -24,8 +24,8 @@ import org.bson.Document;
 
 import java.awt.Desktop;
 import java.io.FileInputStream;
-import java.io.InputStreamReader;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.Collections;
 import java.util.List;
@@ -35,95 +35,83 @@ public class calendar {
     private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
     private static final List<String> SCOPES = Collections.singletonList(CalendarScopes.CALENDAR);
 
-    //Google Calendar Authorization
+    /** Connect to Google Calendar API */
     private static Calendar getCalendarService() throws Exception {
-        InputStream in = new FileInputStream("/Users/harish/IdeaProjects/StudyBuddies/src/main/java/use_case/calendar/credentials.json");
-        if (in == null) throw new RuntimeException("credentials.json not found!");
-
-        GoogleClientSecrets secrets =
-                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+        InputStream in = new FileInputStream("src/main/java/use_case/calendar/credentials.json");
+        GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 GoogleNetHttpTransport.newTrustedTransport(),
                 JSON_FACTORY,
                 secrets,
-                SCOPES
-        )
+                SCOPES)
                 .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
                 .setAccessType("offline")
                 .build();
 
-        LocalServerReceiver receiver = new LocalServerReceiver.Builder().setPort(8888).build();
-        Credential credential = new AuthorizationCodeInstalledApp(flow, receiver).authorize("user");
+        Credential credential = new AuthorizationCodeInstalledApp(
+                flow, new LocalServerReceiver.Builder().setPort(8888).build()
+        ).authorize("user");
 
         return new Calendar.Builder(
                 GoogleNetHttpTransport.newTrustedTransport(),
                 JSON_FACTORY,
                 credential
-        )
-                .setApplicationName("SwingGoogleCalendar")
-                .build();
+        ).setApplicationName("StudyBuddiesApp").build();
     }
 
-    //insert events from mongodb
-    public static void insertSampleEvents() throws Exception {
-
-        //mongodb connection
+    /** Insert all study sessions where the user is a participant */
+    public static void insertUserStudySessions(String username) throws Exception {
         String connectionString =
                 "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?appName=StudyBuddiesTest";
 
-
-        ServerApi serverApi = ServerApi.builder()
-                .version(ServerApiVersion.V1)
-                .build();
-
         MongoClientSettings settings = MongoClientSettings.builder()
                 .applyConnectionString(new ConnectionString(connectionString))
-                .serverApi(serverApi)
+                .serverApi(ServerApi.builder().version(ServerApiVersion.V1).build())
                 .build();
 
         MongoClient mongoClient = MongoClients.create(settings);
-
-        // Your actual DB + Collection names:
         MongoDatabase db = mongoClient.getDatabase("StudyPool");
-        MongoCollection<Document> invitations = db.getCollection("StudyPool");
+        MongoCollection<Document> invitations = db.getCollection("StudyPool"); // your correct collection
 
-        // google calendar connection
         Calendar service = getCalendarService();
 
-        //read mongo docs and insert events
-        MongoCursor<Document> cursor = invitations.find().iterator();
+        // Filter invitations where "participants" array contains the username
+        Document filter = new Document("participants", new Document("$in", Collections.singletonList(username)));
+        MongoCursor<Document> cursor = invitations.find(filter).iterator();
 
         while (cursor.hasNext()) {
             Document doc = cursor.next();
 
             String course = doc.getString("course");
+            String description = doc.getString("description");
             String date = doc.getString("date");
-            String start = doc.getString("startTime");
-            String end   = doc.getString("endTime");
+            String start = doc.getString("start_time");
+            String end   = doc.getString("end_time");
 
             if (course == null || date == null || start == null || end == null) {
-                //System.out.println("Skipping document (missing fields): " + doc.toJson());
+                System.out.println("Skipping invalid document: " + doc.toJson());
                 continue;
             }
-
             String startIso = date + "T" + start + ":00-05:00";
-            String endIso   = date + "T" + end + ":00-05:00";
+            String endIso   = date + "T" + end   + ":00-05:00";
 
             Event event = new Event()
                     .setSummary(course)
+                    .setDescription(description)
                     .setStart(new EventDateTime().setDateTime(new DateTime(startIso)))
                     .setEnd(new EventDateTime().setDateTime(new DateTime(endIso)));
 
             service.events().insert("primary", event).execute();
 
-            System.out.println("Added event → " + course + " (" + start + " - " + end + ")");
+            System.out.println("✓ Added event: " + course + " (" + startIso + " - " + endIso + ")");
         }
 
+
+        cursor.close();
         mongoClient.close();
     }
 
-    //Open Calendar
     public static void openGoogleCalendarInBrowser() {
         try {
             Desktop.getDesktop().browse(new URI("https://calendar.google.com/calendar/r"));
@@ -132,10 +120,9 @@ public class calendar {
         }
     }
 
-    // main
     public static void main(String[] args) {
         try {
-            insertSampleEvents();        // Now loads from MongoDB
+            insertUserStudySessions("steve"); // replace with any username -just for testing
             openGoogleCalendarInBrowser();
         } catch (Exception e) {
             e.printStackTrace();
