@@ -11,24 +11,25 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 
-import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.pull;
+import static com.mongodb.client.model.Filters.eq;
+
 
 /**
  * Provides methods for a user to leave a study session or an owner to delete a session.
  */
 public class CancelInvitation {
-
-    private final MongoCollection<Document> studyPoolCollection;
-    private String username;
-    private String ownerName;
+  private final MongoCollection<Document> studyPoolCollection;
+  private String username;
+  private String ownerName;
 
     /**
      * Connects to the MongoDB Atlas StudyPool database and retrieves the StudyPool collection.
      */
     public CancelInvitation() {
         String connectionString =
-                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
+            "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?retry"
+                    + "Writes=true&w=majority";
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
@@ -94,11 +95,11 @@ public class CancelInvitation {
     public static void main(String[] args) {
         CancelInvitation test = new CancelInvitation();
 
-        // Test owner deleting a session
+
         test.setOwnerName("John");
         test.delete();
 
-        // Test user "max" leaving a session
+
         test.setUsername("max");
         test.leave();
 
