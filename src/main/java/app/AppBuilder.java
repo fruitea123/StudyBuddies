@@ -1,6 +1,7 @@
 package app;
 
 import data_access.FileUserDataAccessObject;
+import data_access.PasswordHasher;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logged_in.ChangePasswordController;
@@ -26,6 +27,7 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
+import use_case.signup.SignupPasswordHasher;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
@@ -83,11 +85,17 @@ public class AppBuilder {
     }
 
     public AppBuilder addSignupUseCase() {
-        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
-                signupViewModel, loginViewModel);
-        final SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
+        final SignupOutputBoundary signupOutputBoundary =
+                new SignupPresenter(viewManagerModel, signupViewModel, loginViewModel);
 
+        final SignupPasswordHasher passwordHasher = new PasswordHasher();
+        final SignupInputBoundary userSignupInteractor =
+                new SignupInteractor(
+                        userDataAccessObject,
+                        passwordHasher,
+                        signupOutputBoundary,
+                        userFactory
+                );
         SignupController controller = new SignupController(userSignupInteractor);
         signupView.setSignupController(controller);
         return this;
@@ -143,6 +151,4 @@ public class AppBuilder {
 
         return application;
     }
-
-
 }
