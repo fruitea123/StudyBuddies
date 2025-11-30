@@ -7,7 +7,7 @@ import java.util.*;
 
 public class Invitation {
 
-    public static final String MODE_ONLINE = "On Line";
+    public static final String MODE_ONLINE = "OnLine";
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 2;
 
@@ -21,7 +21,6 @@ public class Invitation {
     private final int capacity;
     private final User owner;
     private final List<User> participants;
-    private final String invitationID;
 
     Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
@@ -43,7 +42,6 @@ public class Invitation {
         }
         this.participants = Collections.unmodifiableList(new ArrayList<>(set));
         // delete repeated participants
-        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -137,7 +135,6 @@ public class Invitation {
     public List<User> getParticipants() {
         return participants;
     }
-    public String getInvitationID() { return invitationID; }
 
     public int participantsCount() {
         return participants.size();
