@@ -1,13 +1,30 @@
 package entity;
 
+import org.bson.types.ObjectId;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
-
+import java.util.List;
 
 public class Invitation {
+    private String id;
+    private String course;
+    private String description;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String mode;
+    private String location;
+    private int capacity;
+    private String owner;
+    private List<String> participants;
 
-    public static final String MODE_ONLINE = "On Line";
+    // Constructors, getters, setters
+    public Invitation() {}
+
+    public String getId() {
+        return id;
+    public static final String MODE_ONLINE = "OnLine";
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 2;
 
@@ -21,7 +38,6 @@ public class Invitation {
     private final int capacity;
     private final User owner;
     private final List<User> participants;
-    private final String invitationID;
 
     Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
@@ -43,7 +59,6 @@ public class Invitation {
         }
         this.participants = Collections.unmodifiableList(new ArrayList<>(set));
         // delete repeated participants
-        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -110,71 +125,84 @@ public class Invitation {
     public String getCourse() {
         return course;
     }
+
     public String getDescription() {
         return description;
     }
+
     public LocalDate getDate() {
         return date;
     }
+
     public LocalTime getStartTime() {
         return startTime;
     }
+
     public LocalTime getEndTime() {
         return endTime;
     }
+
     public String getMode() {
         return mode;
     }
+
     public String getLocation() {
         return location;
     }
+
     public int getCapacity() {
         return capacity;
     }
-    public User getOwner() {
+
+    public String getOwner() {
         return owner;
     }
-    public List<User> getParticipants() {
+
+    public List<String> getParticipants() {
         return participants;
     }
-    public String getInvitationID() { return invitationID; }
 
-    public int participantsCount() {
-        return participants.size();
+    public void setId(String id) {
+        this.id = id;
     }
 
-    public boolean isInPerson() {
-        return MODE_IN_PERSON.equals(mode);
+    public void setCourse(String course) {
+        this.course = course;
     }
 
-    public boolean isOnLine() {
-        return MODE_ONLINE.equals(mode);
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public boolean checkConflict(Invitation other) {
-        if (other == null) {
-            return false;
-        }
-
-        boolean sameCourse = Objects.equals(this.course, other.course);
-        boolean sameDate   = Objects.equals(this.date,   other.date);
-        boolean overlap    = !(this.endTime.isBefore(other.startTime)
-                || this.startTime.isAfter(other.endTime));
-
-        return sameCourse && sameDate && overlap;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public String summary() {
-        return course + " " + date + " " + startTime + "–" + endTime + " (" + mode + ")";
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    @Override
-    public String toString() {
-        return "Invitation [course=" + course + ", description=" + description + ", date=" + date;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
-    public static InvitationBuilder builder() {
-        return new InvitationBuilder();
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
+    }
 }

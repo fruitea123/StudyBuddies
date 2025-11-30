@@ -41,7 +41,7 @@ class SignupInteractorTest {
             }
 
             @Override
-            public void switchToLoginView() {
+            public void switchToProfileView() {
                 // This is expected
             }
         };
@@ -75,7 +75,7 @@ class SignupInteractorTest {
             }
 
             @Override
-            public void switchToLoginView() {
+            public void switchToProfileView() {
                 // This is expected
             }
         };
@@ -115,7 +115,7 @@ class SignupInteractorTest {
             }
 
             @Override
-            public void switchToLoginView() {
+            public void switchToProfileView() {
                 // This is expected
             }
         };
