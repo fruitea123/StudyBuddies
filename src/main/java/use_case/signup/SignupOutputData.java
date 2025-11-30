@@ -18,7 +18,7 @@ public class SignupOutputData {
                             String firstName,
                             String lastName,
                             List<String> programs,
-                            int pfpIndex, String description)
+                            String pfpIndex, String description)
     {
         this.email = email;
         this.firstName = firstName;
