@@ -42,7 +42,7 @@ public class SignupPresenter implements SignupOutputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
+    public void switchToProfileView() {
         viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
