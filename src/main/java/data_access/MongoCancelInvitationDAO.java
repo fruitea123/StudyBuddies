@@ -14,7 +14,7 @@ import static com.mongodb.client.model.Updates.pull;
 public class MongoCancelInvitationDAO implements CancelInvitationDataAccessInterface {
 
     private final MongoCollection<Document> studyPoolCollection;//Collection
-
+    //database connection
     public MongoCancelInvitationDAO() {
 
         String connectionString =
