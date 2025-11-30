@@ -10,6 +10,7 @@ public class Invitation {
     public static final String MODE_ONLINE = "On Line";
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 1;
+    public static final int DEFAULT_CAPACITY = 2;
 
     private final String course;
     private final String description;
@@ -20,6 +21,9 @@ public class Invitation {
     private final String location;
     private final int capacity;
     private final List<User> participants;
+    private final User owner;
+    private final List<User> participants;
+    private final String invitationID;
 
     Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
@@ -32,6 +36,18 @@ public class Invitation {
         this.capacity = (b.getCapacity() == null) ? DEFAULT_CAPACITY : b.getCapacity();
         LinkedHashSet<User> set = new LinkedHashSet<>(b.getParticipants());
         this.participants = Collections.unmodifiableList(new ArrayList<>(set)); // delete repeated participants
+        this.owner = b.getOwner();
+        LinkedHashSet<User> set = new LinkedHashSet<>();
+        if (this.owner != null) {
+            set.add(this.owner);
+        }
+        List<User> fromBuilder = b.getParticipants();
+        if (fromBuilder != null && !fromBuilder.isEmpty()) {
+            set.addAll(fromBuilder);
+        }
+        this.participants = Collections.unmodifiableList(new ArrayList<>(set));
+        // delete repeated participants
+        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -87,6 +103,9 @@ public class Invitation {
         if (capacity < 2) {
             throw new IllegalArgumentException("capacity must be ≥ 2");
         }
+        if (owner == null) {
+            throw new IllegalArgumentException("owner required");
+        }
         if (participants.size() > capacity) {
             throw new IllegalArgumentException("participants exceed capacity");
         }
@@ -119,6 +138,13 @@ public class Invitation {
     public List<User> getParticipants() {
         return participants;
     }
+    public User getOwner() {
+        return owner;
+    }
+    public List<User> getParticipants() {
+        return participants;
+    }
+    public String getInvitationID() { return invitationID; }
 
     public int participantsCount() {
         return participants.size();
@@ -131,6 +157,7 @@ public class Invitation {
     public boolean isOnLine() {
         return MODE_ONLINE.equals(mode);
     }
+
     public boolean checkConflict(Invitation other) {
         if (other == null) {
             return false;
@@ -157,4 +184,5 @@ public class Invitation {
         return new InvitationBuilder();
     }
 
+}
 }

@@ -2,6 +2,7 @@ package entity;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -15,6 +16,9 @@ public class InvitationBuilder {
     private String location;
     private Integer capacity;
     private List<User> participants;
+    private User owner;
+    private List<User> participants =  new ArrayList<>();
+    private String invitationID;
 
     // Setter
     public InvitationBuilder course(String v){
@@ -49,6 +53,10 @@ public class InvitationBuilder {
         this.capacity = v;
         return this;
     }
+    public InvitationBuilder owner(User u) {
+        this.owner = u;
+        return this;
+    }
     public InvitationBuilder addParticipant(User u) {
         if (u != null) this.participants.add(u);
         return this;
@@ -57,6 +65,10 @@ public class InvitationBuilder {
         if (users != null) {
             this.participants.addAll(users);
         }
+        return this;
+    }
+    public InvitationBuilder invitationID(String v) {
+        this.invitationID = v;
         return this;
     }
 
@@ -88,6 +100,13 @@ public class InvitationBuilder {
     public List<User> getParticipants(){
         return participants;
     }
+    public User getOwner(){
+        return owner;
+    }
+    public List<User> getParticipants(){
+        return participants;
+    }
+    public String getinvitationID(){ return invitationID; }
 
     public Invitation build() {
         return new Invitation(this);
@@ -102,8 +121,10 @@ public class InvitationBuilder {
                 .mode(src.getMode())
                 .location(src.getLocation())
                 .capacity(src.getCapacity())
+                .owner(src.getOwner())
                 .participants(src.getParticipants());
     }
 
 
+}
 }
