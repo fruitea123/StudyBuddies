@@ -13,9 +13,14 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
     private final JTextArea description_area;
     private final JLabel title;
     private final JButton accept;
+    //private final ProfileViewModel profileViewModel;
+    //private final AcceptController acceptController;
 
     public InvitationCardAcceptPanel(Invitation invitation) {
         this.invitation = invitation;
+
+        //this.profileViewModel = profileViewModel;        //Contstructor also has this parameter
+        //this.acceptController = acceptController;
 
         this.description_area = new JTextArea(invitation.getDescription());
 
@@ -37,6 +42,9 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(accept)) {
+                            //final ProfileState currentState = profileViewModel.getState();
+                            //acceptController.execute(invitation.getId, currentState.getusername):
+
                             invitation.setCourse("csc207");    //placeholder
                         }
                     }
@@ -51,7 +59,7 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
 
     }
     public void actionPerformed(ActionEvent evt) {
-        JOptionPane.showMessageDialog(this, "Cancel not implemented yet.");
+        System.out.println("Click " + evt.getActionCommand());
     }
 
 }
