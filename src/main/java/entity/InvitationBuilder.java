@@ -96,10 +96,10 @@ public class InvitationBuilder {
     public Integer getCapacity(){
         return capacity;
     }
-    public User getOwner(){
+    public static User getOwner(){
         return owner;
     }
-    public List<User> getParticipants(){
+    public static List<User> getParticipants(){
         return participants;
     }
     public String getinvitationID(){ return invitationID; }

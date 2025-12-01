@@ -12,6 +12,7 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
@@ -73,7 +74,7 @@ public class AppBuilder {
     private SignUpView signupView;
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
-    private LoggedInViewModel loggedInViewModel;
+    private ProfileViewModel profileViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
@@ -105,12 +106,12 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addLoggedInView() {
-        loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
-        return this;
-    }
+//    public AppBuilder addLoggedInView() {
+//        loggedInViewModel = new LoggedInViewModel();
+//        loggedInView = new LoggedInView(loggedInViewModel);
+//        cardPanel.add(loggedInView, loggedInView.getViewName());
+//        return this;
+//    }
 
     public AppBuilder addMakeInvitationView() {
         makeInvitationViewModel = new MakeInvitationViewModel();
@@ -147,7 +148,7 @@ public class AppBuilder {
 
     public AppBuilder addLoginUseCase() {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
+                profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 

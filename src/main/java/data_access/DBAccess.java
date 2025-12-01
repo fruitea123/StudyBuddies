@@ -27,4 +27,3 @@ public class DBAccess {
         return client.getDatabase(DB_NAME);
     }
 }
-

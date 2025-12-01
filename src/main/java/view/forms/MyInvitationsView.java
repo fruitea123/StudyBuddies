@@ -5,6 +5,8 @@ import entity.Invitation;
 import use_case.myinvitations.MyInvitations;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.List;
 
 
@@ -34,6 +36,14 @@ public class MyInvitationsView extends JFrame {
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+        createInvitationButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                    //insert Qiyu's usecase
+            }
+        });
     }
 
     public void loadInvitations(InvitationDAO dao, String currentUser) {
@@ -68,6 +78,7 @@ public class MyInvitationsView extends JFrame {
             // here goes leave logic
             card.getActionButton().addActionListener(e ->
                     System.out.println("Clicked leave for: " + inv.getCourse())
+                    // Harish's usecase
             );
 
             ParticipatingInvitations.add(card.getPanel());
@@ -84,6 +95,7 @@ public class MyInvitationsView extends JFrame {
             // here goes leave logic
             card.getActionButton().addActionListener(e ->
                     System.out.println("Clicked leave for: " + inv.getCourse())
+                    //Harish's usecase
             );
 
             OwnedInvitations.add(card.getPanel());
