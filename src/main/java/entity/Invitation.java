@@ -1,9 +1,10 @@
 package entity;
 
+import org.bson.types.ObjectId;
+
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
-
+import java.util.List;
 
 public class Invitation {
 
@@ -153,38 +154,43 @@ public class Invitation {
         return participants.size();
     }
 
-    public boolean isInPerson() {
-        return MODE_IN_PERSON.equals(mode);
+    public void setCourse(String course) {
+        this.course = course;
     }
 
-    public boolean isOnLine() {
-        return MODE_ONLINE.equals(mode);
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public boolean checkConflict(Invitation other) {
-        if (other == null) {
-            return false;
-        }
-
-        boolean sameCourse = Objects.equals(this.course, other.course);
-        boolean sameDate   = Objects.equals(this.date,   other.date);
-        boolean overlap    = !(this.endTime.isBefore(other.startTime)
-                || this.startTime.isAfter(other.endTime));
-
-        return sameCourse && sameDate && overlap;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
-    public String summary() {
-        return course + " " + date + " " + startTime + "–" + endTime + " (" + mode + ")";
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 
-    @Override
-    public String toString() {
-        return "Invitation [course=" + course + ", description=" + description + ", date=" + date;
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
     }
 
-    public static InvitationBuilder builder() {
-        return new InvitationBuilder();
+    public void setMode(String mode) {
+        this.mode = mode;
     }
 
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setOwner(String owner) {
+        this.owner = owner;
+    }
+
+    public void setParticipants(List<String> participants) {
+        this.participants = participants;
+    }
 }

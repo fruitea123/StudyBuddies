@@ -32,6 +32,21 @@ import use_case.make_invitation.*;
 //import data_access.InMemoryInvitationDataAccessObject; // change after implemented MongoDB
 import view.*;
 
+
+import data_access.NotificationDataAccessObject;
+import data_access.InMemoryNotificationDataAccessObject;
+
+import interface_adapter.notifications.NotificationsController;
+import interface_adapter.notifications.NotificationsPresenter;
+import interface_adapter.notifications.NotificationsViewModel;
+
+import use_case.notifications.ViewNotificationsInputBoundary;
+import use_case.notifications.ViewNotificationsInteractor;
+import use_case.notifications.ViewNotificationsOutputBoundary;
+import use_case.notifications.CurrentUserIdProvider;
+
+import view.NotificationsView;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -63,6 +78,9 @@ public class AppBuilder {
             new MongoInvitationDataAccessObject();
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
+    private NotificationsView notificationsView;
+    private NotificationsViewModel notificationsViewModel;
+
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -102,6 +120,13 @@ public class AppBuilder {
         makeInvitationView.setBackController(backController);
         return this;
     }
+    public AppBuilder addNotificationsView() {
+        notificationsViewModel = new NotificationsViewModel();
+        notificationsView = new NotificationsView(notificationsViewModel);
+        cardPanel.add(notificationsView, notificationsView.getViewName());
+        return this;
+    }
+
 
 
     public AppBuilder addSignupUseCase() {
@@ -121,7 +146,7 @@ public class AppBuilder {
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 userDataAccessObject, loginOutputBoundary);
 
-        LoginController loginController = new LoginController(loginInteractor);
+        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupView);
         loginView.setLoginController(loginController);
         return this;
     }
@@ -174,6 +199,40 @@ public class AppBuilder {
 
         return this;
     }
+
+    public AppBuilder addNotificationsUseCase() {
+        // 1. Presenter：
+        final ViewNotificationsOutputBoundary notificationsOutputBoundary =
+                new NotificationsPresenter(notificationsViewModel);
+
+        // 2. 当前用户 ID 提供者
+        CurrentUserIdProvider currentUserIdProvider = new CurrentUserIdProvider() {
+            @Override
+            public String getCurrentUserId() {
+                return loggedInViewModel.getUsername();
+            }
+        };
+
+        // 3. Interactor：假设构造函数是
+        //    ViewNotificationsInteractor(NotificationDataAccessObject dao,
+        //                                CurrentUserIdProvider currentUserIdProvider,
+        //                                ViewNotificationsOutputBoundary presenter)
+        final ViewNotificationsInputBoundary notificationsInteractor =
+                new ViewNotificationsInteractor(
+                        notificationDataAccessObject,
+                        currentUserIdProvider,
+                        notificationsOutputBoundary);
+
+        // 4. Controller
+        final NotificationsController notificationsController =
+                new NotificationsController(notificationsInteractor);
+
+        // 5. 把 controller 塞进 view
+        notificationsView.setNotificationsController(notificationsController);
+        return this;
+    }
+
+
 
     public JFrame build() {
         final JFrame application = new JFrame("User Login Example");

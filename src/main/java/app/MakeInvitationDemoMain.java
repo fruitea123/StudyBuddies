@@ -23,11 +23,14 @@ public class MakeInvitationDemoMain {
                     new SessionCurrentUserGateway();
             currentUserGateway.setCurrentUser(new User("alice", "password"));
 
+            // ViewModel
             MakeInvitationViewModel vm = new MakeInvitationViewModel();
 
+            // Presenter
             MakeInvitationOutputBoundary presenter =
                     new MakeInvitationPresenter(vm);
 
+            // Interactor
             MakeInvitationInputBoundary interactor =
                     new MakeInvitationInteractor(
                             invitationDAO,
