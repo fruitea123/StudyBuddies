@@ -36,6 +36,7 @@ public class MyInvitationsView extends JFrame {
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 
         createInvitationButton.addActionListener(new ActionListener() {
             @Override

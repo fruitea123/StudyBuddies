@@ -15,8 +15,9 @@ public class InvitationBuilder {
     private String mode;
     private String location;
     private Integer capacity;
-    private static User owner;
-    private static List<User> participants =  new ArrayList<>();
+    private User owner;
+    private List<User> participants =  new ArrayList<>();
+    private String invitationID;
 
     // Setter
     public InvitationBuilder course(String v){
@@ -65,6 +66,10 @@ public class InvitationBuilder {
         }
         return this;
     }
+    public InvitationBuilder invitationID(String v) {
+        this.invitationID = v;
+        return this;
+    }
 
     // getter
     public String getCourse(){
@@ -97,6 +102,7 @@ public class InvitationBuilder {
     public static List<User> getParticipants(){
         return participants;
     }
+    public String getinvitationID(){ return invitationID; }
 
     public Invitation build() {
         return new Invitation(this);
