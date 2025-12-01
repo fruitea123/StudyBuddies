@@ -1,5 +1,6 @@
 package use_case.signup;
 
+import data_access.PasswordHasher;
 import entity.User;
 import entity.UserFactory;
 
@@ -12,13 +13,16 @@ import java.util.regex.Pattern;
  */
 public class SignupInteractor implements SignupInputBoundary {
     private final SignupUserDataAccessInterface userDataAccessObject;
+    private final SignupPasswordHasher passwordHasher;
     private final SignupOutputBoundary userPresenter;
     private final UserFactory userFactory;
 
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
+                            SignupPasswordHasher passwordHasher,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;
+        this.passwordHasher = passwordHasher;
         this.userPresenter = signupOutputBoundary;
         this.userFactory = userFactory;
     }
@@ -79,7 +83,14 @@ public class SignupInteractor implements SignupInputBoundary {
             final User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
             userDataAccessObject.save(user);
 
-            final SignupOutputData signupOutputData = new SignupOutputData(user.getName());
+            final SignupOutputData signupOutputData = new SignupOutputData(
+                    user.getEmail(),
+                    user.getFirstName(),
+                    user.getLastName(),
+                    user.getPrograms(),
+                    user.getPfpIndex(),
+                    user.getDescription());
+
             userPresenter.prepareSuccessView(signupOutputData);
         }
     }
