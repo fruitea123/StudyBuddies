@@ -18,12 +18,7 @@ class SignupInteractorTest {
 
     @Test
     void successTest() {
-        List<String> programs = new ArrayList<>(); ;
-        programs.add("Bussiness");
-        SignupInputData inputData = new SignupInputData("paul@gmail.com", "password",
-                "wrong", "Paul", "Edwards",
-                LocalDate.of(2004,06,12), 1, programs, "hi I'm Paul",
-                0);
+        SignupInputData inputData = new SignupInputData("Paul", "password", "password", firstName, lastName, dob, numPrograms, p1, p2, p3, icon, description);
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // This creates a successPresenter that tests whether the test case is as we expect.
@@ -52,13 +47,7 @@ class SignupInteractorTest {
 
     @Test
     void failurePasswordMismatchTest() {
-        List<String> programs = new ArrayList<>(); ;
-        programs.add("Bussiness");
-        SignupInputData inputData = new SignupInputData("paul@gmail.com", "password",
-                "wrong", "Paul", "Edwards",
-                LocalDate.of(2004,06,12), 1, programs, "hi I'm Paul",
-                0);
-
+        SignupInputData inputData = new SignupInputData("Paul", "password", "wrong", firstName, lastName, dob, numPrograms, p1, p2, p3, icon, description);
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // This creates a presenter that tests whether the test case is as we expect.
@@ -86,12 +75,7 @@ class SignupInteractorTest {
 
     @Test
     void failureUserExistsTest() {
-        List<String> programs = new ArrayList<>(); ;
-        programs.add("Bussiness");
-        SignupInputData inputData = new SignupInputData("paul@gmail.com", "password",
-                "wrong", "Paul", "Edwards",
-                LocalDate.of(2004,06,12), 1, programs, "hi I'm Paul",
-                0);
+        SignupInputData inputData = new SignupInputData("Paul", "password", "wrong", firstName, lastName, dob, numPrograms, p1, p2, p3, icon, description);
         SignupUserDataAccessInterface userRepository = new InMemoryUserDataAccessObject();
 
         // Add Paul to the repo so that when we check later they already exist
