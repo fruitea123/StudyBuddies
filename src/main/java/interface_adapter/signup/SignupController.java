@@ -3,6 +3,9 @@ package interface_adapter.signup;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
 
+import java.time.LocalDate;
+import java.util.List;
+
 /**
  * Controller for the Signup Use Case.
  */
@@ -19,10 +22,41 @@ public class SignupController {
      * @param username the username to sign up
      * @param password1 the password
      * @param password2 the password repeated
+     * @param firstName the username to sign up
+     * @param lastName the password
+     * @param dob the username to sign up
+     * @param numPrograms the password
+     * @param p1 the username to sign up
+     * @param p2 the password
+     * @param p3 the username to sign up
+     * @param icon the password
+     * @param description the password
      */
-    public void execute(String username, String password1, String password2) {
+    public void execute(String username,
+                        String password1,
+                        String password2,
+                        String firstName,
+                        String lastName,
+                        LocalDate dob,
+                        int numPrograms,
+                        String p1,
+                        String p2,
+                        String p3,
+                        String icon,
+                        String description) {
         final SignupInputData signupInputData = new SignupInputData(
-                username, password1, password2);
+                username,
+                password1,
+                password2,
+                firstName,
+                lastName,
+                dob,
+                numPrograms,
+                p1,
+                p2,
+                p3,
+                icon,
+                description);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
@@ -30,7 +64,7 @@ public class SignupController {
     /**
      * Executes the "switch to LoginView" Use Case.
      */
-    public void switchToLoginView() {
-        userSignupUseCaseInteractor.switchToLoginView();
+    public void switchToProfileView() {
+        userSignupUseCaseInteractor.switchToProfileView();
     }
 }
