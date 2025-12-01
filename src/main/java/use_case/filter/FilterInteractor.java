@@ -32,7 +32,7 @@ public class FilterInteractor implements FilterInputBoundary {
             filterPresenter.prepareFailViewD();
         }
         else if (course.isEmpty() && date.isEmpty()) {
-            List<Invitation> result_list = invitationDAO.findAll();
+            List<Invitation> result_list = base_filter_list();
             FilterOutputData filterOutputData = new FilterOutputData(result_list);
             filterPresenter.prepareSuccessView(filterOutputData);
         }
@@ -98,7 +98,8 @@ public class FilterInteractor implements FilterInputBoundary {
 
         for (Invitation invitation : base_list) {
             if (course.equals(invitation.getCourse()) &&
-                    LocalDate.parse(date).equals(invitation.getDate())) {
+                    LocalDate.parse(date).equals(invitation.getDate()) &&
+            invitation.getParticipants().size() < invitation.getCapacity() - 1) {
                 result_list.add(invitation);
             }
         }
@@ -109,7 +110,8 @@ public class FilterInteractor implements FilterInputBoundary {
         List<Invitation> result_list = new ArrayList<>();
 
         for (Invitation invitation : base_list) {
-            if (LocalDate.parse(date).equals(invitation.getDate())) {
+            if (LocalDate.parse(date).equals(invitation.getDate()) &&
+                    invitation.getParticipants().size() < invitation.getCapacity() - 1) {
                 result_list.add(invitation);
             }
         }
@@ -120,7 +122,19 @@ public class FilterInteractor implements FilterInputBoundary {
         List<Invitation> result_list = new ArrayList<>();
 
         for (Invitation invitation : base_list) {
-            if (course.equals(invitation.getCourse())) {
+            if (course.equals(invitation.getCourse()) &&
+                    invitation.getParticipants().size() < invitation.getCapacity() - 1) {
+                result_list.add(invitation);
+            }
+        }
+        return result_list;
+    }
+    public List<Invitation> base_filter_list() {
+        List<Invitation> base_list = invitationDAO.findAll();
+        List<Invitation> result_list = new ArrayList<>();
+
+        for (Invitation invitation : base_list) {
+            if (invitation.getParticipants().size() < invitation.getCapacity() - 1) {
                 result_list.add(invitation);
             }
         }
