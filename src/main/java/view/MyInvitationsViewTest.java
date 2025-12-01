@@ -1,4 +1,4 @@
-package use_case.myinvitations;
+package view;
 
 import com.mongodb.client.MongoDatabase;
 import data_access.DBAccess;
