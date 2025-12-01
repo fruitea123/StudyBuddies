@@ -6,6 +6,7 @@ import com.mongodb.client.result.UpdateResult;
 import entity.Invitation;
 import entity.InvitationBuilder;
 import entity.User;
+import mapper.DBInvitationMapper;
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import use_case.accept.AcceptInvitationUserDataAccessInterface;
@@ -26,7 +27,7 @@ public class InvitationMongoDataAccess implements AcceptInvitationUserDataAccess
         Document doc = invitationsCollection.find(Filters.eq("_id", new ObjectId(invitationId))).first();
         if (doc == null) return null;
         // Convert doc to domain Invitation (implement Invitation.fromDocument)
-        return Invitation.fromDocument(doc);
+        return DBInvitationMapper.fromDocument(doc);
     }
 
     @Override

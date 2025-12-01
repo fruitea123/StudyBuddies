@@ -1,10 +1,8 @@
 package entity;
 
-import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.*;
 
 public class Invitation {
 
@@ -24,7 +22,7 @@ public class Invitation {
     private List<User> participants; // store list of string(email)
     private final String invitationID;
 
-    Invitation(InvitationBuilder b) {
+    public Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
         this.description = trimOrEmpty(b.getDescription());
         this.date = b.getDate();

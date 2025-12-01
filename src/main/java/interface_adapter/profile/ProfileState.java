@@ -26,4 +26,5 @@ public class ProfileState {
 
     public String getProfileImagePath() { return profileImagePath; }
     public void setProfileImagePath(String profileImagePath) { this.profileImagePath = profileImagePath; }
+
 }

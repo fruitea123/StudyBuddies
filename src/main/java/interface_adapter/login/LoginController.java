@@ -38,7 +38,7 @@ public class LoginController {
     public void switchToSignupView() {
         // LoginViewModel 继承的 ViewModel 里已经设置 view name = "log in"
         // SignupViewModel 也应该类似：super("sign up");
-        viewManagerModel.setActiveView(signupViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        viewManagerModel.setState(signupViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }

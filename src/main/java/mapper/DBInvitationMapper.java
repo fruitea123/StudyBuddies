@@ -1,5 +1,6 @@
 package mapper;
 import entity.Invitation;
+import entity.InvitationBuilder;
 import org.bson.Document;
 
 import java.time.LocalDate;
@@ -9,9 +10,10 @@ import java.util.List;
 public class DBInvitationMapper {
 
     public static Invitation fromDocument(Document doc) {
-        Invitation inv = new Invitation();
+        InvitationBuilder builder = new InvitationBuilder();
+        Invitation inv = new Invitation(builder);
 
-        inv.setId(doc.getObjectId("_id").toHexString());
+        inv.setInvitationId(doc.getObjectId("_id").toHexString());
         inv.setCourse(doc.getString("course"));
         inv.setDescription(doc.getString("description"));
 

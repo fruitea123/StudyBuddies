@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class InvitationBuilder {
-    String course;
+    private String course;
     private String description;
     private LocalDate date;
     private LocalTime startTime;
@@ -96,10 +96,10 @@ public class InvitationBuilder {
     public Integer getCapacity(){
         return capacity;
     }
-    public static User getOwner(){
+    public User getOwner(){
         return owner;
     }
-    public static List<User> getParticipants(){
+    public List<User> getParticipants(){
         return participants;
     }
     public String getinvitationID(){ return invitationID; }
