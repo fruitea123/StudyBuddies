@@ -18,7 +18,8 @@ public class MongoCancelInvitationDAO implements CancelInvitationDataAccessInter
     public MongoCancelInvitationDAO() {
 
         String connectionString =
-                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
+                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/" +
+                        "?retryWrites=true&w=majority";
 
         ServerApi serverApi = ServerApi.builder()
                 .version(ServerApiVersion.V1)
