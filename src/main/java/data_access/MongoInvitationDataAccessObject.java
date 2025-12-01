@@ -44,11 +44,11 @@ public class MongoInvitationDataAccessObject implements MakeInvitationDataAccess
         doc.append("mode", inv.getMode());
         doc.append("location", inv.getLocation());
         doc.append("capacity", inv.getCapacity());
-        doc.append("owner", inv.getOwner().getName());          // you can later also store ownerId
+        doc.append("owner", inv.getOwner().getEmail());          // you can later also store ownerId
         // participants as list of usernames:
         List<String> participantNames = new ArrayList<>();
         for (User u : inv.getParticipants()) {
-            participantNames.add(u.getName());
+            participantNames.add(u.getEmail());
         }
         doc.append("participants", participantNames);
 
@@ -100,7 +100,7 @@ public class MongoInvitationDataAccessObject implements MakeInvitationDataAccess
 
         List<Document> docs = invitations.find(
                 Filters.and(
-                        Filters.eq("owner", owner.getName()),
+                        Filters.eq("owner", owner.getEmail()),
                         Filters.eq("date", date.toString())
                 )
         ).into(new ArrayList<>());
