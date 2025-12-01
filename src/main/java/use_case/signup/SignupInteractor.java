@@ -71,7 +71,7 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("Password must contain at least 1 number");
         } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
             userPresenter.prepareFailView("Passwords don't match");
-        } else if (Period.between(signupInputData.getDateOfBirth(), today).getYears() >= 16) {
+        } else if (Period.between(signupInputData.getDateOfBirth(), today).getYears() < 16) {
             userPresenter.prepareFailView("You must be at least 16 years old");
         } else if (signupInputData.getNumPrograms() < 1) {
             userPresenter.prepareFailView("Number of programs must be at least 1");
