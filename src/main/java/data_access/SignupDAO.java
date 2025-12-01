@@ -11,17 +11,17 @@ import use_case.signup.SignupUserDataAccessInterface;
 
 import static com.mongodb.client.model.Filters.eq;
 
-public class SignupDAO implements SignupUserDataAccessInterface {
+        public class SignupDAO implements SignupUserDataAccessInterface {
 
-    private final MongoCollection<Document> usersCollection;
+            private final MongoCollection<Document> usersCollection;
 
-    public SignupDAO() {
+            public SignupDAO() {
 
-        String connectionString =
-                "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
+                String connectionString =
+                        "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?retryWrites=true&w=majority";
 
-        ServerApi serverApi = ServerApi.builder()
-                .version(ServerApiVersion.V1)
+                ServerApi serverApi = ServerApi.builder()
+                        .version(ServerApiVersion.V1)
                 .build();
 
         MongoClientSettings settings = MongoClientSettings.builder()
@@ -64,5 +64,6 @@ public class SignupDAO implements SignupUserDataAccessInterface {
 
         usersCollection.insertOne(doc);
     }
+
 }
 
