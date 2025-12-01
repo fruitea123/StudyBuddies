@@ -7,24 +7,8 @@ import java.time.LocalTime;
 import java.util.List;
 
 public class Invitation {
-    private String id;
-    private String course;
-    private String description;
-    private LocalDate date;
-    private LocalTime startTime;
-    private LocalTime endTime;
-    private String mode;
-    private String location;
-    private int capacity;
-    private String owner;
-    private List<String> participants;
 
-    // Constructors, getters, setters
-    public Invitation() {}
-
-    public String getId() {
-        return id;
-    public static final String MODE_ONLINE = "OnLine";
+    public static final String MODE_ONLINE = "On Line";
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 2;
 
@@ -36,8 +20,9 @@ public class Invitation {
     private final String mode;
     private final String location;
     private final int capacity;
-    private final User owner;
-    private final List<User> participants;
+    private final User owner; // store string(email in DAO)
+    private final List<User> participants; // store list of string(email)
+    private final String invitationID;
 
     Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
@@ -59,6 +44,7 @@ public class Invitation {
         }
         this.participants = Collections.unmodifiableList(new ArrayList<>(set));
         // delete repeated participants
+        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -154,16 +140,18 @@ public class Invitation {
         return capacity;
     }
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public List<String> getParticipants() {
+    public List<User> getParticipants() {
         return participants;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getInvitationID() { return invitationID; }
+
+    public int participantsCount() {
+        return participants.size();
     }
 
     public void setCourse(String course) {

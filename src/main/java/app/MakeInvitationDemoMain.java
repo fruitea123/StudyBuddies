@@ -15,11 +15,10 @@ public class MakeInvitationDemoMain {
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
-            // DAO：用内存实现
+
             InMemoryInvitationDataAccessObject invitationDAO =
                     new InMemoryInvitationDataAccessObject();
 
-            // 当前用户 gateway，并设置一个假用户
             SessionCurrentUserGateway currentUserGateway =
                     new SessionCurrentUserGateway();
             currentUserGateway.setCurrentUser(new User("alice", "password"));
@@ -38,17 +37,13 @@ public class MakeInvitationDemoMain {
                             presenter,
                             currentUserGateway);
 
-            // Controller
             MakeInvitationController controller =
                     new MakeInvitationController(interactor);
 
-            // View（注意：构造函数只传 vm）
             MakeInvitationView view = new MakeInvitationView(vm);
-            // 再单独把 controller 塞进去（和 SignupView 一样的模式）
             view.setMakeInvitationController(controller);
 
-            // 放进 JFrame 里展示出来
-            JFrame frame = new JFrame("Make Invitatio");
+            JFrame frame = new JFrame("Make Invitation");
             frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             frame.setContentPane(view);
             frame.pack();
