@@ -16,13 +16,10 @@ public class SignupInputData {
     private final LocalDate DOB;
     private final int programNumber;
     private final List<String> programs;
-    private final int pfp;
+    private final String pfp;
     private final String description;
 
-    public SignupInputData(
-            String email, String password, String repeatPassword,
-            String firstName, String lastName, LocalDate DOB,
-            int programNumber, List<String> programs, String description, int pfp) {
+    public SignupInputData(String email, String password, String repeatPassword, String firstName, String lastName, LocalDate DOB, int programNumber, List<String> programs, String description, String pfp) {
         this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;
