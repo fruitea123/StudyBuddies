@@ -28,6 +28,7 @@ public class MyInvitationsView extends JFrame {
     private JPanel OwnedInvitations;
     private JLabel OwnedInvitationsHeader;
     private JLabel ParticipatingInvitationsHeader;
+    private JButton calendarButton;
 
     public MyInvitationsView() { //Constructor method
         //default setup
@@ -41,6 +42,12 @@ public class MyInvitationsView extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //insert Qiyu's usecase
+            }
+        });
+        calendarButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // harish's calendar code
             }
         });
     }

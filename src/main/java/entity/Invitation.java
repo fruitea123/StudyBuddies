@@ -191,4 +191,8 @@ public class Invitation {
     public void setParticipants(List<User> participants) {
         this.participants = participants;
     }
+
+    public static InvitationBuilder builder () {
+        return new InvitationBuilder();
+    }
 }
