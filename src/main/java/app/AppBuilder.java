@@ -96,6 +96,13 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addMakeInvitationNavigation() {
+        MakeInvitationBackController backController =
+                new MakeInvitationBackController(viewManagerModel, loggedInViewModel);
+        makeInvitationView.setBackController(backController);
+        return this;
+    }
+
 
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,

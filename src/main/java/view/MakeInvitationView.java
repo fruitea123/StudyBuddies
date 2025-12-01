@@ -3,6 +3,7 @@ package view;
 import interface_adapter.make_invitation.MakeInvitationController;
 import interface_adapter.make_invitation.MakeInvitationState;
 import interface_adapter.make_invitation.MakeInvitationViewModel;
+import interface_adapter.make_invitation.MakeInvitationBackController;
 
 import javax.swing.*;
 import java.awt.*;
@@ -22,6 +23,7 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
 
     private final MakeInvitationViewModel viewModel;
     private MakeInvitationController controller;
+    private MakeInvitationBackController backController;
 
     private final JTextField courseField        = new JTextField(20);
     private final JTextField descriptionField   = new JTextField(30);
@@ -33,7 +35,7 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
     private final JTextField   locationField    = new JTextField(20);
     private final JSpinner     capacitySpinner  = new JSpinner();
     private final JLabel       messageLabel     = new JLabel(" ");
-
+    private final JButton backButton = new JButton("Back to Profile");
     private final JButton confirmButton = new JButton("Create Invitation");
 
     public MakeInvitationView(MakeInvitationViewModel viewModel) {
@@ -46,6 +48,10 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         JLabel title = new JLabel("Create Your Invitation");
         JPanel titlePanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
         titlePanel.add(title);
+
+        JPanel topPanel = new JPanel(new BorderLayout());
+        topPanel.add(backButton, BorderLayout.WEST);
+        topPanel.add(titlePanel, BorderLayout.CENTER);
 
         JPanel centerColumn = new JPanel();
         centerColumn.setLayout(new BoxLayout(centerColumn, BoxLayout.Y_AXIS));
@@ -103,7 +109,7 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         bottomPanel.add(buttonPanel);
         bottomPanel.add(messagePanel);
 
-        add(titlePanel, BorderLayout.NORTH);
+        add(topPanel, BorderLayout.NORTH);
         add(centerColumn, BorderLayout.CENTER);
         add(bottomPanel, BorderLayout.SOUTH);
 
@@ -111,6 +117,7 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         setupModeToggle();
 
         wireEvents();
+        wireBackButton();
     }
 
     private void setupSpinners() {
@@ -168,8 +175,20 @@ public class MakeInvitationView extends JPanel implements PropertyChangeListener
         });
     }
 
+    private void wireBackButton() {
+        backButton.addActionListener(e -> {
+            if (backController != null) {
+                backController.onBack();
+            }
+        });
+    }
+
     public void setMakeInvitationController(MakeInvitationController controller) {
         this.controller = controller;
+    }
+
+    public void setBackController(MakeInvitationBackController backController) {
+        this.backController = backController;
     }
 
     public String getViewName() {
