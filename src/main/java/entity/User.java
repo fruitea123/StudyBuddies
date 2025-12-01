@@ -1,5 +1,6 @@
 package entity;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -13,8 +14,9 @@ public class User {
     private final String password;
     private final String firstName;
     private final String lastName;
+    private final LocalDate dateOfBirth;
     private final List<String> programs;
-    private final int pfpIndex;
+    private final String icon;
     private final String description;
 
     /**
@@ -23,13 +25,20 @@ public class User {
      * @param password the password
      * @param firstName the first name
      * @param lastName the last name
+     * @param dateOfBirth the date of birth
      * @param programs the programs the user is enrolled in
-     * @param pfpIndex the index that correlates to each profile photo
+     * @param icon the index that correlates to each profile photo
      * @param description the description of the user
      * @throws IllegalArgumentException if the password or name are empty
      */
-    public User(String email, String password, String firstName,
-                String lastName, List<String> programs, int pfpIndex, String description) {
+    public User(String email,
+                String password,
+                String firstName,
+                String lastName,
+                LocalDate dateOfBirth,
+                List<String> programs,
+                String icon,
+                String description) {
         if ("".equals(email)) {
             throw new IllegalArgumentException("Email cannot be empty");
         }
@@ -42,6 +51,9 @@ public class User {
         if ("".equals(lastName)) {
             throw new IllegalArgumentException("Last Name cannot be empty");
         }
+        if ("".equals(dateOfBirth)) {
+            throw new IllegalArgumentException("Date of Birth cannot be empty");
+        }
         if ("".equals(programs)) {
             throw new IllegalArgumentException("Program(s) cannot be empty");
         }
@@ -50,8 +62,9 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.dateOfBirth = dateOfBirth;
         this.programs = programs;
-        this.pfpIndex = pfpIndex;
+        this.icon = icon;
         this.description = description;
     }
 
@@ -67,9 +80,11 @@ public class User {
 
     public String getLastName() { return lastName; }
 
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
+
     public List<String> getPrograms() { return programs; }
 
-    public int getPfpIndex() { return pfpIndex; }
+    public String getIcon() { return icon; }
 
     public String getDescription() { return description; }
 }
