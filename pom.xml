@@ -28,10 +28,15 @@
             <scope>test</scope>
         </dependency>
 
+        <!-- MongoDB driver (correct, standalone dependency) -->
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>4.10.2</version>
+        </dependency>
+
+        <!-- BCrypt (separate dependency) -->
+        <dependency>
             <groupId>org.mindrot</groupId>
             <artifactId>jbcrypt</artifactId>
             <version>0.4</version>
