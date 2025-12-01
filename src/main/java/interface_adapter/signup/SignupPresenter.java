@@ -1,8 +1,8 @@
 package interface_adapter.signup;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.login.LoginState;
-import interface_adapter.login.LoginViewModel;
+import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.profile.profileState;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
@@ -12,25 +12,25 @@ import use_case.signup.SignupOutputData;
 public class SignupPresenter implements SignupOutputBoundary {
 
     private final SignupViewModel signupViewModel;
-    private final LoginViewModel loginViewModel;
+    private final ProfileViewModel profileViewModel;
     private final ViewManagerModel viewManagerModel;
 
     public SignupPresenter(ViewManagerModel viewManagerModel,
                            SignupViewModel signupViewModel,
-                           LoginViewModel loginViewModel) {
+                           ProfileViewModel profileViewModel) {
         this.viewManagerModel = viewManagerModel;
         this.signupViewModel = signupViewModel;
-        this.loginViewModel = loginViewModel;
+        this.profileViewModel = profileViewModel;
     }
 
     @Override
     public void prepareSuccessView(SignupOutputData response) {
-        // On success, switch to the login view.
-        final LoginState loginState = loginViewModel.getState();
-        loginState.setUsername(response.getUsername());
-        loginViewModel.firePropertyChange();
+        // On success, switch to the profile view.
+        final profileState profileState = profileViewModel.getState();
+        profileState.setEmail(response.getEmail());
+        profileViewModel.firePropertyChange();
 
-        viewManagerModel.setState(loginViewModel.getViewName());
+        viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
 
@@ -42,7 +42,7 @@ public class SignupPresenter implements SignupOutputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
+    public void switchToProfileView() {
         viewManagerModel.setState(loginViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }

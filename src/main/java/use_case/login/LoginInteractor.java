@@ -1,6 +1,8 @@
 package use_case.login;
 
 import entity.User;
+import use_case.make_invitation.CurrentUserGateway;
+import interface_adapter.make_invitation.SessionCurrentUserGateway;
 
 /**
  * The Login Interactor.
@@ -8,11 +10,14 @@ import entity.User;
 public class LoginInteractor implements LoginInputBoundary {
     private final LoginUserDataAccessInterface userDataAccessObject;
     private final LoginOutputBoundary loginPresenter;
+    private final SessionCurrentUserGateway sessionCurrentUserGateway;
 
     public LoginInteractor(LoginUserDataAccessInterface userDataAccessInterface,
-                           LoginOutputBoundary loginOutputBoundary) {
+                           LoginOutputBoundary loginOutputBoundary,
+                           SessionCurrentUserGateway sessionCurrentUserGateway) {
         this.userDataAccessObject = userDataAccessInterface;
         this.loginPresenter = loginOutputBoundary;
+        this.sessionCurrentUserGateway = sessionCurrentUserGateway;
     }
 
     @Override
@@ -34,6 +39,9 @@ public class LoginInteractor implements LoginInputBoundary {
                 userDataAccessObject.setCurrentUsername(username);
 
                 final LoginOutputData loginOutputData = new LoginOutputData(user.getName());
+
+                sessionCurrentUserGateway.setCurrentUser(user);
+
                 loginPresenter.prepareSuccessView(loginOutputData);
             }
         }
