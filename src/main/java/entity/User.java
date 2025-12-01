@@ -14,7 +14,7 @@ public class User {
     private final String password;
     private final String firstName;
     private final String lastName;
-    private final LocalDate dateOfBirth;
+//    private final LocalDate dateOfBirth;
     private final List<String> programs;
     private final String icon;
     private final String description;
@@ -25,7 +25,7 @@ public class User {
      * @param password the password
      * @param firstName the first name
      * @param lastName the last name
-     * @param dateOfBirth the date of birth
+//     * @param dateOfBirth the date of birth
      * @param programs the programs the user is enrolled in
      * @param icon the index that correlates to each profile photo
      * @param description the description of the user
@@ -35,7 +35,7 @@ public class User {
                 String password,
                 String firstName,
                 String lastName,
-                LocalDate dateOfBirth,
+//                LocalDate dateOfBirth,
                 List<String> programs,
                 String icon,
                 String description) {
@@ -51,9 +51,9 @@ public class User {
         if ("".equals(lastName)) {
             throw new IllegalArgumentException("Last Name cannot be empty");
         }
-        if ("".equals(dateOfBirth)) {
-            throw new IllegalArgumentException("Date of Birth cannot be empty");
-        }
+//        if ("".equals(dateOfBirth)) {
+//            throw new IllegalArgumentException("Date of Birth cannot be empty");
+//        }
         if ("".equals(programs)) {
             throw new IllegalArgumentException("Program(s) cannot be empty");
         }
@@ -62,7 +62,6 @@ public class User {
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.dateOfBirth = dateOfBirth;
         this.programs = programs;
         this.icon = icon;
         this.description = description;
@@ -80,7 +79,7 @@ public class User {
 
     public String getLastName() { return lastName; }
 
-    public LocalDate getDateOfBirth() { return dateOfBirth; }
+//    public LocalDate getDateOfBirth() { return dateOfBirth; }
 
     public List<String> getPrograms() { return programs; }
 
