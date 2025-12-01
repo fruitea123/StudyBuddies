@@ -40,10 +40,10 @@ public class SignupInputData {
     String getFirstName() {
         return firstName;
     }
-    String getLastInitial() { return lastName; }
+    String getLastName() { return lastName; }
     LocalDate getDOB() { return DOB; }
     int getProgramNumber() { return programNumber; }
     List<String> getPrograms() { return programs; }
-    String getPfp() { return pfp; }
+    int getPfp() { return pfp; }
     String getDescription() { return description; }
 }
