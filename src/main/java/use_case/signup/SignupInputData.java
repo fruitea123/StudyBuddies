@@ -15,11 +15,25 @@ public class SignupInputData {
     private final String lastName;
     private final LocalDate DOB;
     private final int programNumber;
-    private final List<String> programs;
+    private final String program1;
+    private final String program2;
+    private final String program3;
     private final String pfp;
     private final String description;
 
-    public SignupInputData(String email, String password, String repeatPassword, String firstName, String lastName, LocalDate DOB, int programNumber, List<String> programs, String description, String pfp) {
+    public SignupInputData(
+            String email,
+            String password,
+            String repeatPassword,
+            String firstName,
+            String lastName,
+            LocalDate DOB,
+            int programNumber,
+            String program1,
+            String program2,
+            String program3,
+            String description,
+            String pfp) {
         this.email = email;
         this.password = password;
         this.repeatPassword = repeatPassword;
@@ -27,7 +41,9 @@ public class SignupInputData {
         this.lastName = lastName;
         this.DOB = DOB;
         this.programNumber = programNumber;
-        this.programs = programs;
+        this.program1 = program1;
+        this.program2 = program2;
+        this.program3 = program3;
         this.pfp = pfp;
         this.description = description;
     }
@@ -35,15 +51,17 @@ public class SignupInputData {
     String getEmail() {
         return email;
     }
-    String getPassword1() { return password;}
-    String getPassword2() { return repeatPassword;}
+    String getPassword() { return password;}
+    String getRepeatPassword() { return repeatPassword;}
     String getFirstName() {
         return firstName;
     }
     String getLastName() { return lastName; }
-    LocalDate getDOB() { return DOB; }
-    int getProgramNumber() { return programNumber; }
-    List<String> getPrograms() { return programs; }
-    String getPfp() { return pfp; }
+    LocalDate getDateOfBirth() { return DOB; }
+    int getNumPrograms() { return programNumber; }
+    String getProgram1() { return program1; }
+    String getProgram2() { return program2; }
+    String getProgram3() { return program3; }
+    String getIcon() { return pfp; }
     String getDescription() { return description; }
 }
