@@ -56,7 +56,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Profile");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new ProfileView(new ProfileViewModel("profile")));
+        frame.add(new ProfileView(new ProfileViewModel()));
         frame.setSize(450, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
