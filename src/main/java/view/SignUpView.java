@@ -72,7 +72,7 @@ public class SignUpView extends JPanel {
 
         String[] days = new String[32];
         days[0] = "Day";
-        for (int i = 1; i <= 31; i++) days[i] = String.valueOf(i);
+        for (int i = 1; i <= 31; i++) {days[i] = String.valueOf(i);}
         JComboBox<String> dayBox = new JComboBox<>(days);
         dayBox.setBounds(50, 280, 140, 30);
         mainPanel.add(dayBox);
