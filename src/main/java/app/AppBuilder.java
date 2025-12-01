@@ -4,31 +4,31 @@ import data_access.FileUserDataAccessObject;
 import data_access.MongoInvitationDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.logged_in.ChangePasswordController;
-import interface_adapter.logged_in.ChangePasswordPresenter;
-import interface_adapter.logged_in.LoggedInViewModel;
+//import interface_adapter.logged_in.ChangePasswordController;
+//import interface_adapter.logged_in.ChangePasswordPresenter;
+//import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutPresenter;
+//import interface_adapter.logout.LogoutController;
+//import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
+//import use_case.change_password.ChangePasswordInputBoundary;
+//import use_case.change_password.ChangePasswordInteractor;
+//import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.logout.LogoutInputBoundary;
-import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
+//import use_case.logout.LogoutInputBoundary;
+//import use_case.logout.LogoutInteractor;
+//import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
+//import view.LoggedInView;
 import view.LoginView;
 import view.SignUpView;
 import view.ViewManager;
@@ -90,7 +90,7 @@ public class AppBuilder {
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private ProfileViewModel profileViewModel;
-    private LoggedInView loggedInView;
+//    private LoggedInView loggedInView;
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
     private MakeInvitationView makeInvitationView;
@@ -148,18 +148,10 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addNotificationsView() {
-        notificationsViewModel = new NotificationsViewModel();
-        notificationsView = new NotificationsView(notificationsViewModel);
-        cardPanel.add(notificationsView, notificationsView.getViewName());
-        return this;
-    }
-
-
 
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
-                signupViewModel, loginViewModel);
+                signupViewModel, profileViewModel);
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);
 
@@ -172,40 +164,40 @@ public class AppBuilder {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
+                userDataAccessObject, loginOutputBoundary, sessionCurrentUserGateway);
 
-        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupView);
+        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel);
         loginView.setLoginController(loginController);
         return this;
     }
 
-    public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
-                loggedInViewModel);
-
-        final ChangePasswordInputBoundary changePasswordInteractor =
-                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-
-        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordInteractor);
-        loggedInView.setChangePasswordController(changePasswordController);
-        return this;
-    }
+//    public AppBuilder addChangePasswordUseCase() {
+//        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
+//                loggedInViewModel);
+//
+//        final ChangePasswordInputBoundary changePasswordInteractor =
+//                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
+//
+//        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordInteractor);
+//        loggedInView.setChangePasswordController(changePasswordController);
+//        return this;
+//    }
 
     /**
      * Adds the Logout Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addLogoutUseCase() {
-        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
-
-        final LogoutInputBoundary logoutInteractor =
-                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-
-        final LogoutController logoutController = new LogoutController(logoutInteractor);
-        loggedInView.setLogoutController(logoutController);
-        return this;
-    }
+//    public AppBuilder addLogoutUseCase() {
+//        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
+//                loggedInViewModel, loginViewModel);
+//
+//        final LogoutInputBoundary logoutInteractor =
+//                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+//
+//        final LogoutController logoutController = new LogoutController(logoutInteractor);
+//        loggedInView.setLogoutController(logoutController);
+//        return this;
+//    }
 
     public AppBuilder addMakeInvitationUseCase() {
         // updates MakeInvitationViewModel
@@ -237,7 +229,7 @@ public class AppBuilder {
         CurrentUserIdProvider currentUserIdProvider = new CurrentUserIdProvider() {
             @Override
             public String getCurrentUserId() {
-                return loggedInViewModel.getUsername();
+                return pro.getUsername();
             }
         };
 
