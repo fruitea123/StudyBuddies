@@ -122,7 +122,7 @@ public class AppBuilder {
 
     public AppBuilder addMakeInvitationNavigation() {
         MakeInvitationBackController backController =
-                new MakeInvitationBackController(viewManagerModel, loggedInViewModel);
+                new MakeInvitationBackController(viewManagerModel, profileViewModel);
         makeInvitationView.setBackController(backController);
         return this;
     }

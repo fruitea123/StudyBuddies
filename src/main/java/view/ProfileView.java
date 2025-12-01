@@ -40,7 +40,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         update(profileViewModel.getState());
 
     }
-
+// make list of programs p1,p2,p3
     private void update(ProfileState state) {
         usernameLabel.setText(ProfileViewModel.USERNAME_LABEL + state.getUsername());
         nameLabel.setText(ProfileViewModel.NAME_LABEL + state.getName());

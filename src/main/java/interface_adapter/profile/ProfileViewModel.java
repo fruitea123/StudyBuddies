@@ -3,7 +3,7 @@ package interface_adapter.profile;
 import interface_adapter.ViewModel;
 import interface_adapter.login.LoginState;
 
-public class ProfileViewModel extends ViewModel<profileState> {
+public class ProfileViewModel extends ViewModel<ProfileState> {
 
     public static final String USERNAME_LABEL = "Username";
     public static final String NAME_LABEL = "Name";
@@ -14,13 +14,13 @@ public class ProfileViewModel extends ViewModel<profileState> {
 
     public ProfileViewModel(String viewName) {
         super("profile");
-        setState(new profileState());
+        setState(new ProfileState());
     }
 
     public String getViewName() { return "profile"; }
 
     @Override
-    public profileState getState() { return super.getState(); }
+    public ProfileState getState() { return super.getState(); }
 
     @Override
     public void firePropertyChange() { super.firePropertyChange(); }

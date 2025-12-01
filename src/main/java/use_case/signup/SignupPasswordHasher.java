@@ -1,5 +1,5 @@
-package use_case.signup;
-
-public interface SignupPasswordHasher {
-    String hashPassword(String password);
-}
+//package use_case.signup;
+//
+//public interface SignupPasswordHasher {
+//    String hashPassword(String password);
+//}

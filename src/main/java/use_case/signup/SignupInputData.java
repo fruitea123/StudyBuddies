@@ -44,6 +44,6 @@ public class SignupInputData {
     LocalDate getDOB() { return DOB; }
     int getProgramNumber() { return programNumber; }
     List<String> getPrograms() { return programs; }
-    int getPfp() { return pfp; }
+    String getPfp() { return pfp; }
     String getDescription() { return description; }
 }
