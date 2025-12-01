@@ -36,6 +36,11 @@
 
         <dependency>
             <groupId>org.mongodb</groupId>
+        <!-- MongoDB driver (correct, standalone dependency) -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>mongodb-driver-sync</artifactId>
+            <version>4.10.2</version>
             <artifactId>mongodb-driver-bom</artifactId>
             <version>5.6.1</version>
             <type>pom</type>
@@ -43,6 +48,11 @@
         </dependency>
 
         <dependency>
+        <!-- BCrypt (separate dependency) -->
+        <dependency>
+            <groupId>org.mindrot</groupId>
+            <artifactId>jbcrypt</artifactId>
+            <version>0.4</version>
             <groupId>org.mongodb</groupId>
             <artifactId>mongodb-driver-sync</artifactId>
             <version>5.1.3</version>

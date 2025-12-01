@@ -1,6 +1,5 @@
 package use_case.signup;
 
-import data_access.PasswordHasher;
 import entity.User;
 import entity.UserFactory;
 
@@ -88,7 +87,7 @@ public class SignupInteractor implements SignupInputBoundary {
                     user.getFirstName(),
                     user.getLastName(),
                     user.getPrograms(),
-                    user.getPfpIndex(),
+                    user.getIcon(),
                     user.getDescription());
 
             userPresenter.prepareSuccessView(signupOutputData);

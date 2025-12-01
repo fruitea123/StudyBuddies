@@ -24,6 +24,7 @@ public class SignUpView extends JPanel {
 
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(null);
+        mainPanel.setPreferredSize(new Dimension(600, 1000));
 
         JScrollPane scrollPane = new JScrollPane(mainPanel);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
