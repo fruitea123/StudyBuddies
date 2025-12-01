@@ -4,7 +4,7 @@ import com.mongodb.client.MongoDatabase;
 import data_access.DBAccess;
 import data_access.InvitationDAO;
 import entity.Invitation;
-import entity.InvitationBuilder;
+import entity.User;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,24 +20,24 @@ public class MyInvitations {
         return dao.findAll();
     }
 
-    public List<Invitation> FilterByOwned(String user) {
+    public List<Invitation> FilterByOwned(String userEmail) {
         List<Invitation> result = new ArrayList<>();
         List<Invitation> invitations = dao.findAll();
         for  (Invitation invitation : invitations) {
-            if (InvitationBuilder.getOwner().equals(user)) {
+            if (invitation.getOwner().getEmail().equals(userEmail)) {
                 result.add(invitation);
             }
         }
         return result;
     }
 
-    public List<Invitation> FilterByParticipant(String user) {
+    public List<Invitation> FilterByParticipant(String userEmail) {
         List<Invitation> result = new ArrayList<>();
         List<Invitation> invitations = dao.findAll();
         for  (Invitation invitation : invitations) {
-            List<String> participants = InvitationBuilder.getParticipants(); //User to string resolution
-            for (String participant : participants) {
-                if (participant.equals(user)) {
+            List<User> participants = invitation.getParticipants();
+            for (User participant : participants) {
+                if (participant.getEmail().equals(userEmail)) {
                     result.add(invitation);
                     break;
                 }

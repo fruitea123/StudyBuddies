@@ -4,24 +4,25 @@ import org.bson.types.ObjectId;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.*;
+import java.util.List;
 
 public class Invitation {
 
-    public static final String MODE_ONLINE = "OnLine";
+    public static final String MODE_ONLINE = "On Line";
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 2;
 
-    private final String course;
-    private final String description;
-    private final LocalDate date;
-    private final LocalTime startTime;
-    private final LocalTime endTime;
-    private final String mode;
-    private final String location;
-    private final int capacity;
-    private final User owner; //different
-    private final List<User> participants; //different
+    private String course;
+    private String description;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String mode;
+    private String location;
+    private int capacity;
+    private User owner; // store string(email in DAO)
+    private List<User> participants; // store list of string(email)
+    private final String invitationID;
 
     Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
@@ -43,6 +44,7 @@ public class Invitation {
         }
         this.participants = Collections.unmodifiableList(new ArrayList<>(set));
         // delete repeated participants
+        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -104,5 +106,91 @@ public class Invitation {
         if (participants.size() > capacity) {
             throw new IllegalArgumentException("participants exceed capacity");
         }
+    }
+
+    public String getCourse() {
+        return course;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public LocalTime getEndTime() {
+        return endTime;
+    }
+
+    public String getMode() {
+        return mode;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public int getCapacity() {
+        return capacity;
+    }
+
+    public User getOwner() {
+        return owner;
+    }
+
+    public List<User> getParticipants() {
+        return participants;
+    }
+
+    public String getInvitationID() { return invitationID; }
+
+    public int participantsCount() {
+        return participants.size();
+    }
+
+    public void setCourse(String course) {
+        this.course = course;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(LocalTime endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setMode(String mode) {
+        this.mode = mode;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+
+    public void setOwner(User owner) {
+        this.owner = owner;
+    }
+
+    public void setParticipants(List<User> participants) {
+        this.participants = participants;
     }
 }
