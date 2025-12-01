@@ -1,68 +1,42 @@
 package view.forms;
 
-import data_access.InvitationDAO;
-import entity.Invitation;
-import use_case.myinvitations.MyInvitations;
+import interface_adapter.myinvitations.InvitationItemViewModel;
+import interface_adapter.myinvitations.MyInvitationsController;
+import interface_adapter.myinvitations.MyInvitationsViewModel;
 
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.List;
-
 
 public class MyInvitationsView extends JFrame {
-    private JButton createInvitationButton;
-    private JButton leaveButton;
-    private JButton leaveButton1;
-    private JButton deleteButton;
-    private JButton deleteButton1;
-    private JTextPane info1TextPane;
-    private JTextPane info2TextPane;
-    private JTextPane info3TextPane;
-    private JTextPane info4TextPane;
+
+    // === Swing components from your .form ===
     private JPanel PagePanel;
+    private JButton createInvitationButton;
     private JButton myInvitationsHomeButton;
     private JButton studyPoolButton;
     private JButton profileButton;
-    private JPanel ParticipatingInvitations;
-    private JPanel OwnedInvitations;
-    private JLabel OwnedInvitationsHeader;
-    private JLabel ParticipatingInvitationsHeader;
     private JButton calendarButton;
 
-    public MyInvitationsView() { //Constructor method
-        //default setup
+    private JPanel ParticipatingInvitations;
+    private JPanel OwnedInvitations;
+
+    private JLabel OwnedInvitationsHeader;
+    private JLabel ParticipatingInvitationsHeader;
+
+    // Controller injected by AppBuilder
+    private MyInvitationsController controller;
+
+
+    // ============================================================
+    // Constructor — keeps EXACT style of your original version
+    // ============================================================
+    public MyInvitationsView() {
         setContentPane(PagePanel);
         setTitle("My Invitations");
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        createInvitationButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                //insert Qiyu's usecase
-            }
-        });
-        calendarButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // harish's calendar code
-            }
-        });
-    }
-
-    public void loadInvitations(InvitationDAO dao, String currentUser) {
-
-        MyInvitations myInvitations = new MyInvitations(dao);
-
-        List<Invitation> owned = myInvitations.FilterByOwned(currentUser);
-        List<Invitation> participating = myInvitations.FilterByParticipant(currentUser);
-
-        // clears existing cards
-        ParticipatingInvitations.removeAll();
-        OwnedInvitations.removeAll();
-
+        // Layouts for dynamic invitation sections
         ParticipatingInvitations.setLayout(
                 new BoxLayout(ParticipatingInvitations, BoxLayout.Y_AXIS)
         );
@@ -70,55 +44,96 @@ public class MyInvitationsView extends JFrame {
                 new BoxLayout(OwnedInvitations, BoxLayout.Y_AXIS)
         );
 
+        // Button hooks (view delegates → controller)
+        createInvitationButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.onCreateInvitation();
+            }
+        });
+
+        calendarButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.onCalendarClicked();
+            }
+        });
+
+        // Other navigation buttons (stub)
+        studyPoolButton.addActionListener(e -> {
+            if (controller != null) controller.onStudyPoolClicked();
+        });
+
+        profileButton.addActionListener(e -> {
+            if (controller != null) controller.onProfileClicked();
+        });
+
+        myInvitationsHomeButton.addActionListener(e -> {
+            // stays on this screen – no controller call needed
+        });
+    }
+
+
+    // ============================================================
+    // Allow AppBuilder to set controller
+    // ============================================================
+    public void setController(MyInvitationsController controller) {
+        this.controller = controller;
+    }
+
+
+    // ============================================================
+    // The new MVP update() method
+    // Replaces your old loadInvitations(dao, user)
+    // ============================================================
+    public void update(MyInvitationsViewModel viewModel) {
+
+        // Clear old content
+        ParticipatingInvitations.removeAll();
+        OwnedInvitations.removeAll();
+
+        // Keep your headers
         OwnedInvitations.add(OwnedInvitationsHeader);
         ParticipatingInvitations.add(ParticipatingInvitationsHeader);
 
-        // card builder
-        for (Invitation inv : participating) {
+        // -------------------------
+        // Participating Invitations
+        // -------------------------
+        for (InvitationItemViewModel item : viewModel.getParticipatingInvitations()) {
 
             LeaveInvitationCard card = new LeaveInvitationCard();
+            card.setTitle(item.getTitle());
+            card.setInfo(item.getDescription());
 
-            card.setTitle(inv.getCourse());          // top label
-            card.setInfo(inv.getDescription());      // text pane
-
-            // here goes leave logic
-            card.getActionButton().addActionListener(e ->
-                            System.out.println("Clicked leave for: " + inv.getCourse())
-                    // Harish's usecase
-            );
+            card.getActionButton().addActionListener(e -> {
+                if (controller != null) {
+                    controller.onLeaveClicked(item.getInvitationId());
+                }
+            });
 
             ParticipatingInvitations.add(card.getPanel());
-
         }
 
-        for (Invitation inv : owned) {
+        // -------------------------
+        // Owned Invitations
+        // -------------------------
+        for (InvitationItemViewModel item : viewModel.getOwnedInvitations()) {
 
             DeleteInvitationCard card = new DeleteInvitationCard();
+            card.setTitle(item.getTitle());
+            card.setInfo(item.getDescription());
 
-            card.setTitle(inv.getCourse());          // top label
-            card.setInfo(inv.getDescription());      // text pane
-
-            // here goes leave logic
-            card.getActionButton().addActionListener(e ->
-                            System.out.println("Clicked leave for: " + inv.getCourse())
-                    //Harish's usecase
-            );
+            card.getActionButton().addActionListener(e -> {
+                if (controller != null) {
+                    controller.onDeleteClicked(item.getInvitationId());
+                }
+            });
 
             OwnedInvitations.add(card.getPanel());
-
         }
 
-        // refresh UI
+        // Refresh UI
         ParticipatingInvitations.revalidate();
         ParticipatingInvitations.repaint();
         OwnedInvitations.revalidate();
         OwnedInvitations.repaint();
     }
-
-    public static void main(String[] args) {
-        //initializer, for testing purposes
-        MyInvitationsView myInvitationsView = new MyInvitationsView();
-        myInvitationsView.setVisible(true);
-    }
-
 }
