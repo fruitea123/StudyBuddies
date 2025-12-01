@@ -36,12 +36,11 @@ public class MyInvitationsView extends JFrame {
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
 
         createInvitationButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                    //insert Qiyu's usecase
+                //insert Qiyu's usecase
             }
         });
     }
@@ -77,13 +76,13 @@ public class MyInvitationsView extends JFrame {
 
             // here goes leave logic
             card.getActionButton().addActionListener(e ->
-                    System.out.println("Clicked leave for: " + inv.getCourse())
+                            System.out.println("Clicked leave for: " + inv.getCourse())
                     // Harish's usecase
             );
 
             ParticipatingInvitations.add(card.getPanel());
 
-            }
+        }
 
         for (Invitation inv : owned) {
 
@@ -94,7 +93,7 @@ public class MyInvitationsView extends JFrame {
 
             // here goes leave logic
             card.getActionButton().addActionListener(e ->
-                    System.out.println("Clicked leave for: " + inv.getCourse())
+                            System.out.println("Clicked leave for: " + inv.getCourse())
                     //Harish's usecase
             );
 
