@@ -22,7 +22,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
     private final StudyPoolViewModel studyPoolViewModel;
     //private final ProfileViewModel profileViewModel;
 
-    private final JScrollPane jScrollPane = new JScrollPane();
+    private final JPanel scroll_panel = new JPanel();
     private final JButton toHome;
 
     //private final AcceptController acceptController;
@@ -39,9 +39,6 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
 
         toHome = new JButton(studyPoolViewModel.TO_HOME_BUTTON_LABEL);
 
-        final JPanel scroll = new JPanel();
-        scroll.add(jScrollPane);
-
         final JPanel button = new JPanel();
         button.add(toHome);
 
@@ -55,7 +52,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(scroll);
+        this.add(scroll_panel);
         this.add(button);
 
     }
@@ -68,15 +65,20 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
         final StudyPoolState state = (StudyPoolState) evt.getNewValue();
         result_list = state.getInvitations();
 
+        scroll_panel.removeAll();
+        JPanel scroll_list = new JPanel();
+
         //final ProfileState currentState = profileViewModel.getState();
         //final String user = currentState.getusername;
 
         for (Invitation invitation : result_list) {
             if (!invitation.getParticipants().contains("placeholder")) {   // instead of placeholder it will be user
                 InvitationCardAcceptPanel invitationCardAcceptPanel = new InvitationCardAcceptPanel(invitation);  //more parameters in real version
-                jScrollPane.add(invitationCardAcceptPanel);
+                scroll_list.add(invitationCardAcceptPanel);
             }
         }
+        JScrollPane jScrollPane = new JScrollPane(scroll_list);
+        scroll_panel.add(jScrollPane);
 
 
     }

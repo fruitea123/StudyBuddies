@@ -4,9 +4,5 @@ public interface FilterOutputBoundary {
 
     void prepareSuccessView(FilterOutputData filterOutputData);
 
-    void prepareFailViewC();
-
-    void prepareFailViewD();
-
-    void prepareFailViewCD();
+    void prepareFailView(String error);
 }

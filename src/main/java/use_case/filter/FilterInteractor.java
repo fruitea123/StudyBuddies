@@ -23,13 +23,13 @@ public class FilterInteractor implements FilterInputBoundary {
         final String date = filterInputData.getDate();
 
         if (!(valid_course(course) || valid_date(date))) {
-            filterPresenter.prepareFailViewCD();
+            filterPresenter.prepareFailView("Problem with both inputs.");
         }
         else if (Boolean.FALSE.equals(valid_course(course))) {
-            filterPresenter.prepareFailViewC();
+            filterPresenter.prepareFailView("Problem with course input.");
         }
         else if (Boolean.FALSE.equals(valid_date(date))) {
-            filterPresenter.prepareFailViewD();
+            filterPresenter.prepareFailView("Problem with date input.");
         }
         else if (course.isEmpty() && date.isEmpty()) {
             List<Invitation> result_list = base_filter_list();
