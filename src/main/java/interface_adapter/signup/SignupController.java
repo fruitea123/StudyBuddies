@@ -20,23 +20,43 @@ public class SignupController {
     /**
      * Executes the Signup Use Case.
      * @param username the username to sign up
-     * @param password the password
-     * @param repeatPassword the password repeated
+     * @param password1 the password
+     * @param password2 the password repeated
+     * @param firstName the username to sign up
+     * @param lastName the password
+     * @param dob the username to sign up
+     * @param numPrograms the password
+     * @param p1 the username to sign up
+     * @param p2 the password
+     * @param p3 the username to sign up
+     * @param icon the password
+     * @param description the password
      */
-    public void execute(String username, String password, String repeatPassword,
-                        String firstName, String lastName, LocalDate DOB,
-                        int programNumber, List<String> programs, String description, int pfp) {
+    public void execute(String username,
+                        String password1,
+                        String password2,
+                        String firstName,
+                        String lastName,
+                        LocalDate dob,
+                        int numPrograms,
+                        String p1,
+                        String p2,
+                        String p3,
+                        String icon,
+                        String description) {
         final SignupInputData signupInputData = new SignupInputData(
-                        username,
-                        password,
-                        repeatPassword,
-                        firstName,
-                        lastName,
-                        DOB,
-                        programNumber,
-                        programs,
-                        description,
-                        pfp);
+                username,
+                password1,
+                password2,
+                firstName,
+                lastName,
+                dob,
+                numPrograms,
+                p1,
+                p2,
+                p3,
+                icon,
+                description);
 
         userSignupUseCaseInteractor.execute(signupInputData);
     }
@@ -44,7 +64,7 @@ public class SignupController {
     /**
      * Executes the "switch to LoginView" Use Case.
      */
-    public void switchToLoginView() {
-        userSignupUseCaseInteractor.switchToLoginView();
+    public void switchToProfileView() {
+        userSignupUseCaseInteractor.switchToProfileView();
     }
 }

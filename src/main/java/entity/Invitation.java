@@ -12,16 +12,16 @@ public class Invitation {
     public static final String MODE_IN_PERSON = "In Person";
     public static final int DEFAULT_CAPACITY = 2;
 
-    private final String course;
-    private final String description;
-    private final LocalDate date;
-    private final LocalTime startTime;
-    private final LocalTime endTime;
-    private final String mode;
-    private final String location;
-    private final int capacity;
-    private final User owner; // store string(email in DAO)
-    private final List<User> participants; // store list of string(email)
+    private String course;
+    private String description;
+    private LocalDate date;
+    private LocalTime startTime;
+    private LocalTime endTime;
+    private String mode;
+    private String location;
+    private int capacity;
+    private User owner; // store string(email in DAO)
+    private List<User> participants; // store list of string(email)
     private final String invitationID;
 
     Invitation(InvitationBuilder b) {
@@ -186,11 +186,11 @@ public class Invitation {
         this.capacity = capacity;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
-    public void setParticipants(List<String> participants) {
+    public void setParticipants(List<User> participants) {
         this.participants = participants;
     }
 }
