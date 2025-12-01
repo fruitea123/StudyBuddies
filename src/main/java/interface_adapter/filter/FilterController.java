@@ -11,6 +11,10 @@ public class FilterController {
         this.filterUseCaseInteractor = filterUseCaseInteractor;
     }
 
+    public void movetohome() {
+        filterUseCaseInteractor.movetohome();
+    }
+
     public void execute(String course, String date) {
         final FilterInputData filterInputData = new FilterInputData(course, date);
         filterUseCaseInteractor.execute(filterInputData);

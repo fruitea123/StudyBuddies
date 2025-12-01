@@ -17,6 +17,10 @@ public class FilterInteractor implements FilterInputBoundary {
         this.filterPresenter = filterPresenter;
     }
 
+    public void movetohome() {
+        filterPresenter.movetohome();
+    }
+
     @Override
     public void execute(FilterInputData filterInputData) {
         final String course = filterInputData.getCourse();

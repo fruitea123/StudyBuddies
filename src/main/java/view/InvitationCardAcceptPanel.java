@@ -1,6 +1,9 @@
 package view;
 
 import entity.Invitation;
+import interface_adapter.accept.AcceptInvitationController;
+import interface_adapter.profile.ProfileState;
+import interface_adapter.profile.ProfileViewModel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -13,16 +16,15 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
     private final JTextArea description_area;
     private final JLabel title;
     private final JButton accept;
-    //private final ProfileViewModel profileViewModel;
-    //private final AcceptController acceptController;
+    private final ProfileViewModel profileViewModel;
+    private final AcceptInvitationController acceptController;
 
-    public InvitationCardAcceptPanel(Invitation invitation) {
+    public InvitationCardAcceptPanel(Invitation invitation, ProfileViewModel profileViewModel, AcceptInvitationController acceptController) {
         this.invitation = invitation;
 
-        //this.profileViewModel = profileViewModel;        //Contstructor also has this parameter
-        //this.acceptController = acceptController;
-
         this.description_area = new JTextArea(invitation.getDescription());
+        this.profileViewModel = profileViewModel;
+        this.acceptController = acceptController;
 
         String title_string = "(" + invitation.getCourse() + ")" + " " + "(" + invitation.getDate().toString() + ")" +
                 " " + "(" + invitation.getStartTime().toString() + " - " + invitation.getEndTime().toString() + ")";
@@ -42,10 +44,9 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
                     @Override
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(accept)) {
-                            //final ProfileState currentState = profileViewModel.getState();
-                            //acceptController.execute(invitation.getId, currentState.getusername):
-
-                            invitation.setCourse("csc207");    //placeholder
+                            final ProfileState currentState = profileViewModel.getState();
+                            acceptController.acceptInvitation(invitation.getInvitationID(),
+                                    currentState.getUsername());
                         }
                     }
                 }
