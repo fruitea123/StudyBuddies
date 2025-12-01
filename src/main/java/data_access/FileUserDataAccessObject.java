@@ -89,7 +89,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                         user.getFirstName(),
                         user.getLastName(),
                         user.getPrograms(),
-                        user.getPfpIndex(),
+                        user.getIcon(),
                         user.getDescription());
                 writer.write(line);
                 writer.newLine();
