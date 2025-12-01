@@ -9,6 +9,7 @@ import interface_adapter.ViewManagerModel;
 //import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.accept.AcceptInvitationController;
 import interface_adapter.filter.FilterController;
+import interface_adapter.filter.FilterPresenter;
 import interface_adapter.filter.FilterViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -23,6 +24,9 @@ import interface_adapter.signup.SignupViewModel;
 //import use_case.change_password.ChangePasswordInteractor;
 //import use_case.change_password.ChangePasswordOutputBoundary;
 import interface_adapter.study_pool.StudyPoolViewModel;
+import use_case.filter.FilterInputBoundary;
+import use_case.filter.FilterInteractor;
+import use_case.filter.FilterOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -110,9 +114,12 @@ public class AppBuilder {
 
     private StudyPoolView studyPoolView;
     private StudyPoolViewModel studyPoolViewModel;
-//    AcceptInvitationController acceptController, FilterController filterController
     private AcceptInvitationController acceptController;
     private FilterController filterController;
+
+    private ProfileView profileView;
+    private ProfileViewModel poolViewModel;
+
 
 
 
@@ -170,17 +177,27 @@ public class AppBuilder {
         return this;
     }
 
+
     public AppBuilder addStudyPoolView() {
         studyPoolViewModel = new StudyPoolViewModel();
         profileViewModel = new ProfileViewModel();
-        acceptController = new AcceptInvitationController();
-        filterController = new FilterController();
+//        acceptController = new AcceptInvitationController();
+//        filterController = new FilterController();
 
-        studyPoolView = new StudyPoolView(studyPoolViewModel, profileViewModel,
-                acceptController, filterController);
-        cardPanel.add(notificationsView, notificationsView.getViewName());
+        studyPoolView = new StudyPoolView(studyPoolViewModel, profileViewModel);
+        cardPanel.add(studyPoolView, studyPoolViewModel.getViewName());
         return this;
     }
+
+    public AppBuilder addProfileView() {
+        poolViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel);
+        cardPanel.add(profileView, profileView.getViewName());
+        return this;
+    }
+
+
+
 
 
 
@@ -256,6 +273,31 @@ public class AppBuilder {
 
         return this;
     }
+
+    public AppBuilder addFilterUseCase() {
+        FilterOutputBoundary filterOutputBoundary;
+        filterOutputBoundary = new FilterPresenter(filterViewModel,
+                studyPoolViewModel,
+                viewManagerModel,
+                profileViewModel);
+
+
+        FilterInputBoundary filterInteractor =
+                new FilterInteractor(
+                        invitationDAO,
+                        filterOutputBoundary
+                );
+
+        FilterController filterController =
+                new FilterController(filterInteractor);
+
+        filterView.setFilterController(filterController);
+
+        return this;
+    }
+
+
+
 
     public AppBuilder addNotificationsUseCase() {
         // 1. Presenter：
