@@ -9,12 +9,11 @@ import mapper.DBInvitationMapper;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import use_case.filter.FilterInvitationDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvitationDAO implements FilterInvitationDataAccessInterface {
+public class InvitationDAO {
 
     private final MongoCollection<Document> collection;
 

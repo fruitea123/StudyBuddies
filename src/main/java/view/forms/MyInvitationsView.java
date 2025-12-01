@@ -1,14 +1,14 @@
 package view.forms;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import data_access.InvitationDAO;
+import entity.Invitation;
+import use_case.myinvitations.MyInvitations;
 
-//written by jessica, i apologize for all the weirdness.
+import javax.swing.*;
+import java.util.List;
+
 
 public class MyInvitationsView extends JFrame {
-    // this constructor class will be revamped to have loops to generate all
-    // of the stuff below, but for now it's a bunch of samples.
     private JButton createInvitationButton;
     private JButton leaveButton;
     private JButton leaveButton1;
@@ -22,10 +22,10 @@ public class MyInvitationsView extends JFrame {
     private JButton myInvitationsHomeButton;
     private JButton studyPoolButton;
     private JButton profileButton;
-
-    public void ParticipatingInvitationGenerator() {
-        //a false constructor/generator I started for no reason other than to remind myself that I need one later, disregard
-    }
+    private JPanel ParticipatingInvitations;
+    private JPanel OwnedInvitations;
+    private JLabel OwnedInvitationsHeader;
+    private JLabel ParticipatingInvitationsHeader;
 
     public MyInvitationsView() { //Constructor method
         //default setup
@@ -34,38 +34,67 @@ public class MyInvitationsView extends JFrame {
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
 
-        //actions for leave
-        leaveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
+    public void loadInvitations(InvitationDAO dao, String currentUser) {
+
+        MyInvitations myInvitations = new MyInvitations(dao);
+
+        List<Invitation> owned = myInvitations.FilterByOwned(currentUser);
+        List<Invitation> participating = myInvitations.FilterByParticipant(currentUser);
+
+        // clears existing cards
+        ParticipatingInvitations.removeAll();
+        OwnedInvitations.removeAll();
+
+        ParticipatingInvitations.setLayout(
+                new BoxLayout(ParticipatingInvitations, BoxLayout.Y_AXIS)
+        );
+        OwnedInvitations.setLayout(
+                new BoxLayout(OwnedInvitations, BoxLayout.Y_AXIS)
+        );
+
+        OwnedInvitations.add(OwnedInvitationsHeader);
+        ParticipatingInvitations.add(ParticipatingInvitationsHeader);
+
+        // card builder
+        for (Invitation inv : participating) {
+
+            LeaveInvitationCard card = new LeaveInvitationCard();
+
+            card.setTitle(inv.getCourse());          // top label
+            card.setInfo(inv.getDescription());      // text pane
+
+            // here goes leave logic
+            card.getActionButton().addActionListener(e ->
+                    System.out.println("Clicked leave for: " + inv.getCourse())
+            );
+
+            ParticipatingInvitations.add(card.getPanel());
+
             }
-        });
 
-        leaveButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
-            }
-        });
+        for (Invitation inv : owned) {
 
-        //actions for delete
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
-            }
-        });
+            DeleteInvitationCard card = new DeleteInvitationCard();
 
-        deleteButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
-            }
-        });
+            card.setTitle(inv.getCourse());          // top label
+            card.setInfo(inv.getDescription());      // text pane
 
-        // could add more actions, but it's kinda pointless for me to make some rn, 'cause they'd lead to nothing :/
+            // here goes leave logic
+            card.getActionButton().addActionListener(e ->
+                    System.out.println("Clicked leave for: " + inv.getCourse())
+            );
+
+            OwnedInvitations.add(card.getPanel());
+
+        }
+
+        // refresh UI
+        ParticipatingInvitations.revalidate();
+        ParticipatingInvitations.repaint();
+        OwnedInvitations.revalidate();
+        OwnedInvitations.repaint();
     }
 
     public static void main(String[] args) {
