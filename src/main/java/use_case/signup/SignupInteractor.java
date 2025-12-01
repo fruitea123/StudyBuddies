@@ -5,6 +5,8 @@ import entity.UserFactory;
 
 import java.time.LocalDate;
 import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 /**
@@ -12,16 +14,16 @@ import java.util.regex.Pattern;
  */
 public class SignupInteractor implements SignupInputBoundary {
     private final SignupUserDataAccessInterface userDataAccessObject;
-    private final SignupPasswordHasher passwordHasher;
+//    private final SignupPasswordHasher passwordHasher;
     private final SignupOutputBoundary userPresenter;
     private final UserFactory userFactory;
 
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
-                            SignupPasswordHasher passwordHasher,
+//                            SignupPasswordHasher passwordHasher,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;
-        this.passwordHasher = passwordHasher;
+//        this.passwordHasher = passwordHasher;
         this.userPresenter = signupOutputBoundary;
         this.userFactory = userFactory;
     }
@@ -60,7 +62,7 @@ public class SignupInteractor implements SignupInputBoundary {
             userPresenter.prepareFailView("This field cannot be empty");
         } else if ("".equals(signupInputData.getProgram3()) && signupInputData.getNumPrograms() > 2) {
             userPresenter.prepareFailView("This field cannot be empty");
-        } else if (userDataAccessObject.existsByName(signupInputData.getUsername())) {
+        } else if (userDataAccessObject.existsByEmail(signupInputData.getEmail())) {
             userPresenter.prepareFailView("User already exists");
         } else if (!signupInputData.getEmail().contains("@utoronto.ca")) {
             userPresenter.prepareFailView("Email address must be a UofT email address");
@@ -79,11 +81,32 @@ public class SignupInteractor implements SignupInputBoundary {
         } else if (signupInputData.getNumPrograms() < 1) {
             userPresenter.prepareFailView("Number of programs must be at least 1");
         } else {
-            final User user = userFactory.create(signupInputData.getUsername(), signupInputData.getPassword());
+
+            List<String> programs = new ArrayList<>();
+            if (signupInputData.getProgram1() != null && !signupInputData.getProgram1().isEmpty()) {
+                programs.add(signupInputData.getProgram1());
+            }
+            if (signupInputData.getProgram2() != null && !signupInputData.getProgram2().isEmpty()) {
+                programs.add(signupInputData.getProgram2());
+            }
+            if (signupInputData.getProgram3() != null && !signupInputData.getProgram3().isEmpty()) {
+                programs.add(signupInputData.getProgram3());
+            }
+
+            final User user = userFactory.create(
+                    signupInputData.getEmail(),
+                    signupInputData.getPassword(),
+                    signupInputData.getFirstName(),
+                    signupInputData.getLastName(),
+                    programs,
+                    signupInputData.getIcon(),
+                    signupInputData.getDescription()
+            );
             userDataAccessObject.save(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(
                     user.getEmail(),
+                    user.getPassword(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getPrograms(),
