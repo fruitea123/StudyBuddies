@@ -52,6 +52,21 @@ import use_case.notifications.CurrentUserIdProvider;
 
 import view.NotificationsView;
 
+
+import data_access.NotificationDataAccessObject;
+import data_access.InMemoryNotificationDataAccessObject;
+
+import interface_adapter.notifications.NotificationsController;
+import interface_adapter.notifications.NotificationsPresenter;
+import interface_adapter.notifications.NotificationsViewModel;
+
+import use_case.notifications.ViewNotificationsInputBoundary;
+import use_case.notifications.ViewNotificationsInteractor;
+import use_case.notifications.ViewNotificationsOutputBoundary;
+import use_case.notifications.CurrentUserIdProvider;
+
+import view.NotificationsView;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -126,6 +141,13 @@ public class AppBuilder {
         makeInvitationView.setBackController(backController);
         return this;
     }
+    public AppBuilder addNotificationsView() {
+        notificationsViewModel = new NotificationsViewModel();
+        notificationsView = new NotificationsView(notificationsViewModel);
+        cardPanel.add(notificationsView, notificationsView.getViewName());
+        return this;
+    }
+
     public AppBuilder addNotificationsView() {
         notificationsViewModel = new NotificationsViewModel();
         notificationsView = new NotificationsView(notificationsViewModel);
