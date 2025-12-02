@@ -206,7 +206,7 @@ public class AppBuilder {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary, sessionCurrentUserGateway);
+                signupUserDataAccessObject, loginOutputBoundary, sessionCurrentUserGateway);
 
         LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel);
         loginView.setLoginController(loginController);
