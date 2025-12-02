@@ -57,7 +57,6 @@ import static com.mongodb.client.model.Filters.eq;
                 .append("passwordHash", user.getPassword())
                 .append("firstName", user.getFirstName())
                 .append("lastName", user.getLastName())
-                .append("dateOfBirth", user.getDateOfBirth())
                 .append("programs", user.getPrograms())
                 .append("description", user.getDescription())
                 .append("icon", user.getIcon());

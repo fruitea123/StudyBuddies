@@ -61,7 +61,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                     final String firstName = col[headers.get("firstName")];
                     final String lastName = col[headers.get("lastName")];
                     final List<String> programs = Collections.singletonList(col[headers.get("programs")]);
-                    final int pfpIndex = Integer.parseInt(col[headers.get("pfpIndex")]);
+                    final String pfpIndex = String.valueOf(Integer.parseInt(col[headers.get("pfpIndex")]));
                     final String descripion = col[headers.get("description")];
                     final User user = userFactory.create(email, password, firstName, lastName, programs, pfpIndex, descripion);
                     accounts.put(email, user);
@@ -127,10 +127,10 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
         return accounts.containsKey(identifier);
     }
 
-    @Override
-    public void changePassword(User user) {
-        // Replace the User object in the map
-        accounts.put(user.getEmail(), user);
-        save();
-    }
+//    @Override
+//    public void changePassword(User user) {
+//        // Replace the User object in the map
+//        accounts.put(user.getEmail(), user);
+//        save();
+//    }
 }

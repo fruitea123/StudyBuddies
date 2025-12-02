@@ -59,7 +59,7 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
                 final String firstName = userJSONObject.getString(FIRST_NAME);
                 final String lastName = userJSONObject.getString(LAST_NAME);
                 final List<String> programs = Collections.singletonList(userJSONObject.getString(PROGRAMS));
-                final int pfpIndex = Integer.parseInt(userJSONObject.getString(PFPINDEX));
+                final String pfpIndex = String.valueOf(Integer.parseInt(userJSONObject.getString(PFPINDEX)));
                 final String description = userJSONObject.getString(DESCRIPTION);
 
                 return userFactory.create(emailDB, password, firstName, lastName, programs, pfpIndex, description);
