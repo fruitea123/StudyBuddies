@@ -2,7 +2,7 @@ package data_access;
 
 import entity.Invitation;
 import entity.User;
-import use_case.make_invitation.MakeInvitationDataAccessInterface;
+import use_case.makeinvitation.MakeInvitationDataAccessInterface;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

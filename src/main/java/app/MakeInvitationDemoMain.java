@@ -1,59 +1,64 @@
-//package app;
+//package interface_adapter;
 //
-//import data_access.InMemoryInvitationDataAccessObject;
-//import entity.User;
-//import interface_adapter.make_invitation.MakeInvitationController;
-//import interface_adapter.make_invitation.MakeInvitationPresenter;
-//import interface_adapter.make_invitation.MakeInvitationViewModel;
-//import interface_adapter.make_invitation.SessionCurrentUserGateway;
-//import use_case.make_invitation.*;
-//import view.MakeInvitationView;
+//import java.beans.PropertyChangeListener;
+//import java.beans.PropertyChangeSupport;
 //
-//import javax.swing.*;
+///**
+// * The ViewModel for our CA implementation.
+// * This class delegates work to a PropertyChangeSupport object for
+// * managing the property change events.
+// *
+// * @param <T> The type of state object contained in the model.
+// */
+//public class ViewModel<T> {
 //
-//public class MakeInvitationDemoMain {
+//    private final String viewName;
 //
-//    public static void main(String[] args) {
-//        SwingUtilities.invokeLater(() -> {
-//            // DAO：用内存实现
-//            InMemoryInvitationDataAccessObject invitationDAO =
-//                    new InMemoryInvitationDataAccessObject();
+//    private final PropertyChangeSupport support = new PropertyChangeSupport(this);
 //
-//            // 当前用户 gateway，并设置一个假用户
-//            SessionCurrentUserGateway currentUserGateway =
-//                    new SessionCurrentUserGateway();
-//            currentUserGateway.setCurrentUser(new User("alice", "password"));
+//    private T state;
 //
-//            // ViewModel
-//            MakeInvitationViewModel vm = new MakeInvitationViewModel();
+//    public ViewModel(String viewName) {
+//        this.viewName = viewName;
+//    }
 //
-//            // Presenter
-//            MakeInvitationOutputBoundary presenter =
-//                    new MakeInvitationPresenter(vm);
+//    public String getViewName() {
+//        return this.viewName;
+//    }
 //
-//            // Interactor
-//            MakeInvitationInputBoundary interactor =
-//                    new MakeInvitationInteractor(
-//                            invitationDAO,
-//                            presenter,
-//                            currentUserGateway);
+//    public T getState() {
+//        return this.state;
+//    }
 //
-//            // Controller
-//            MakeInvitationController controller =
-//                    new MakeInvitationController(interactor);
+//    public void setState(T state) {
+//        this.state = state;
+//    }
 //
-//            // View（注意：构造函数只传 vm）
-//            MakeInvitationView view = new MakeInvitationView(vm);
-//            // 再单独把 controller 塞进去（和 SignupView 一样的模式）
-//            view.setMakeInvitationController(controller);
+//    /**
+//     * Fires a property changed event for the state of this ViewModel.
+//     */
+//    public void firePropertyChange() {
+//        this.support.firePropertyChange("state", null, this.state);
+//    }
 //
-//            // 放进 JFrame 里展示出来
-//            JFrame frame = new JFrame("Make Invitatio");
-//            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-//            frame.setContentPane(view);
-//            frame.pack();
-//            frame.setLocationRelativeTo(null);
-//            frame.setVisible(true);
-//        });
+//    /**
+//     * Fires a property changed event for the state of this ViewModel, which
+//     * allows the user to specify a different propertyName. This can be useful
+//     * when a class is listening for multiple kinds of property changes.
+//     * <p/>
+//     * For example, the LoggedInView listens for two kinds of property changes;
+//     * it can use the property name to distinguish which property has changed.
+//     * @param propertyName the label for the property that was changed
+//     */
+//    public void firePropertyChange(String propertyName) {
+//        this.support.firePropertyChange(propertyName, null, this.state);
+//    }
+//
+//    /**
+//     * Adds a PropertyChangeListener to this ViewModel.
+//     * @param listener The PropertyChangeListener to be added
+//     */
+//    public void addPropertyChangeListener(PropertyChangeListener listener) {
+//        this.support.addPropertyChangeListener(listener);
 //    }
 //}

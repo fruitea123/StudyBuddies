@@ -1,8 +1,7 @@
 package use_case.login;
 
 import entity.User;
-import use_case.make_invitation.CurrentUserGateway;
-import interface_adapter.make_invitation.SessionCurrentUserGateway;
+import interface_adapter.makeinvitation.SessionCurrentUserGateway;
 
 /**
  * The Login Interactor.

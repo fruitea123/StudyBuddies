@@ -1,4 +1,4 @@
-package use_case.make_invitation;
+package use_case.makeinvitation;
 
 import data_access.InMemoryInvitationDataAccessObject;
 import entity.Invitation;
