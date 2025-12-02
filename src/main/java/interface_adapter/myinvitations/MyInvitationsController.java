@@ -1,14 +1,9 @@
 package interface_adapter.myinvitations;
 
-import entity.Invitation;
-import interface_adapter.make_invitation.MakeInvitationState;
-import interface_adapter.make_invitation.MakeInvitationViewModel;
+import interface_adapter.makeinvitation.MakeInvitationViewModel;
 import use_case.calendar.InsertUserStudySessionsInteractor;
 import use_case.cancel.CancelInvitation;
 import use_case.myinvitations.MyInvitations;
-import view.MakeInvitationView;
-
-import java.util.List;
 
 /**
  * Controller for the MyInvitations screen.

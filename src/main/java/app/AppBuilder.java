@@ -1,7 +1,6 @@
 package app;
 
 import data_access.*;
-import entity.Notification;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 //import interface_adapter.logged_in.ChangePasswordController;
@@ -40,8 +39,8 @@ import use_case.signup.SignupOutputBoundary;
 import view.LoginView;
 import view.SignUpView;
 import view.ViewManager;
-import interface_adapter.make_invitation.*;
-import use_case.make_invitation.*;
+import interface_adapter.makeinvitation.*;
+import use_case.makeinvitation.*;
 //import data_access.InMemoryInvitationDataAccessObject; // change after implemented MongoDB
 import view.*;
 
@@ -60,8 +59,6 @@ import view.NotificationsView;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.List;
-import java.util.Optional;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();

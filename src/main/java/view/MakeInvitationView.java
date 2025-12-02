@@ -1,9 +1,9 @@
 package view;
 
-import interface_adapter.make_invitation.MakeInvitationController;
-import interface_adapter.make_invitation.MakeInvitationState;
-import interface_adapter.make_invitation.MakeInvitationViewModel;
-import interface_adapter.make_invitation.MakeInvitationBackController;
+import interface_adapter.makeinvitation.MakeInvitationController;
+import interface_adapter.makeinvitation.MakeInvitationState;
+import interface_adapter.makeinvitation.MakeInvitationViewModel;
+import interface_adapter.makeinvitation.MakeInvitationBackController;
 
 import javax.swing.*;
 import java.awt.*;
