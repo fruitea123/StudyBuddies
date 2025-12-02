@@ -79,7 +79,6 @@ public class User {
                 "placeholder-password",
                 "placeholder-firstName",
                 "placeholder-lastName",
-                LocalDate.now(),
                 List.of(),          // empty programs
                 "",                 // icon
                 ""                  // description

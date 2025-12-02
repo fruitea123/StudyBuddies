@@ -21,7 +21,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private String currentUsername;
 
     @Override
-    public boolean existsByName(String identifier) {
+    public boolean existsByEmail(String identifier) {
         return users.containsKey(identifier);
     }
 
