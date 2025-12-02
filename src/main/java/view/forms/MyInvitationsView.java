@@ -8,7 +8,7 @@ import javax.swing.*;
 
 public class MyInvitationsView extends JFrame {
 
-    // === Swing components from your .form ===
+    // Swing
     private JPanel PagePanel;
     private JButton createInvitationButton;
     private JButton myInvitationsHomeButton;
@@ -26,9 +26,6 @@ public class MyInvitationsView extends JFrame {
     private MyInvitationsController controller;
 
 
-    // ============================================================
-    // Constructor — keeps EXACT style of your original version
-    // ============================================================
     public MyInvitationsView() {
         setContentPane(PagePanel);
         setTitle("My Invitations");
@@ -36,7 +33,6 @@ public class MyInvitationsView extends JFrame {
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        // Layouts for dynamic invitation sections
         ParticipatingInvitations.setLayout(
                 new BoxLayout(ParticipatingInvitations, BoxLayout.Y_AXIS)
         );
@@ -44,7 +40,7 @@ public class MyInvitationsView extends JFrame {
                 new BoxLayout(OwnedInvitations, BoxLayout.Y_AXIS)
         );
 
-        // Button hooks (view delegates → controller)
+        // action listeners
         createInvitationButton.addActionListener(e -> {
             if (controller != null) {
                 controller.onCreateInvitation();
@@ -57,7 +53,7 @@ public class MyInvitationsView extends JFrame {
             }
         });
 
-        // Other navigation buttons (stub)
+        // page navigation
         studyPoolButton.addActionListener(e -> {
             if (controller != null) controller.onStudyPoolClicked();
         });
@@ -67,36 +63,25 @@ public class MyInvitationsView extends JFrame {
         });
 
         myInvitationsHomeButton.addActionListener(e -> {
-            // stays on this screen – no controller call needed
+            // stays on myinvitations
         });
     }
 
-
-    // ============================================================
-    // Allow AppBuilder to set controller
-    // ============================================================
     public void setController(MyInvitationsController controller) {
         this.controller = controller;
     }
 
-
-    // ============================================================
-    // The new MVP update() method
-    // Replaces your old loadInvitations(dao, user)
-    // ============================================================
     public void update(MyInvitationsViewModel viewModel) {
 
-        // Clear old content
+        // old content cleared
         ParticipatingInvitations.removeAll();
         OwnedInvitations.removeAll();
 
-        // Keep your headers
+        // sets headers
         OwnedInvitations.add(OwnedInvitationsHeader);
         ParticipatingInvitations.add(ParticipatingInvitationsHeader);
 
-        // -------------------------
-        // Participating Invitations
-        // -------------------------
+        // loads participating invitations
         for (InvitationItemViewModel item : viewModel.getParticipatingInvitations()) {
 
             LeaveInvitationCard card = new LeaveInvitationCard();
@@ -112,9 +97,7 @@ public class MyInvitationsView extends JFrame {
             ParticipatingInvitations.add(card.getPanel());
         }
 
-        // -------------------------
-        // Owned Invitations
-        // -------------------------
+        // loads owned invitations
         for (InvitationItemViewModel item : viewModel.getOwnedInvitations()) {
 
             DeleteInvitationCard card = new DeleteInvitationCard();
@@ -130,7 +113,7 @@ public class MyInvitationsView extends JFrame {
             OwnedInvitations.add(card.getPanel());
         }
 
-        // Refresh UI
+        // refresh UI
         ParticipatingInvitations.revalidate();
         ParticipatingInvitations.repaint();
         OwnedInvitations.revalidate();
