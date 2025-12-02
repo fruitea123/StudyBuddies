@@ -11,37 +11,48 @@ import com.google.api.client.json.gson.GsonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
-
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Collections;
 
+/**
+ * Configuration class for initializing the Google Calendar API client.
+ */
 public class GoogleCalendarConfig {
 
-    private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
+  private static final JsonFactory JSON_FACTORY = GsonFactory.getDefaultInstance();
 
-    public static Calendar getCalendarService() throws Exception {
-        InputStream in = new FileInputStream("src/main/java/use_case/calendar/credentials.json");
-        GoogleClientSecrets secrets = GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
+  /**
+     * Creates and returns an authenticated Google Calendar client.
+     *
+     * @return an authenticated {@link Calendar} instance
+     * @throws Exception if the Google Calendar client cannot be created
+  */
+  public static Calendar getCalendarService() throws Exception {
+    InputStream in =
+                new FileInputStream("src/main/java/usecase/calendar/credentials.json");
+    GoogleClientSecrets secrets =
+                GoogleClientSecrets.load(JSON_FACTORY, new InputStreamReader(in));
 
-        GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                JSON_FACTORY,
-                secrets,
-                Collections.singletonList(CalendarScopes.CALENDAR))
-                .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
-                .setAccessType("offline")
+    GoogleAuthorizationCodeFlow flow =
+                new GoogleAuthorizationCodeFlow.Builder(
+                        GoogleNetHttpTransport.newTrustedTransport(),
+                        JSON_FACTORY,
+                        secrets,
+                        Collections.singletonList(CalendarScopes.CALENDAR))
+                        .setDataStoreFactory(new FileDataStoreFactory(new java.io.File("tokens")))
+                        .setAccessType("offline")
+                        .build();
+
+    Credential credential =
+                new AuthorizationCodeInstalledApp(
+                        flow, new LocalServerReceiver.Builder().setPort(8888).build())
+                        .authorize("user");
+
+    return new Calendar.Builder(
+                GoogleNetHttpTransport.newTrustedTransport(), JSON_FACTORY, credential)
+                .setApplicationName("StudyBuddiesApp")
                 .build();
-
-        Credential credential = new AuthorizationCodeInstalledApp(
-                flow, new LocalServerReceiver.Builder().setPort(8888).build()
-        ).authorize("user");
-
-        return new Calendar.Builder(
-                GoogleNetHttpTransport.newTrustedTransport(),
-                JSON_FACTORY,
-                credential
-        ).setApplicationName("StudyBuddiesApp").build();
-    }
+  }
 }
