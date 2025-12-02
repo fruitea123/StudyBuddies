@@ -4,6 +4,7 @@ import data_access.FileUserDataAccessObject;
 import data_access.MongoInvitationDataAccessObject;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.filter.FilterViewModel;
 import interface_adapter.logged_in.ChangePasswordController;
 import interface_adapter.logged_in.ChangePasswordPresenter;
 import interface_adapter.logged_in.LoggedInViewModel;
@@ -16,6 +17,7 @@ import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+import interface_adapter.study_pool.StudyPoolViewModel;
 import use_case.change_password.ChangePasswordInputBoundary;
 import use_case.change_password.ChangePasswordInteractor;
 import use_case.change_password.ChangePasswordOutputBoundary;
@@ -100,11 +102,30 @@ public class AppBuilder {
             new SessionCurrentUserGateway();
     private NotificationsView notificationsView;
     private NotificationsViewModel notificationsViewModel;
+    private FilterView filterView;
+    private FilterViewModel filterViewModel;
+    private StudyPoolView studyPoolView;
+    private StudyPoolViewModel studyPoolViewModel;
 
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
+
+    public AppBuilder addFilterview() {
+        filterViewModel = new FilterViewModel();
+        filterView = new FilterView(filterViewModel);
+        cardPanel.add(filterView, filterViewModel.getViewName());
+        return this;
+    }
+
+    public AppBuilder addStudyPoolview() {
+        studyPoolViewModel = new StudyPoolViewModel();
+        studyPoolView = new StudyPoolView()
+        cardPanel.add(filterView, filterViewModel.getViewName());
+        return this;
+    }
+
 
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();

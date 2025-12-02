@@ -112,4 +112,8 @@ public class FilterView extends JPanel implements ActionListener, PropertyChange
     public void setFilterController(FilterController filterController) {
         this.filterController = filterController;
     }
+
+    public static void main(String[] args) {
+
+    }
 }
