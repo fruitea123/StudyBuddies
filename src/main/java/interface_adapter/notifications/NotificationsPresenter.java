@@ -1,9 +1,8 @@
 package interface_adapter.notifications;
 
-import use_case.notifications.NotificationFilter;
-import use_case.notifications.NotificationSummary;
-import use_case.notifications.ViewNotificationsOutputBoundary;
-import use_case.notifications.ViewNotificationsOutputData;
+import usecase.notifications.NotificationSummary;
+import usecase.notifications.ViewNotificationsOutputBoundary;
+import usecase.notifications.ViewNotificationsOutputData;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;

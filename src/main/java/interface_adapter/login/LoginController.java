@@ -2,8 +2,8 @@ package interface_adapter.login;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.signup.SignupViewModel;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInputData;
+import usecase.login.LoginInputBoundary;
+import usecase.login.LoginInputData;
 
 /**
  * The controller for the Login Use Case.

@@ -15,36 +15,33 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInteractor;
-import use_case.login.LoginOutputBoundary;
-import use_case.logout.LogoutInputBoundary;
-import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInteractor;
-import use_case.signup.SignupOutputBoundary;
-import use_case.signup.SignupPasswordHasher;
+import usecase.change_password.ChangePasswordInputBoundary;
+import usecase.change_password.ChangePasswordInteractor;
+import usecase.change_password.ChangePasswordOutputBoundary;
+import usecase.login.LoginInputBoundary;
+import usecase.login.LoginInteractor;
+import usecase.login.LoginOutputBoundary;
+import usecase.logout.LogoutInputBoundary;
+import usecase.logout.LogoutInteractor;
+import usecase.logout.LogoutOutputBoundary;
+import usecase.signup.SignupInputBoundary;
+import usecase.signup.SignupInteractor;
+import usecase.signup.SignupOutputBoundary;
+import usecase.signup.SignupPasswordHasher;
 import view.LoggedInView;
 import view.LoginView;
 import view.SignupView;
 import view.ViewManager;
 
 
-import data_access.NotificationDataAccessObject;
-import data_access.InMemoryNotificationDataAccessObject;
-
 import interface_adapter.notifications.NotificationsController;
 import interface_adapter.notifications.NotificationsPresenter;
 import interface_adapter.notifications.NotificationsViewModel;
 
-import use_case.notifications.ViewNotificationsInputBoundary;
-import use_case.notifications.ViewNotificationsInteractor;
-import use_case.notifications.ViewNotificationsOutputBoundary;
-import use_case.notifications.CurrentUserIdProvider;
+import usecase.notifications.ViewNotificationsInputBoundary;
+import usecase.notifications.ViewNotificationsInteractor;
+import usecase.notifications.ViewNotificationsOutputBoundary;
+import usecase.notifications.CurrentUserIdProvider;
 
 import view.NotificationsView;
 

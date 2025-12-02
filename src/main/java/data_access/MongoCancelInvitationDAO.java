@@ -13,7 +13,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import use_case.cancel.CancelInvitationDataAccessInterface;
+import usecase.cancel.CancelInvitationDataAccessInterface;
 
 /**
  * MongoDB implementation of CancelInvitationDataAccessInterface.

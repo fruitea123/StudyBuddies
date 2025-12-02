@@ -3,7 +3,7 @@ package view;
 import interface_adapter.notifications.NotificationItemViewModel;
 import interface_adapter.notifications.NotificationsController;
 import interface_adapter.notifications.NotificationsViewModel;
-import use_case.notifications.NotificationFilter;
+import usecase.notifications.NotificationFilter;
 
 import javax.swing.*;
 import java.awt.*;

@@ -6,7 +6,9 @@ import interface_adapter.make_invitation.MakeInvitationController;
 import interface_adapter.make_invitation.MakeInvitationPresenter;
 import interface_adapter.make_invitation.MakeInvitationViewModel;
 import interface_adapter.make_invitation.SessionCurrentUserGateway;
-import use_case.make_invitation.*;
+import usecase.make_invitation.MakeInvitationInputBoundary;
+import usecase.make_invitation.MakeInvitationInteractor;
+import usecase.make_invitation.MakeInvitationOutputBoundary;
 import view.MakeInvitationView;
 
 import javax.swing.*;
