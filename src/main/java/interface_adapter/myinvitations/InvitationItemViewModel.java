@@ -9,7 +9,7 @@ public class InvitationItemViewModel {
     private String invitationId;
     private String title;
     private String description;
-    private boolean owned; // true = owned by current user, false = just participating
+    private boolean owned; // true = owned by current user; false = just participating
 
     public InvitationItemViewModel() {
     }
