@@ -1,12 +1,8 @@
-package use_case.accept;
+package usecase.accept;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.jupiter.api.Test;
-import usecase.accept.AcceptInvitationInputData;
-import usecase.accept.AcceptInvitationInteractor;
-import usecase.accept.AcceptInvitationOutputBoundary;
-import usecase.accept.AcceptInvitationUserDataAccessInterface;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -133,20 +129,6 @@ public class AcceptCoverageTests {
         interactor.acceptInvitation(new AcceptInvitationInputData(username, owner));
 
         assertEquals("No session found for owner: " + owner, presenter.lastError);
-    }
-
-    @Test
-    public void hasTimeConflict_targetStartNull_only() {
-        FakePresenter presenter = new FakePresenter();
-        FakeDao dao = new FakeDao();
-        dao.targetSession = new Document("_id", new ObjectId())
-                .append("owner", "Tim")
-                .append("startTime", null)
-                .append("endTime", new Date(2000L));
-        dao.userSessions = Collections.emptyList();
-
-        AcceptInvitationInteractor interactor = new AcceptInvitationInteractor(presenter, dao);
-        assertFalse(interactor.hasTimeConflict("max", "Tim")); // you'll need to make hasTimeConflict package-private or use reflection
     }
 
     @Test

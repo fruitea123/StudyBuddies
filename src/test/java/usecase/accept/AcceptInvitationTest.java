@@ -1,10 +1,6 @@
-package use_case.accept;
+package usecase.accept;
 
 import data_access.MongoAcceptInvitationDAO;
-import usecase.accept.AcceptInvitationInputData;
-import usecase.accept.AcceptInvitationInteractor;
-import usecase.accept.AcceptInvitationOutputBoundary;
-import usecase.accept.AcceptInvitationUserDataAccessInterface;
 
 public class AcceptInvitationTest { // accept invitation test
     public static void main(String[] args) {
