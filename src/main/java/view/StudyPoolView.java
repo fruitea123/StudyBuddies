@@ -82,6 +82,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
 
         scroll_panel.removeAll();
         JPanel scroll_list = new JPanel();
+        scroll_list.setLayout(new BoxLayout(scroll_list, BoxLayout.Y_AXIS));
 
         final ProfileState currentState = profileViewModel.getState();
         final String user = currentState.getUsername();
