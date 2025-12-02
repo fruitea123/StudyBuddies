@@ -32,6 +32,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         descriptionLabel = new JLabel();
 
         JPanel panel = new JPanel(new GridBagLayout());
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         panel.add(usernameLabel);
         panel.add(nameLabel);
         panel.add(programsLabel);
@@ -44,10 +45,10 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     }
 // make list of programs p1,p2,p3
     private void update(ProfileState state) {
-        usernameLabel.setText(ProfileViewModel.USERNAME_LABEL + state.getUsername());
-        nameLabel.setText(ProfileViewModel.NAME_LABEL + state.getName());
-        programsLabel.setText(ProfileViewModel.PROGRAM_LABEL + state.getPrograms());
-        descriptionLabel.setText(ProfileViewModel.DESCRIPTION_LABEL + state.getDescription());
+        usernameLabel.setText(ProfileViewModel.USERNAME_LABEL + ":   " + state.getUsername());
+        nameLabel.setText(ProfileViewModel.NAME_LABEL + ":   " + state.getName());
+        programsLabel.setText(ProfileViewModel.PROGRAM_LABEL + ":   " + state.getPrograms());
+        descriptionLabel.setText(ProfileViewModel.DESCRIPTION_LABEL + ":   " + state.getDescription());
     }
 
     @Override
