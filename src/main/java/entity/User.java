@@ -67,23 +67,6 @@ public class User {
     this.icon = icon;
     this.description = description;
   }
-    /**
-     * A lightweight factory method to create a User when we only know the email.
-     * Used by Mongo mappers (e.g., invitation owner/participants).
-     * Other fields are filled with placeholder values because they are not
-     * needed in those use cases.
-     */
-    public static User fromEmail(String email) {
-        return new User(
-                email,
-                "placeholder-password",
-                "placeholder-firstName",
-                "placeholder-lastName",
-                List.of(),          // empty programs
-                "",                 // icon
-                ""                  // description
-        );
-    }
 
   /**
    * A lightweight factory method to create a User when we only know the email.
