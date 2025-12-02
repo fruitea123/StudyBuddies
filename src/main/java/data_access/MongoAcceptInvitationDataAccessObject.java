@@ -1,4 +1,4 @@
-package dataaccess;
+package data_access;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.addToSet;
@@ -13,7 +13,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import usecase.accept.AcceptInvitationDataAccessInterface;
+import use_case.accept.AcceptInvitationDataAccessInterface;
 
 
 /**

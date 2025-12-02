@@ -1,4 +1,4 @@
-package usecase.accept;
+package use_case.accept;
 
 import java.util.Date;
 import org.bson.Document;
@@ -8,13 +8,13 @@ import org.bson.Document;
  */
 public class AcceptInvitationInteractor implements AcceptInvitationInputBoundary {
   private final AcceptInvitationOutputBoundary outputBoundary;
-  private final AcceptInvitationUserDataAccessInterface dataAccess;
+  private final AcceptInvitationDataAccessInterface dataAccess;
 
   /**
      * Interactor depends on a data access interface instead of Mongo directly.
   */
   public AcceptInvitationInteractor(AcceptInvitationOutputBoundary outputBoundary,
-                                      AcceptInvitationUserDataAccessInterface dataAccess) {
+                                      AcceptInvitationDataAccessInterface dataAccess) {
     this.outputBoundary = outputBoundary;
     this.dataAccess = dataAccess;
   }

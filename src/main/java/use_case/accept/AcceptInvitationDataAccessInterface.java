@@ -1,11 +1,11 @@
-package usecase.accept;
+package use_case.accept;
 
 import org.bson.Document;
 
 /**
  * Interface for accessing invitation data in the AcceptInvitation system.
  */
-public interface AcceptInvitationUserDataAccessInterface {
+public interface AcceptInvitationDataAccessInterface {
 
   /**
      * Finds the invitation for a given participant.

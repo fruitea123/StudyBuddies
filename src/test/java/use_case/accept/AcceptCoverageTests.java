@@ -1,4 +1,4 @@
-package usecase.accept;
+package use_case.accept;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
@@ -29,7 +29,7 @@ public class AcceptCoverageTests {
         }
     }
 
-    private static class FakeDao implements AcceptInvitationUserDataAccessInterface {
+    private static class FakeDao implements AcceptInvitationDataAccessInterface {
         Document targetSession = null;
         Iterable<Document> userSessions = Collections.emptyList();
         boolean addCalled = false;
@@ -98,7 +98,7 @@ public class AcceptCoverageTests {
 
         FakePresenter presenter = new FakePresenter();
 
-        AcceptInvitationUserDataAccessInterface dao = new FakeDao() {
+        AcceptInvitationDataAccessInterface dao = new FakeDao() {
             int calls = 0;
 
             @Override
@@ -408,7 +408,7 @@ public class AcceptCoverageTests {
 
         // DAO that returns null for the first call (from hasTimeConflict)
         // and a real session for the second call (from acceptInvitation).
-        AcceptInvitationUserDataAccessInterface dao = new FakeDao() {
+        AcceptInvitationDataAccessInterface dao = new FakeDao() {
             int calls = 0;
 
             @Override

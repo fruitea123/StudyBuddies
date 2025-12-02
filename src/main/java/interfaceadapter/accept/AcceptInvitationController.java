@@ -1,7 +1,7 @@
 package interfaceadapter.accept;
 
-import usecase.accept.AcceptInvitationInputBoundary;
-import usecase.accept.AcceptInvitationInputData;
+import use_case.accept.AcceptInvitationInputBoundary;
+import use_case.accept.AcceptInvitationInputData;
 
 /**
  * Controller for the Accept Invitation use case.
