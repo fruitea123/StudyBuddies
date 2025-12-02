@@ -16,7 +16,7 @@ import java.util.*;
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                                                  LoginUserDataAccessInterface{
 
-    private static final String HEADER = "username,password,firstName,lastName,programs,pfpIndex,description";
+    private static final String HEADER = "email,password,firstName,lastName,programs,pfpIndex,description";
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
