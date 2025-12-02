@@ -1,6 +1,6 @@
 package use_case.accept;
 
-import data_access.MongoAcceptInvitationDAO;
+import data_access.MongoAcceptInvitationDataAccessObject;
 
 public class AcceptInvitationTest { // accept invitation test
     public static void main(String[] args) {
@@ -19,7 +19,7 @@ public class AcceptInvitationTest { // accept invitation test
         };
 
         // 2) DAO (Mongo implementation of your data access interface)
-        AcceptInvitationUserDataAccessInterface dao = new MongoAcceptInvitationDAO();
+        AcceptInvitationDataAccessInterface dao = new MongoAcceptInvitationDataAccessObject();
 
         // 3) Interactor needs BOTH presenter and dao
         AcceptInvitationInteractor interactor =
@@ -27,7 +27,7 @@ public class AcceptInvitationTest { // accept invitation test
 
         // 4) Build input and call use case
         String username = "max";
-        String sessionOwner = "john";
+        String sessionOwner = "Tim";
         AcceptInvitationInputData input =
                 new AcceptInvitationInputData(username, sessionOwner);
 
