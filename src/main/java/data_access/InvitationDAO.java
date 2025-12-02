@@ -9,11 +9,12 @@ import mapper.DBInvitationMapper;
 
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import use_case.filter.FilterInvitationDataAccessInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class InvitationDAO {
+public class InvitationDAO implements FilterInvitationDataAccessInterface {
 
     private final MongoCollection<Document> collection;
 
@@ -28,6 +29,7 @@ public class InvitationDAO {
         }
         return list;
     }
+
 //can delete useless (just there bc i generated them as filteration examples
     public Invitation findById(String id) {
         Document doc = collection.find(Filters.eq("_id", new ObjectId(id))).first();

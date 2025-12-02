@@ -1,63 +1,116 @@
 package use_case.signup;
 
-import data_access.PasswordHasher;
 import entity.User;
 import entity.UserFactory;
+
+import java.time.LocalDate;
+import java.time.Period;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * The Signup Interactor.
  */
 public class SignupInteractor implements SignupInputBoundary {
     private final SignupUserDataAccessInterface userDataAccessObject;
-    private final SignupPasswordHasher passwordHasher;
+//    private final SignupPasswordHasher passwordHasher;
     private final SignupOutputBoundary userPresenter;
     private final UserFactory userFactory;
 
     public SignupInteractor(SignupUserDataAccessInterface signupDataAccessInterface,
-                            SignupPasswordHasher passwordHasher,
+//                            SignupPasswordHasher passwordHasher,
                             SignupOutputBoundary signupOutputBoundary,
                             UserFactory userFactory) {
         this.userDataAccessObject = signupDataAccessInterface;
-        this.passwordHasher = passwordHasher;
+//        this.passwordHasher = passwordHasher;
         this.userPresenter = signupOutputBoundary;
         this.userFactory = userFactory;
     }
 
+    /* checks if:
+    - All required fields are not empty
+     - User already exists
+     - Email contains @utoronto.ca
+     - Password is at least 8 characters, contains one uppercase, one lowercase, and one number
+     - Password is equal to repeatPassword
+     - dateOfBirth must show that the user is at least 16 years old
+     - numPrograms must be at least one
+     - numPrograms must be equal to the number of programs the user is enrolled in
+     */
     @Override
     public void execute(SignupInputData signupInputData) {
-        if (userDataAccessObject.existsByEmail(signupInputData.getEmail())) {
-            userPresenter.prepareFailView("User already exists.");
-        }
-        else if (!signupInputData.getPassword1().equals(signupInputData.getPassword2())) {
-            userPresenter.prepareFailView("Passwords don't match.");
-        }
-        else if ("".equals(signupInputData.getPassword1())) {
-            userPresenter.prepareFailView("New password cannot be empty");
-        }
-        else if ("".equals(signupInputData.getEmail())) {
-            userPresenter.prepareFailView("Username cannot be empty");
-        }
-        else {
 
-            String hashedPassword = passwordHasher.hashPassword(signupInputData.getPassword1());
+        LocalDate today = LocalDate.now();
+        if ("".equals(signupInputData.getEmail())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getPassword())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getRepeatPassword())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getFirstName())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getLastName())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getDateOfBirth())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getNumPrograms())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getProgram1())) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getProgram2()) && signupInputData.getNumPrograms() > 1) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if ("".equals(signupInputData.getProgram3()) && signupInputData.getNumPrograms() > 2) {
+            userPresenter.prepareFailView("This field cannot be empty");
+        } else if (userDataAccessObject.existsByEmail(signupInputData.getEmail())) {
+            userPresenter.prepareFailView("User already exists");
+        } else if (!signupInputData.getEmail().contains("@utoronto.ca")) {
+            userPresenter.prepareFailView("Email address must be a UofT email address");
+        } else if (signupInputData.getPassword().length() < 8) {
+            userPresenter.prepareFailView("Password must be at least 8 characters");
+        } else if (!signupInputData.getPassword().matches(".*[A-Z].*")) {
+            userPresenter.prepareFailView("Password must contain at least 1 uppercase letter");
+        } else if (!signupInputData.getPassword().matches(".*[a-z].*")) {
+            userPresenter.prepareFailView("Password must contain at least 1 lowercase letter");
+        } else if (!signupInputData.getPassword().matches(".*[0-9].*")) {
+            userPresenter.prepareFailView("Password must contain at least 1 number");
+        } else if (!signupInputData.getPassword().equals(signupInputData.getRepeatPassword())) {
+            userPresenter.prepareFailView("Passwords don't match");
+        } else if (Period.between(signupInputData.getDateOfBirth(), today).getYears() < 16) {
+            userPresenter.prepareFailView("You must be at least 16 years old");
+        } else if (signupInputData.getNumPrograms() < 1) {
+            userPresenter.prepareFailView("Number of programs must be at least 1");
+        } else {
+
+            List<String> programs = new ArrayList<>();
+            if (signupInputData.getProgram1() != null && !signupInputData.getProgram1().isEmpty()) {
+                programs.add(signupInputData.getProgram1());
+            }
+            if (signupInputData.getProgram2() != null && !signupInputData.getProgram2().isEmpty()) {
+                programs.add(signupInputData.getProgram2());
+            }
+            if (signupInputData.getProgram3() != null && !signupInputData.getProgram3().isEmpty()) {
+                programs.add(signupInputData.getProgram3());
+            }
 
             final User user = userFactory.create(
                     signupInputData.getEmail(),
-                    hashedPassword,
+                    signupInputData.getPassword(),
                     signupInputData.getFirstName(),
                     signupInputData.getLastName(),
-                    signupInputData.getPrograms(),
-                    signupInputData.getPfp(),
-                    signupInputData.getDescription());
-
+                    programs,
+                    signupInputData.getIcon(),
+                    signupInputData.getDescription()
+            );
             userDataAccessObject.save(user);
 
             final SignupOutputData signupOutputData = new SignupOutputData(
                     user.getEmail(),
+                    user.getPassword(),
                     user.getFirstName(),
                     user.getLastName(),
                     user.getPrograms(),
-                    user.getPfpIndex(),
+                    user.getIcon(),
                     user.getDescription());
 
             userPresenter.prepareSuccessView(signupOutputData);
@@ -65,7 +118,7 @@ public class SignupInteractor implements SignupInputBoundary {
     }
 
     @Override
-    public void switchToLoginView() {
+    public void switchToProfileView() {
         userPresenter.switchToProfileView();
     }
 }

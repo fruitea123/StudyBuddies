@@ -8,14 +8,19 @@ import java.util.List;
 public class UserFactory {
 
     public User create(String email,
-                       String hashedPassword,
+                       String password,
                        String firstName,
                        String lastName,
                        List<String> programs,
-                       int pfpindex,
+                       String icon,
                        String descripion) {
-        return new User(email, hashedPassword,
-                        firstName, lastName,
-                        programs, pfpindex, descripion);
+        return new User(
+                email,
+                password,
+                firstName,
+                lastName,
+                programs,
+                icon,
+                descripion);
     }
 }

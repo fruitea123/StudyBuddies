@@ -1,77 +1,139 @@
 package view.forms;
 
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import interface_adapter.myinvitations.InvitationItemViewModel;
+import interface_adapter.myinvitations.MyInvitationsController;
+import interface_adapter.myinvitations.MyInvitationsViewModel;
 
-//written by jessica, i apologize for all the weirdness.
+import javax.swing.*;
 
 public class MyInvitationsView extends JFrame {
-    // this constructor class will be revamped to have loops to generate all
-    // of the stuff below, but for now it's a bunch of samples.
-    private JButton createInvitationButton;
-    private JButton leaveButton;
-    private JButton leaveButton1;
-    private JButton deleteButton;
-    private JButton deleteButton1;
-    private JTextPane info1TextPane;
-    private JTextPane info2TextPane;
-    private JTextPane info3TextPane;
-    private JTextPane info4TextPane;
+
+    // === Swing components from your .form ===
     private JPanel PagePanel;
+    private JButton createInvitationButton;
     private JButton myInvitationsHomeButton;
     private JButton studyPoolButton;
     private JButton profileButton;
+    private JButton calendarButton;
 
-    public void ParticipatingInvitationGenerator() {
-        //a false constructor/generator I started for no reason other than to remind myself that I need one later, disregard
-    }
+    private JPanel ParticipatingInvitations;
+    private JPanel OwnedInvitations;
 
-    public MyInvitationsView() { //Constructor method
-        //default setup
+    private JLabel OwnedInvitationsHeader;
+    private JLabel ParticipatingInvitationsHeader;
+
+    // Controller injected by AppBuilder
+    private MyInvitationsController controller;
+
+
+    // ============================================================
+    // Constructor — keeps EXACT style of your original version
+    // ============================================================
+    public MyInvitationsView() {
         setContentPane(PagePanel);
         setTitle("My Invitations");
         setSize(500, 500);
         setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        //actions for leave
-        leaveButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
+        // Layouts for dynamic invitation sections
+        ParticipatingInvitations.setLayout(
+                new BoxLayout(ParticipatingInvitations, BoxLayout.Y_AXIS)
+        );
+        OwnedInvitations.setLayout(
+                new BoxLayout(OwnedInvitations, BoxLayout.Y_AXIS)
+        );
+
+        // Button hooks (view delegates → controller)
+        createInvitationButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.onCreateInvitation();
             }
         });
 
-        leaveButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
+        calendarButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.onCalendarClicked();
             }
         });
 
-        //actions for delete
-        deleteButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
-            }
+        // Other navigation buttons (stub)
+        studyPoolButton.addActionListener(e -> {
+            if (controller != null) controller.onStudyPoolClicked();
         });
 
-        deleteButton1.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(MyInvitationsView.this, "hello world");
-            }
+        profileButton.addActionListener(e -> {
+            if (controller != null) controller.onProfileClicked();
         });
 
-        // could add more actions, but it's kinda pointless for me to make some rn, 'cause they'd lead to nothing :/
+        myInvitationsHomeButton.addActionListener(e -> {
+            // stays on this screen – no controller call needed
+        });
     }
 
-    public static void main(String[] args) {
-        //initializer, for testing purposes
-        MyInvitationsView myInvitationsView = new MyInvitationsView();
-        myInvitationsView.setVisible(true);
+
+    // ============================================================
+    // Allow AppBuilder to set controller
+    // ============================================================
+    public void setController(MyInvitationsController controller) {
+        this.controller = controller;
     }
 
+
+    // ============================================================
+    // The new MVP update() method
+    // Replaces your old loadInvitations(dao, user)
+    // ============================================================
+    public void update(MyInvitationsViewModel viewModel) {
+
+        // Clear old content
+        ParticipatingInvitations.removeAll();
+        OwnedInvitations.removeAll();
+
+        // Keep your headers
+        OwnedInvitations.add(OwnedInvitationsHeader);
+        ParticipatingInvitations.add(ParticipatingInvitationsHeader);
+
+        // -------------------------
+        // Participating Invitations
+        // -------------------------
+        for (InvitationItemViewModel item : viewModel.getParticipatingInvitations()) {
+
+            LeaveInvitationCard card = new LeaveInvitationCard();
+            card.setTitle(item.getTitle());
+            card.setInfo(item.getDescription());
+
+            card.getActionButton().addActionListener(e -> {
+                if (controller != null) {
+                    controller.onLeaveClicked(item.getInvitationId());
+                }
+            });
+
+            ParticipatingInvitations.add(card.getPanel());
+        }
+
+        // -------------------------
+        // Owned Invitations
+        // -------------------------
+        for (InvitationItemViewModel item : viewModel.getOwnedInvitations()) {
+
+            DeleteInvitationCard card = new DeleteInvitationCard();
+            card.setTitle(item.getTitle());
+            card.setInfo(item.getDescription());
+
+            card.getActionButton().addActionListener(e -> {
+                if (controller != null) {
+                    controller.onDeleteClicked(item.getInvitationId());
+                }
+            });
+
+            OwnedInvitations.add(card.getPanel());
+        }
+
+        // Refresh UI
+        ParticipatingInvitations.revalidate();
+        ParticipatingInvitations.repaint();
+        OwnedInvitations.revalidate();
+        OwnedInvitations.repaint();
+    }
 }

@@ -6,15 +6,23 @@ public class Main {
     public static void main(String[] args) {
         AppBuilder appBuilder = new AppBuilder();
         JFrame application = appBuilder
+// add views and use cases for all
                 .addLoginView()
                 .addSignupView()
-                .addLoggedInView()
+//                .addLoggedInView()
+                .addMakeInvitationView()
                 .addNotificationsView()
+                .addFilterView()
+                .addStudyPoolView()
+                .addProfileView()
                 .addSignupUseCase()
                 .addLoginUseCase()
-                .addLogoutUseCase()
-                .addChangePasswordUseCase()
+//                .addLogoutUseCase()
+//                .addChangePasswordUseCase()
+                .addMakeInvitationUseCase()
+                .addMakeInvitationNavigation()
                 .addNotificationsUseCase()
+                .addFilterUseCase()
                 .build();
 
         application.pack();

@@ -1,13 +1,15 @@
 package entity;
 
-import org.bson.types.ObjectId;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
+import java.util.*;
 
 public class Invitation {
-    private String id;
+
+    public static final String MODE_ONLINE = "On Line";
+    public static final String MODE_IN_PERSON = "In Person";
+    public static final int DEFAULT_CAPACITY = 2;
+
     private String course;
     private String description;
     private LocalDate date;
@@ -16,30 +18,11 @@ public class Invitation {
     private String mode;
     private String location;
     private int capacity;
-    private String owner;
-    private List<String> participants;
+    private User owner; // store string(email in DAO)
+    private List<User> participants; // store list of string(email)
+    private final String invitationID;
 
-    // Constructors, getters, setters
-    public Invitation() {}
-
-    public String getId() {
-        return id;
-    public static final String MODE_ONLINE = "OnLine";
-    public static final String MODE_IN_PERSON = "In Person";
-    public static final int DEFAULT_CAPACITY = 2;
-
-    private final String course;
-    private final String description;
-    private final LocalDate date;
-    private final LocalTime startTime;
-    private final LocalTime endTime;
-    private final String mode;
-    private final String location;
-    private final int capacity;
-    private final User owner;
-    private final List<User> participants;
-
-    Invitation(InvitationBuilder b) {
+    public Invitation(InvitationBuilder b) {
         this.course = trim(b.getCourse());
         this.description = trimOrEmpty(b.getDescription());
         this.date = b.getDate();
@@ -59,6 +42,7 @@ public class Invitation {
         }
         this.participants = Collections.unmodifiableList(new ArrayList<>(set));
         // delete repeated participants
+        this.invitationID = b.getinvitationID();
         validate();
     }
 
@@ -154,16 +138,18 @@ public class Invitation {
         return capacity;
     }
 
-    public String getOwner() {
+    public User getOwner() {
         return owner;
     }
 
-    public List<String> getParticipants() {
+    public List<User> getParticipants() {
         return participants;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public String getInvitationID() { return invitationID; }
+
+    public int participantsCount() {
+        return participants.size();
     }
 
     public void setCourse(String course) {
@@ -198,11 +184,15 @@ public class Invitation {
         this.capacity = capacity;
     }
 
-    public void setOwner(String owner) {
+    public void setOwner(User owner) {
         this.owner = owner;
     }
 
-    public void setParticipants(List<String> participants) {
+    public void setParticipants(List<User> participants) {
         this.participants = participants;
+    }
+
+    public static InvitationBuilder builder () {
+        return new InvitationBuilder();
     }
 }

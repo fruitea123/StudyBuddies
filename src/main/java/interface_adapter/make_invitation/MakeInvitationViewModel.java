@@ -1,24 +1,17 @@
 package interface_adapter.make_invitation;
 
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
+import interface_adapter.ViewModel;
 
-public class MakeInvitationViewModel {
+public class MakeInvitationViewModel extends ViewModel<MakeInvitationState> {
 
-    public static final String STATE_PROPERTY = "state";
+    // for ViewManager/view
+    public static final String VIEW_NAME = "make invitation";
 
-    private final PropertyChangeSupport pcs = new PropertyChangeSupport(this);
-    private final MakeInvitationState state = new MakeInvitationState();
-
-    public MakeInvitationState getState() {
-        return state;
+    // title for view
+    public static final String TITLE = "Make Invitation";
+    public MakeInvitationViewModel() {
+        super(VIEW_NAME);
+        this.setState(new MakeInvitationState());
     }
 
-    public void addPropertyChangeListener(PropertyChangeListener l) {
-        pcs.addPropertyChangeListener(l);
-    }
-
-    public void firePropertyChanged() {
-        pcs.firePropertyChange(STATE_PROPERTY, null, state);
-    }
 }

@@ -2,9 +2,9 @@ package data_access;
 
 import entity.User;
 import entity.UserFactory;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
+//import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
+//import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
@@ -14,9 +14,7 @@ import java.util.*;
  * DAO for user data implemented using a File to persist the data.
  */
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
-                                                 LoginUserDataAccessInterface,
-                                                 ChangePasswordUserDataAccessInterface,
-                                                 LogoutUserDataAccessInterface {
+                                                 LoginUserDataAccessInterface{
 
     private static final String HEADER = "username,password,firstName,lastName,programs,pfpIndex,description";
 
@@ -89,7 +87,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                         user.getFirstName(),
                         user.getLastName(),
                         user.getPrograms(),
-                        user.getPfpIndex(),
+                        user.getIcon(),
                         user.getDescription());
                 writer.write(line);
                 writer.newLine();
