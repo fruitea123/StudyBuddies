@@ -1,6 +1,10 @@
 package use_case.accept;
 
 import data_access.MongoAcceptInvitationDAO;
+import usecase.accept.AcceptInvitationInputData;
+import usecase.accept.AcceptInvitationInteractor;
+import usecase.accept.AcceptInvitationOutputBoundary;
+import usecase.accept.AcceptInvitationUserDataAccessInterface;
 
 public class AcceptInvitationTest { // accept invitation test
     public static void main(String[] args) {
@@ -27,7 +31,7 @@ public class AcceptInvitationTest { // accept invitation test
 
         // 4) Build input and call use case
         String username = "max";
-        String sessionOwner = "john";
+        String sessionOwner = "Tim";
         AcceptInvitationInputData input =
                 new AcceptInvitationInputData(username, sessionOwner);
 

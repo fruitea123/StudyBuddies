@@ -1,4 +1,4 @@
-package use_case.accept;
+package usecase.accept;
 
 import java.util.Date;
 import org.bson.Document;

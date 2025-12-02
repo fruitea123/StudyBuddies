@@ -1,4 +1,4 @@
-package use_case.accept;
+package usecase.accept;
 
 /**
  * Holds input data for accepting invitation by particular owner for particular user.

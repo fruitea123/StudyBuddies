@@ -1,4 +1,4 @@
-package use_case.accept;
+package usecase.accept;
 
 /**
  * Defines methods to handle the input of the AcceptInvitation use case.

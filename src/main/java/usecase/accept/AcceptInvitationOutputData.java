@@ -1,4 +1,4 @@
-package use_case.accept;
+package usecase.accept;
 
 /**
  * Holds output data for failure cases or messages to show.

@@ -1,4 +1,4 @@
-package use_case.accept;
+package usecase.accept;
 
 import org.bson.Document;
 
