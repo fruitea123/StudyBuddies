@@ -17,8 +17,8 @@ public class FilterView extends JPanel implements ActionListener, PropertyChange
     private final String viewName = "Filter";
     private final FilterViewModel filterViewModel;
 
-    private final JTextField courseInputField = new JTextField();
-    private final JTextField dateInputField = new JTextField();
+    private final JTextField courseInputField = new JTextField(20);
+    private final JTextField dateInputField = new JTextField(20);
     private final JLabel inputErrorField =  new JLabel();
 
     private final JButton filter;
