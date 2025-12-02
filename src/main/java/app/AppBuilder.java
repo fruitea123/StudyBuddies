@@ -121,7 +121,7 @@ public class AppBuilder {
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
 //        signupView = new SignUpView(signupViewModel);
-        signupView = new SignUpView();
+        signupView = new SignUpView(signupViewModel);
 //        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
