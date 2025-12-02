@@ -1,6 +1,7 @@
-package use_case.cancel;
+package usecase.cancel;
 
 import data_access.MongoCancelInvitationDAO;
+
 //test
 public class CancelInvitationTest {//cancel invitation test
 

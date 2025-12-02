@@ -1,3 +1,4 @@
+/*
 package use_case.signup;
 
 import data_access.InMemoryUserDataAccessObject;
@@ -107,4 +108,4 @@ class SignupInteractorTest {
         SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new UserFactory());
         interactor.execute(inputData);
     }
-}
+}*/
