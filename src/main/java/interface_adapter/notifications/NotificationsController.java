@@ -1,8 +1,8 @@
 package interface_adapter.notifications;
 
-import use_case.notifications.NotificationFilter;
-import use_case.notifications.ViewNotificationsInputBoundary;
-import use_case.notifications.ViewNotificationsInputData;
+import usecase.notifications.NotificationFilter;
+import usecase.notifications.ViewNotificationsInputBoundary;
+import usecase.notifications.ViewNotificationsInputData;
 
 public class NotificationsController {
 

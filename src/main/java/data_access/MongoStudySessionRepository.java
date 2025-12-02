@@ -2,8 +2,8 @@ package data_access;
 
 import com.mongodb.client.*;
 import org.bson.Document;
-import use_case.calendar.StudySession;
-import use_case.calendar.StudySessionRepository;
+import usecase.calendar.StudySession;
+import usecase.calendar.StudySessionRepository;
 
 import java.util.ArrayList;
 import java.util.Collections;

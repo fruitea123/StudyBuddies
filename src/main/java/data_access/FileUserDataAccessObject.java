@@ -2,10 +2,10 @@ package data_access;
 
 import entity.User;
 import entity.UserFactory;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
-import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
+import usecase.change_password.ChangePasswordUserDataAccessInterface;
+import usecase.login.LoginUserDataAccessInterface;
+import usecase.logout.LogoutUserDataAccessInterface;
+import usecase.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
 import java.util.*;

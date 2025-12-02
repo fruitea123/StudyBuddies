@@ -4,11 +4,10 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Updates;
 import com.mongodb.client.result.UpdateResult;
 import entity.Invitation;
-import entity.InvitationBuilder;
 import entity.User;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import use_case.accept.AcceptInvitationUserDataAccessInterface;
+import usecase.accept.AcceptInvitationUserDataAccessInterface;
 
 public class InvitationMongoDataAccess implements AcceptInvitationUserDataAccessInterface {
     private final MongoCollection<Document> invitationsCollection;

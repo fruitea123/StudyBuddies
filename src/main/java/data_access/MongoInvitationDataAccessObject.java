@@ -5,7 +5,7 @@ import com.mongodb.client.model.Filters;
 import entity.Invitation;
 import entity.User;
 import org.bson.Document;
-import use_case.make_invitation.MakeInvitationDataAccessInterface;
+import usecase.make_invitation.MakeInvitationDataAccessInterface;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

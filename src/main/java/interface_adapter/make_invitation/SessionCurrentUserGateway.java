@@ -1,7 +1,7 @@
 package interface_adapter.make_invitation;
 
 import entity.User;
-import use_case.make_invitation.CurrentUserGateway;
+import usecase.make_invitation.CurrentUserGateway;
 
 public class SessionCurrentUserGateway implements CurrentUserGateway {
     private User currentUser;

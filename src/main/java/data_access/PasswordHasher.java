@@ -1,7 +1,7 @@
 package data_access;
 
 import org.mindrot.jbcrypt.BCrypt;
-import use_case.signup.SignupPasswordHasher;
+import usecase.signup.SignupPasswordHasher;
 
 /**
  * Uses BCrypt to generate hash codes

@@ -2,7 +2,7 @@ package view.forms;
 
 import data_access.InvitationDAO;
 import entity.Invitation;
-import use_case.myinvitations.MyInvitations;
+import usecase.myinvitations.MyInvitations;
 
 import javax.swing.*;
 import java.util.List;

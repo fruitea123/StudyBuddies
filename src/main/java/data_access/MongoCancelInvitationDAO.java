@@ -7,7 +7,7 @@ import com.mongodb.ServerApiVersion;
 import com.mongodb.client.*;
 import org.bson.Document;
 import org.bson.types.ObjectId;
-import use_case.cancel.CancelInvitationDataAccessInterface;
+import usecase.cancel.CancelInvitationDataAccessInterface;
 
 import static com.mongodb.client.model.Filters.eq;
 import static com.mongodb.client.model.Updates.pull;

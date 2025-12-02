@@ -1,12 +1,9 @@
-package use_case.myinvitations;
+package usecase.myinvitations;
 
 import com.mongodb.client.MongoDatabase;
 import data_access.DBAccess;
 import data_access.InvitationDAO;
-import entity.Invitation;
 import view.forms.MyInvitationsView;
-
-import java.util.List;
 
 public class MyInvitationsViewTest {
 

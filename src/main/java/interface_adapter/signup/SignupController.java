@@ -1,7 +1,7 @@
 package interface_adapter.signup;
 
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInputData;
+import usecase.signup.SignupInputBoundary;
+import usecase.signup.SignupInputData;
 
 import java.time.LocalDate;
 import java.util.List;

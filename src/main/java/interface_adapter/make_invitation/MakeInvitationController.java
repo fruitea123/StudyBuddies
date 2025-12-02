@@ -1,7 +1,7 @@
 package interface_adapter.make_invitation;
 
-import use_case.make_invitation.MakeInvitationInputBoundary;
-import use_case.make_invitation.MakeInvitationInputData;
+import usecase.make_invitation.MakeInvitationInputBoundary;
+import usecase.make_invitation.MakeInvitationInputData;
 
 import java.time.LocalDate;
 import java.time.LocalTime;

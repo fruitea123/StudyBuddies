@@ -1,6 +1,6 @@
 package interface_adapter.notifications;
 
-import use_case.notifications.NotificationFilter;
+import usecase.notifications.NotificationFilter;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;

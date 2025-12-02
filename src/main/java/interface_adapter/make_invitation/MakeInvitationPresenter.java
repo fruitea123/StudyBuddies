@@ -1,7 +1,7 @@
 //package interface_adapter.make_invitation;
 //
-//import use_case.make_invitation.MakeInvitationOutputBoundary;
-//import use_case.make_invitation.MakeInvitationOutputData;
+//import make_invitation.usecase.MakeInvitationOutputBoundary;
+//import usecase.make_invitation.MakeInvitationOutputData;
 //
 //public class MakeInvitationPresenter implements MakeInvitationOutputBoundary {
 //

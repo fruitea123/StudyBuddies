@@ -4,8 +4,8 @@ import com.google.api.client.util.DateTime;
 import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
-import use_case.calendar.CalendarService;
-import use_case.calendar.StudySession;
+import usecase.calendar.CalendarService;
+import usecase.calendar.StudySession;
 //imports
 /**
  * Google Calendar API implementation of {@link CalendarService}.
