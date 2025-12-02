@@ -11,8 +11,9 @@ public class ProfileViewModel extends ViewModel<ProfileState> {
     public static final String P2_LABEL = "2nd Program";
     public static final String P3_LABEL = "3rd Program";
     public static final String DESCRIPTION_LABEL = "Description (optional)";
+    public static final String PROGRAM_LABEL = "sign up";
 
-    public ProfileViewModel(String viewName) {
+    public ProfileViewModel() {
         super("profile");
         setState(new ProfileState());
     }

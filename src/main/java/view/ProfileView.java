@@ -12,6 +12,8 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     private final ProfileViewModel profileViewModel;
 
+    private final String viewName = "profile";
+
     private JLabel usernameLabel;
     private JLabel nameLabel;
     private JLabel programsLabel;
@@ -56,9 +58,13 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     public static void main(String[] args) {
         JFrame frame = new JFrame("Profile");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(new ProfileView(new ProfileViewModel("profile")));
+        frame.add(new ProfileView(new ProfileViewModel()));
         frame.setSize(450, 600);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    public String getViewName() {
+        return viewName;
     }
 }

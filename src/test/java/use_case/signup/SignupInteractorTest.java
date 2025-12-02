@@ -1,7 +1,7 @@
 package use_case.signup;
 
 import data_access.InMemoryUserDataAccessObject;
-import data_access.PasswordHasher;
+//import data_access.PasswordHasher;
 import entity.UserFactory;
 import entity.User;
 import org.junit.jupiter.api.Test;
@@ -41,7 +41,7 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, new PasswordHasher(), successPresenter, new UserFactory());
+        SignupInputBoundary interactor = new SignupInteractor(userRepository, successPresenter, new UserFactory());
         interactor.execute(inputData);
     }
 
@@ -69,7 +69,7 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, new PasswordHasher(), failurePresenter, new UserFactory());
+        SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new UserFactory());
         interactor.execute(inputData);
     }
 
@@ -104,7 +104,7 @@ class SignupInteractorTest {
             }
         };
 
-        SignupInputBoundary interactor = new SignupInteractor(userRepository, new PasswordHasher(), failurePresenter, new UserFactory());
+        SignupInputBoundary interactor = new SignupInteractor(userRepository, failurePresenter, new UserFactory());
         interactor.execute(inputData);
     }
 }

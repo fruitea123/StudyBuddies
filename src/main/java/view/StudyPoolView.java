@@ -33,8 +33,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
     private FilterController filterController;
 
 
-    public StudyPoolView(StudyPoolViewModel studyPoolViewModel, ProfileViewModel profileViewModel,
-                         AcceptInvitationController acceptController, FilterController filterController) {
+    public StudyPoolView(StudyPoolViewModel studyPoolViewModel, ProfileViewModel profileViewModel) {
         this.studyPoolViewModel = studyPoolViewModel;
         this.profileViewModel = profileViewModel;
 //        this.acceptController = acceptController;
@@ -108,5 +107,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
     public void setFilterController(FilterController controller) {
         this.filterController = controller;
     }
+
+
 
 }

@@ -1,36 +1,42 @@
 package app;
 
-import data_access.FileUserDataAccessObject;
-import data_access.MongoInvitationDataAccessObject;
+import data_access.*;
+import entity.Notification;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
+//import interface_adapter.logged_in.ChangePasswordController;
+//import interface_adapter.logged_in.ChangePasswordPresenter;
+//import interface_adapter.logged_in.LoggedInViewModel;
+import interface_adapter.accept.AcceptInvitationController;
+import interface_adapter.filter.FilterController;
+import interface_adapter.filter.FilterPresenter;
 import interface_adapter.filter.FilterViewModel;
-import interface_adapter.logged_in.ChangePasswordController;
-import interface_adapter.logged_in.ChangePasswordPresenter;
-import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutPresenter;
+//import interface_adapter.logout.LogoutController;
+//import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
+//import use_case.change_password.ChangePasswordInputBoundary;
+//import use_case.change_password.ChangePasswordInteractor;
+//import use_case.change_password.ChangePasswordOutputBoundary;
 import interface_adapter.study_pool.StudyPoolViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
+import use_case.filter.FilterInputBoundary;
+import use_case.filter.FilterInteractor;
+import use_case.filter.FilterOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
-import use_case.logout.LogoutInputBoundary;
-import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
+//import use_case.logout.LogoutInputBoundary;
+//import use_case.logout.LogoutInteractor;
+//import use_case.logout.LogoutOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
-import view.LoggedInView;
+//import view.LoggedInView;
 import view.LoginView;
 import view.SignUpView;
 import view.ViewManager;
@@ -40,9 +46,6 @@ import use_case.make_invitation.*;
 import view.*;
 
 
-import data_access.NotificationDataAccessObject;
-import data_access.InMemoryNotificationDataAccessObject;
-
 import interface_adapter.notifications.NotificationsController;
 import interface_adapter.notifications.NotificationsPresenter;
 import interface_adapter.notifications.NotificationsViewModel;
@@ -54,23 +57,11 @@ import use_case.notifications.CurrentUserIdProvider;
 
 import view.NotificationsView;
 
-
-import data_access.NotificationDataAccessObject;
-import data_access.InMemoryNotificationDataAccessObject;
-
-import interface_adapter.notifications.NotificationsController;
-import interface_adapter.notifications.NotificationsPresenter;
-import interface_adapter.notifications.NotificationsViewModel;
-
-import use_case.notifications.ViewNotificationsInputBoundary;
-import use_case.notifications.ViewNotificationsInteractor;
-import use_case.notifications.ViewNotificationsOutputBoundary;
-import use_case.notifications.CurrentUserIdProvider;
-
-import view.NotificationsView;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
+import java.util.Optional;
 
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
@@ -92,40 +83,40 @@ public class AppBuilder {
     private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private ProfileViewModel profileViewModel;
-    private LoggedInView loggedInView;
+    //    private LoggedInView loggedInView;
     private LoginView loginView;
     private MakeInvitationViewModel makeInvitationViewModel;
     private MakeInvitationView makeInvitationView;
+
     private final MongoInvitationDataAccessObject invitationDataAccessObject =
             new MongoInvitationDataAccessObject();
+    private final InvitationDAO invitationDAO =
+            new InvitationDAO(DBAccess.getDatabase());
+    private final NotificationDataAccessObject notificationDataAccessObject =
+            new InMemoryNotificationDataAccessObject();
+
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
     private NotificationsView notificationsView;
     private NotificationsViewModel notificationsViewModel;
+
     private FilterView filterView;
     private FilterViewModel filterViewModel;
+
     private StudyPoolView studyPoolView;
     private StudyPoolViewModel studyPoolViewModel;
+    private AcceptInvitationController acceptController;
+    private FilterController filterController;
+
+    private ProfileView profileView;
+    private ProfileViewModel poolViewModel;
+
+
 
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
     }
-
-    public AppBuilder addFilterview() {
-        filterViewModel = new FilterViewModel();
-        filterView = new FilterView(filterViewModel);
-        cardPanel.add(filterView, filterViewModel.getViewName());
-        return this;
-    }
-
-    public AppBuilder addStudyPoolview() {
-        studyPoolViewModel = new StudyPoolViewModel();
-        studyPoolView = new StudyPoolView()
-        cardPanel.add(filterView, filterViewModel.getViewName());
-        return this;
-    }
-
 
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
@@ -169,18 +160,43 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addNotificationsView() {
-        notificationsViewModel = new NotificationsViewModel();
-        notificationsView = new NotificationsView(notificationsViewModel);
-        cardPanel.add(notificationsView, notificationsView.getViewName());
+
+    public AppBuilder addFilterView() {
+        filterViewModel = new FilterViewModel();
+        filterView = new FilterView(filterViewModel);
+        cardPanel.add(filterView, filterView.getViewName());
+        return this;
+    }
+
+
+    public AppBuilder addStudyPoolView() {
+        studyPoolViewModel = new StudyPoolViewModel();
+        profileViewModel = new ProfileViewModel();
+//        acceptController = new AcceptInvitationController();
+//        filterController = new FilterController();
+
+        studyPoolView = new StudyPoolView(studyPoolViewModel, profileViewModel);
+        cardPanel.add(studyPoolView, studyPoolViewModel.getViewName());
+        return this;
+    }
+
+    public AppBuilder addProfileView() {
+        poolViewModel = new ProfileViewModel();
+        profileView = new ProfileView(profileViewModel);
+        cardPanel.add(profileView, profileView.getViewName());
         return this;
     }
 
 
 
+
+
+
+
+
     public AppBuilder addSignupUseCase() {
         final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
-                signupViewModel, loginViewModel);
+                signupViewModel, profileViewModel);
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 userDataAccessObject, signupOutputBoundary, userFactory);
 
@@ -193,40 +209,40 @@ public class AppBuilder {
         final LoginOutputBoundary loginOutputBoundary = new LoginPresenter(viewManagerModel,
                 profileViewModel, loginViewModel);
         final LoginInputBoundary loginInteractor = new LoginInteractor(
-                userDataAccessObject, loginOutputBoundary);
+                userDataAccessObject, loginOutputBoundary, sessionCurrentUserGateway);
 
-        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupView);
+        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel);
         loginView.setLoginController(loginController);
         return this;
     }
 
-    public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
-                loggedInViewModel);
-
-        final ChangePasswordInputBoundary changePasswordInteractor =
-                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-
-        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordInteractor);
-        loggedInView.setChangePasswordController(changePasswordController);
-        return this;
-    }
+//    public AppBuilder addChangePasswordUseCase() {
+//        final ChangePasswordOutputBoundary changePasswordOutputBoundary = new ChangePasswordPresenter(viewManagerModel,
+//                loggedInViewModel);
+//
+//        final ChangePasswordInputBoundary changePasswordInteractor =
+//                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
+//
+//        ChangePasswordController changePasswordController = new ChangePasswordController(changePasswordInteractor);
+//        loggedInView.setChangePasswordController(changePasswordController);
+//        return this;
+//    }
 
     /**
      * Adds the Logout Use Case to the application.
      * @return this builder
      */
-    public AppBuilder addLogoutUseCase() {
-        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
-                loggedInViewModel, loginViewModel);
-
-        final LogoutInputBoundary logoutInteractor =
-                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
-
-        final LogoutController logoutController = new LogoutController(logoutInteractor);
-        loggedInView.setLogoutController(logoutController);
-        return this;
-    }
+//    public AppBuilder addLogoutUseCase() {
+//        final LogoutOutputBoundary logoutOutputBoundary = new LogoutPresenter(viewManagerModel,
+//                loggedInViewModel, loginViewModel);
+//
+//        final LogoutInputBoundary logoutInteractor =
+//                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+//
+//        final LogoutController logoutController = new LogoutController(logoutInteractor);
+//        loggedInView.setLogoutController(logoutController);
+//        return this;
+//    }
 
     public AppBuilder addMakeInvitationUseCase() {
         // updates MakeInvitationViewModel
@@ -249,6 +265,31 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addFilterUseCase() {
+        FilterOutputBoundary filterOutputBoundary;
+        filterOutputBoundary = new FilterPresenter(filterViewModel,
+                studyPoolViewModel,
+                viewManagerModel,
+                profileViewModel);
+
+
+        FilterInputBoundary filterInteractor =
+                new FilterInteractor(
+                        invitationDAO,
+                        filterOutputBoundary
+                );
+
+        FilterController filterController =
+                new FilterController(filterInteractor);
+
+        filterView.setFilterController(filterController);
+
+        return this;
+    }
+
+
+
+
     public AppBuilder addNotificationsUseCase() {
         // 1. Presenter：
         final ViewNotificationsOutputBoundary notificationsOutputBoundary =
@@ -258,7 +299,7 @@ public class AppBuilder {
         CurrentUserIdProvider currentUserIdProvider = new CurrentUserIdProvider() {
             @Override
             public String getCurrentUserId() {
-                return loggedInViewModel.getUsername();
+                return profileViewModel.getState().getUsername();
             }
         };
 
