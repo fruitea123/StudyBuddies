@@ -2,25 +2,21 @@ package data_access;
 
 import entity.User;
 import entity.UserFactory;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
+//import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.logout.LogoutUserDataAccessInterface;
+//import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
 import java.io.*;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * DAO for user data implemented using a File to persist the data.
  */
 public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
-                                                 LoginUserDataAccessInterface,
-                                                 ChangePasswordUserDataAccessInterface,
-                                                 LogoutUserDataAccessInterface {
+                                                 LoginUserDataAccessInterface{
 
-    private static final String HEADER = "username,password";
+    private static final String HEADER = "username,password,firstName,lastName,programs,pfpIndex,description";
 
     private final File csvFile;
     private final Map<String, Integer> headers = new LinkedHashMap<>();
@@ -37,8 +33,13 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
     public FileUserDataAccessObject(String csvPath, UserFactory userFactory) {
 
         csvFile = new File(csvPath);
-        headers.put("username", 0);
+        headers.put("email", 0);
         headers.put("password", 1);
+        headers.put("firstName", 2);
+        headers.put("lastName", 3);
+        headers.put("programs", 4);
+        headers.put("pfpIndex", 5);
+        headers.put("description", 6);
 
         if (csvFile.length() == 0) {
             save();
@@ -55,10 +56,16 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
                 String row;
                 while ((row = reader.readLine()) != null) {
                     final String[] col = row.split(",");
-                    final String username = String.valueOf(col[headers.get("username")]);
+                    final String email = String.valueOf(col[headers.get("username")]);
                     final String password = String.valueOf(col[headers.get("password")]);
-                    final User user = userFactory.create(username, password);
-                    accounts.put(username, user);
+                    final String firstName = col[headers.get("firstName")];
+                    final String lastName = col[headers.get("lastName")];
+                    final List<String> programs = Collections.singletonList(col[headers.get("programs")]);
+                    final int pfpIndex = Integer.parseInt(col[headers.get("pfpIndex")]);
+                    final String descripion = col[headers.get("description")];
+                    final User user = userFactory.create(email, password, firstName, lastName, programs,
+                      String.valueOf(pfpIndex), descripion);
+                    accounts.put(email, user);
                 }
             }
             catch (IOException ex) {
@@ -75,8 +82,14 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
             writer.newLine();
 
             for (User user : accounts.values()) {
-                final String line = String.format("%s,%s",
-                        user.getName(), user.getPassword());
+                final String line = String.format("%s,%s,%s,%s,%s,%d,%s",
+                        user.getEmail(),
+                        user.getPassword(),
+                        user.getFirstName(),
+                        user.getLastName(),
+                        user.getPrograms(),
+                        user.getIcon(),
+                        user.getDescription());
                 writer.write(line);
                 writer.newLine();
             }
@@ -91,18 +104,18 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
 
     @Override
     public void save(User user) {
-        accounts.put(user.getName(), user);
+        accounts.put(user.getEmail(), user);
         this.save();
     }
 
     @Override
-    public User get(String username) {
-        return accounts.get(username);
+    public User get(String email) {
+        return accounts.get(email);
     }
 
     @Override
-    public void setCurrentUsername(String name) {
-        currentUsername = name;
+    public void setCurrentUsername(String email) {
+        currentUsername = email;
     }
 
     @Override
@@ -111,14 +124,14 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
     }
 
     @Override
-    public boolean existsByName(String identifier) {
+    public boolean existsByEmail(String identifier) {
         return accounts.containsKey(identifier);
     }
 
     @Override
     public void changePassword(User user) {
         // Replace the User object in the map
-        accounts.put(user.getName(), user);
+        accounts.put(user.getEmail(), user);
         save();
     }
 }
