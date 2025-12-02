@@ -26,11 +26,14 @@ public class SignupState {
     private String program2Error;
     private String program3 = "";
     private String program3Error;
+    private String icon = "";
+    private String iconError;
+    private String description = "";
+    private String descriptionError;
 
     public String getEmail() {
         return email;
     }
-
     public String getEmailError() {
         return emailError;
     }
@@ -38,7 +41,6 @@ public class SignupState {
     public String getPassword() {
         return password;
     }
-
     public String getPasswordError() {
         return passwordError;
     }
@@ -46,66 +48,36 @@ public class SignupState {
     public String getRepeatPassword() {
         return repeatPassword;
     }
-
     public String getRepeatPasswordError() {
         return repeatPasswordError;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() { return firstName; }
+    public String getFirstNameError() { return firstNameError; }
 
-    public String getFirstNameError() {
-        return firstNameError;
-    }
+    public String getLastName() { return lastName; }
+    public String getLastNameError() { return lastNameError; }
 
-    public String getLastName() {
-        return lastName;
-    }
+    public LocalDate getDateOfBirth() { return dateOfBirth; }
+    public String getDateOfBirthError() { return dateOfBirthError; }
 
-    public String getLastNameError() {
-        return lastNameError;
-    }
+    public int getNumPrograms() { return numPrograms; }
+    public String getNumProgramsError() { return numProgramsError; }
 
-    public LocalDate getDateOfBirth() {
-        return dateOfBirth;
-    }
+    public String getProgram1() { return program1; }
+    public String getProgram1Error() { return program1Error; }
 
-    public String getDateOfBirthError() {
-        return dateOfBirthError;
-    }
+    public String getProgram2() { return program2; }
+    public String getProgram2Error() { return program2Error; }
 
-    public int getNumPrograms() {
-        return numPrograms;
-    }
+    public String getProgram3() { return program3; }
+    public String getProgram3Error() { return program3Error; }
 
-    public String getNumProgramsError() {
-        return numProgramsError;
-    }
+    public String getIcon() { return icon; }
+    public String getIconError() { return iconError; }
 
-    public String getProgram1() {
-        return program1;
-    }
-
-    public String getProgram1Error() {
-        return program1Error;
-    }
-
-    public String getProgram2() {
-        return program2;
-    }
-
-    public String getProgram2Error() {
-        return program2Error;
-    }
-
-    public String getProgram3() {
-        return program3;
-    }
-
-    public String getProgram3Error() {
-        return program3Error;
-    }
+    public String getDescription() { return description; }
+    public String getDescriptionError() { return descriptionError; }
 
     public void setEmail(String email) { this.email = email; }
 
@@ -180,6 +152,14 @@ public class SignupState {
     public void setProgram3Error(String program3Error) {
         this.program3Error = program3Error;
     }
+
+    public void setIcon(String icon) { this.icon = icon; }
+    public void setIconError(String iconError) { this.iconError = iconError; }
+
+    public void setDescription(String description) { this.description = description; }
+    public void setDescriptionError(String descriptionError) { this.descriptionError = descriptionError; }
+
+
 
     @Override
     public String toString() {
