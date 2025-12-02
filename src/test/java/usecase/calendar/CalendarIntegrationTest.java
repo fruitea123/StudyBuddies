@@ -48,6 +48,9 @@ public class CalendarIntegrationTest {
             // Use case execution
             var interactor = new InsertUserStudySessionsInteractor(repo, googleCalendarService);
             interactor.execute("steve@mail.utoronto.ca");
+            interactor.execute(null);
+            interactor.execute("harish");
+            interactor.execute("Tim@mail.utoronto.ca");
 
             System.out.println("✓ All study sessions inserted into Google Calendar!");
 
