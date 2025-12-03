@@ -59,12 +59,4 @@ public class MyInvitationsController {
             e.printStackTrace();
         }
     }
-/// //////
-    public void onStudyPoolClicked() {
-        System.out.println("Navigate: Study Pool");
-    }
-
-    public void onProfileClicked() {
-        System.out.println("Navigate: Profile");
-    }
 }
