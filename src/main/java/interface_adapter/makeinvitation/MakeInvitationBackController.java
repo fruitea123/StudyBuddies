@@ -1,7 +1,8 @@
 package interface_adapter.makeinvitation;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.profile.ProfileViewModel;
+import interface_adapter.myinvitations.MyInvitationsViewModel;
+
 
 /**
  * Controller for switching back to the profile view after invitation successfully created.
@@ -9,25 +10,30 @@ import interface_adapter.profile.ProfileViewModel;
 public class MakeInvitationBackController {
 
   private final ViewManagerModel viewManagerModel;
-  private final ProfileViewModel profileViewModel;
+  private final MakeInvitationViewModel makeInvitationViewModel;
+  private final String myInvitationsViewName;
+
 
   /**
    * controller for switching back.
    *
-   * @param viewManagerModel view manager model
-   * @param profileViewModel profile view model
    */
   public MakeInvitationBackController(ViewManagerModel viewManagerModel,
-                                      ProfileViewModel profileViewModel) {
+                                      MakeInvitationViewModel makeInvitationViewModel,
+                                      String myInvitationsViewName) {
     this.viewManagerModel = viewManagerModel;
-    this.profileViewModel = profileViewModel;
+    this.makeInvitationViewModel = makeInvitationViewModel;
+    this.myInvitationsViewName = myInvitationsViewName;
   }
 
   /**
    * handles to switch back after clicking the back button.
    */
   public void onBack() {
-    viewManagerModel.setState(profileViewModel.getViewName());
+    makeInvitationViewModel.setState(new MakeInvitationState());
+    makeInvitationViewModel.firePropertyChange();
+
+    viewManagerModel.setState(myInvitationsViewName);
     viewManagerModel.firePropertyChange();
   }
 }

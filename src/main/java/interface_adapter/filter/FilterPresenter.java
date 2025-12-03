@@ -1,6 +1,7 @@
 package interface_adapter.filter;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.myinvitations.MyInvitationsViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.study_pool.StudyPoolState;
 import interface_adapter.study_pool.StudyPoolViewModel;
@@ -12,17 +13,17 @@ public class FilterPresenter implements FilterOutputBoundary {
     private final FilterViewModel filterViewModel;
     private final StudyPoolViewModel studyPoolViewModel;
     private final ViewManagerModel viewManagerModel;
-    private final ProfileViewModel profileViewModel;
+    private final MyInvitationsViewModel myInvitationsViewModel;
 
 
     public FilterPresenter(FilterViewModel filterViewModel,
                            StudyPoolViewModel studyPoolViewModel,
                            ViewManagerModel viewManagerModel,
-                           ProfileViewModel profileViewModel) {
+                           MyInvitationsViewModel myInvitationsViewModel) {
         this.filterViewModel = filterViewModel;
         this.studyPoolViewModel = studyPoolViewModel;
         this.viewManagerModel = viewManagerModel;
-        this.profileViewModel = profileViewModel;
+        this.myInvitationsViewModel = myInvitationsViewModel;
     }
 
     public void prepareSuccessView(FilterOutputData filterOutputData) {
@@ -46,7 +47,8 @@ public class FilterPresenter implements FilterOutputBoundary {
     }
 
     public void movetohome() {
-        this.viewManagerModel.setState(profileViewModel.getViewName());
+
+        this.viewManagerModel.setState(myInvitationsViewModel.getViewName());
         this.viewManagerModel.firePropertyChange();
     }
 }
