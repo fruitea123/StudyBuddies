@@ -230,7 +230,8 @@ public class AppBuilder {
                         calendarUseCase,
                         viewManagerModel,
                         profileViewModel,
-                        filterViewModel
+                        filterViewModel,
+                        notificationsView
                 );
 
         myInvitationsView.setController(controller);
