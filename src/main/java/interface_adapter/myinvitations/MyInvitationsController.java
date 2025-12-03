@@ -84,7 +84,7 @@ public class MyInvitationsController {
     }
 
     public void onMyInvitationClicked() {
-
+        this.load();
     }
 
     public void onNotificationsClicked() {
