@@ -7,6 +7,7 @@ import interface_adapter.ViewManagerModel;
 //import interface_adapter.logged_in.ChangePasswordPresenter;
 //import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.accept.AcceptInvitationController;
+import interface_adapter.accept.AcceptPresenter;
 import interface_adapter.filter.FilterController;
 import interface_adapter.filter.FilterPresenter;
 import interface_adapter.filter.FilterViewModel;
@@ -26,6 +27,9 @@ import interface_adapter.signup.SignupViewModel;
 //import use_case.change_password.ChangePasswordInteractor;
 //import use_case.change_password.ChangePasswordOutputBoundary;
 import interface_adapter.study_pool.StudyPoolViewModel;
+import use_case.accept.AcceptInvitationInputBoundary;
+import use_case.accept.AcceptInvitationInteractor;
+import use_case.accept.AcceptInvitationOutputBoundary;
 import use_case.calendar.InsertUserStudySessionsInteractor;
 import use_case.cancel.CancelInvitation;
 import use_case.cancel.CancelInvitationDataAccessInterface;
@@ -102,6 +106,8 @@ public class AppBuilder {
             new InMemoryNotificationDataAccessObject();
     private final CancelInvitationDataAccessInterface cancelDAO =
             new MongoCancelInvitationDAO();
+    private final MongoAcceptInvitationDataAccessObject mongoAcceptInvitationDataAccessObject =
+            new MongoAcceptInvitationDataAccessObject();
 
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
@@ -338,7 +344,7 @@ public class AppBuilder {
         filterOutputBoundary = new FilterPresenter(filterViewModel,
                 studyPoolViewModel,
                 viewManagerModel,
-                profileViewModel);
+                myInvitationsViewModel);
 
 
         FilterInputBoundary filterInteractor =
@@ -351,6 +357,7 @@ public class AppBuilder {
                 new FilterController(filterInteractor);
 
         filterView.setFilterController(filterController);
+        studyPoolView.setFilterController(filterController);
 
         return this;
     }
@@ -387,6 +394,17 @@ public class AppBuilder {
 
         // 5. 把 controller 塞进 view
         notificationsView.setNotificationsController(notificationsController);
+        return this;
+    }
+
+    public AppBuilder addAcceptUseCase () {
+
+        AcceptInvitationOutputBoundary acceptPresenter = new AcceptPresenter();
+        AcceptInvitationInputBoundary acceptInteractor =
+                new AcceptInvitationInteractor(acceptPresenter, mongoAcceptInvitationDataAccessObject);
+        AcceptInvitationController acceptInvitationController =
+                new AcceptInvitationController(acceptInteractor);
+        studyPoolView.setAcceptController(acceptInvitationController);
         return this;
     }
 
