@@ -224,7 +224,8 @@ public class AppBuilder {
                         calendarUseCase,
                         viewManagerModel,
                         profileViewModel,
-                        filterViewModel
+                        filterViewModel,
+                        notificationsView
                 );
 
         myInvitationsView.setController(controller);
@@ -397,7 +398,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;

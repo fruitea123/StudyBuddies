@@ -5,6 +5,8 @@ import interface_adapter.myinvitations.MyInvitationsController;
 import interface_adapter.myinvitations.MyInvitationsViewModel;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class MyInvitationsView extends JPanel {
 
@@ -20,6 +22,7 @@ public class MyInvitationsView extends JPanel {
     private JPanel OwnedInvitations;
     private JLabel OwnedInvitationsHeader;
     private JLabel ParticipatingInvitationsHeader;
+    private JButton notificationButton;
 
     // Controller injected by AppBuilder
     private MyInvitationsController controller;
@@ -67,6 +70,12 @@ public class MyInvitationsView extends JPanel {
         myInvitationsHomeButton.addActionListener(e -> {
             if (controller != null) {
                 controller.onMyInvitationClicked();
+            }
+        });
+
+        notificationButton.addActionListener(e -> {
+            if (controller != null) {
+                controller.onNotificationsClicked();
             }
         });
     }
