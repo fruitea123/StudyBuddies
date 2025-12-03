@@ -30,25 +30,25 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         users.put(user.getEmail(), user);
     }
 
-    @Override
-    public User get(String username) {
-        return users.get(username);
-    }
-
-    @Override
-    public void setCurrentUsername(String name) {
-        currentUsername = name;
-    }
-
-    @Override
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
-
+//    @Override
+//    public User get(String username) {
+//        return users.get(username);
+//    }
+//
+//    @Override
+//    public void setCurrentUsername(String name) {
+//        currentUsername = name;
+//    }
+//
+//    @Override
+//    public String getCurrentUsername() {
+//        return currentUsername;
+//    }
+//
 //    @Override
 //    public void changePassword(User user) {
 //        // Replace the old entry with the new password
 //        users.put(user.getName(), user);
 //    }
-
+//
 }
