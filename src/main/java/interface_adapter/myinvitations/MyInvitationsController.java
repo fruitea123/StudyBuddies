@@ -1,10 +1,14 @@
 package interface_adapter.myinvitations;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.filter.FilterViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.cancel.CancelInvitation;
 import use_case.calendar.InsertUserStudySessionsInteractor;
 import use_case.myinvitations.MyInvitationsInputBoundary;
+import view.FilterView;
+import view.ProfileView;
+import view.StudyPoolView;
 
 public class MyInvitationsController {
 
@@ -13,17 +17,20 @@ public class MyInvitationsController {
     private final InsertUserStudySessionsInteractor calendarUseCase;
     private final ViewManagerModel viewManagerModel;
     private final ProfileViewModel profileViewModel;
+    private final FilterViewModel filterViewModel;
 
     public MyInvitationsController(MyInvitationsInputBoundary interactor,
                                    CancelInvitation cancelUseCase,
                                    InsertUserStudySessionsInteractor calendarUseCase,
                                    ViewManagerModel viewManagerModel,
-                                   ProfileViewModel profileViewModel) {
+                                   ProfileViewModel profileViewModel,
+                                   FilterViewModel filterViewModel) {
         this.interactor = interactor;
         this.cancelUseCase = cancelUseCase;
         this.calendarUseCase = calendarUseCase;
         this.viewManagerModel = viewManagerModel;
         this.profileViewModel = profileViewModel;
+        this.filterViewModel = new FilterViewModel();
     }
 
     public void load() {
@@ -59,4 +66,19 @@ public class MyInvitationsController {
             e.printStackTrace();
         }
     }
+
+    public void onStudyPoolClicked() {
+        viewManagerModel.setState(filterViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
+    }
+
+    public void onProfileClicked() {
+        viewManagerModel.setState(profileViewModel.getViewName());
+        viewManagerModel.firePropertyChange();
+    }
+
+    public void onMyInvitationClicked() {
+
+    }
+
 }
