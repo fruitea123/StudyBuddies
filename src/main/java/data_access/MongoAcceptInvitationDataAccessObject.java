@@ -35,9 +35,7 @@ public class MongoAcceptInvitationDataAccessObject implements AcceptInvitationDa
   */
   public MongoAcceptInvitationDataAccessObject() {
     String connectionString =
-              "mongodb+srv://user:pass@"
-                      + "cluster.mongodb.net/"
-                      + "StudyPoolTestTeam18?retryWrites=true&w=majority";
+              "mongodb+srv://jessicaanirisaihan_db_user:StudyPoolTestTeam18@studybuddiestest.5iradb0.mongodb.net/?appName=StudyBuddiesTest";
 
 
     ServerApi serverApi = ServerApi.builder()
