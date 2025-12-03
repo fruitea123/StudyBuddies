@@ -202,11 +202,10 @@ public class AppBuilder {
     public AppBuilder addMyInvitationsView() {
         myInvitationsViewModel = new MyInvitationsViewModel();
         myInvitationsView = new MyInvitationsView();
-
-        cardPanel.add(myInvitationsView, "MyInvitations");
-
+        cardPanel.add(myInvitationsView, MyInvitationsView.VIEW_NAME);
         return this;
     }
+
 
     public AppBuilder addMyInvitationsUseCase() {
 
@@ -396,7 +395,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(loginView.getViewName());
+        viewManagerModel.setState(MyInvitationsView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
