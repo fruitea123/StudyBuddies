@@ -203,9 +203,15 @@ public class SignUpView extends JPanel implements PropertyChangeListener {
         loginButton.setFocusPainted(false);
         mainPanel.add(loginButton);
 
-        loginButton.addActionListener(e -> signupController.switchToProfileView());
+
+        loginButton.addActionListener(e -> {
+            if (signupController != null) {
+                signupController.switchToLoginView();
+            }
+        });
 
     }
+
 
     private void handleCreateAccount() {
 

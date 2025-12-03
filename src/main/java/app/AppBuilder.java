@@ -7,6 +7,7 @@ import interface_adapter.ViewManagerModel;
 //import interface_adapter.logged_in.ChangePasswordPresenter;
 //import interface_adapter.logged_in.LoggedInViewModel;
 import interface_adapter.accept.AcceptInvitationController;
+import interface_adapter.accept.AcceptPresenter;
 import interface_adapter.filter.FilterController;
 import interface_adapter.filter.FilterPresenter;
 import interface_adapter.filter.FilterViewModel;
@@ -26,6 +27,9 @@ import interface_adapter.signup.SignupViewModel;
 //import use_case.change_password.ChangePasswordInteractor;
 //import use_case.change_password.ChangePasswordOutputBoundary;
 import interface_adapter.study_pool.StudyPoolViewModel;
+import use_case.accept.AcceptInvitationInputBoundary;
+import use_case.accept.AcceptInvitationInteractor;
+import use_case.accept.AcceptInvitationOutputBoundary;
 import use_case.calendar.InsertUserStudySessionsInteractor;
 import use_case.cancel.CancelInvitation;
 import use_case.cancel.CancelInvitationDataAccessInterface;
@@ -102,6 +106,8 @@ public class AppBuilder {
             new InMemoryNotificationDataAccessObject();
     private final CancelInvitationDataAccessInterface cancelDAO =
             new MongoCancelInvitationDAO();
+    private final MongoAcceptInvitationDataAccessObject mongoAcceptInvitationDataAccessObject =
+            new MongoAcceptInvitationDataAccessObject();
 
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
@@ -132,7 +138,7 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
 //        signupView = new SignUpView(signupViewModel);
         signupView = new SignUpView(signupViewModel);
-//        cardPanel.add(signupView, signupView.getViewName());
+        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
 
@@ -206,11 +212,10 @@ public class AppBuilder {
     public AppBuilder addMyInvitationsView() {
         myInvitationsViewModel = new MyInvitationsViewModel();
         myInvitationsView = new MyInvitationsView();
-
-        cardPanel.add(myInvitationsView, "MyInvitations");
-
+        cardPanel.add(myInvitationsView, MyInvitationsView.VIEW_NAME);
         return this;
     }
+
 
     public AppBuilder addMyInvitationsUseCase() {
 
@@ -228,7 +233,9 @@ public class AppBuilder {
                         cancelInvitation,
                         calendarUseCase,
                         viewManagerModel,
-                        profileViewModel
+                        profileViewModel,
+                        filterViewModel,
+                        notificationsView
                 );
 
         myInvitationsView.setController(controller);
@@ -270,8 +277,8 @@ public class AppBuilder {
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 signupUserDataAccessObject, signupOutputBoundary, userFactory);
 
-        SignupController controller = new SignupController(userSignupInteractor);
-//        signupView.setSignupController(controller);
+        SignupController controller = new SignupController(userSignupInteractor, viewManagerModel, loginView);
+        signupView.setSignupController(controller);
         return this;
     }
 
@@ -281,7 +288,8 @@ public class AppBuilder {
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 signupUserDataAccessObject, loginOutputBoundary, sessionCurrentUserGateway);
 
-        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel);
+        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel,
+                signupView);
         loginView.setLoginController(loginController);
         return this;
     }
@@ -340,7 +348,7 @@ public class AppBuilder {
         filterOutputBoundary = new FilterPresenter(filterViewModel,
                 studyPoolViewModel,
                 viewManagerModel,
-                profileViewModel);
+                myInvitationsViewModel);
 
 
         FilterInputBoundary filterInteractor =
@@ -353,6 +361,7 @@ public class AppBuilder {
                 new FilterController(filterInteractor);
 
         filterView.setFilterController(filterController);
+        studyPoolView.setFilterController(filterController);
 
         return this;
     }
@@ -385,17 +394,28 @@ public class AppBuilder {
 
         // 4. Controller
         final NotificationsController notificationsController =
-                new NotificationsController(notificationsInteractor);
+                new NotificationsController(notificationsInteractor, viewManagerModel, myInvitationsView);
 
         // 5. 把 controller 塞进 view
         notificationsView.setNotificationsController(notificationsController);
         return this;
     }
 
+    public AppBuilder addAcceptUseCase () {
+
+        AcceptInvitationOutputBoundary acceptPresenter = new AcceptPresenter();
+        AcceptInvitationInputBoundary acceptInteractor =
+                new AcceptInvitationInteractor(acceptPresenter, mongoAcceptInvitationDataAccessObject);
+        AcceptInvitationController acceptInvitationController =
+                new AcceptInvitationController(acceptInteractor);
+        studyPoolView.setAcceptController(acceptInvitationController);
+        return this;
+    }
+
 
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
+        final JFrame application = new JFrame("Study Buddies");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
