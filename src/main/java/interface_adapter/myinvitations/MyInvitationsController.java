@@ -84,7 +84,12 @@ public class MyInvitationsController {
     }
 
     public void onMyInvitationClicked() {
+        this.load();
+    }
 
+    public void onNotificationsClicked() {
+        viewManagerModel.setState(notificationsView.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 
     public void onNotificationsClicked() {
