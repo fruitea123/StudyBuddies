@@ -1,6 +1,8 @@
 package interface_adapter.myinvitations;
 
 import entity.Invitation;
+import use_case.myinvitations.MyInvitationsOutputBoundary;
+import use_case.myinvitations.MyInvitationsOutputData;
 import view.forms.MyInvitationsView;
 
 import java.util.ArrayList;
@@ -11,7 +13,7 @@ import java.util.List;
  * Converts Invitation entities into InvitationItemViewModel objects
  * and updates the Swing view.
  */
-public class MyInvitationsPresenter {
+public class MyInvitationsPresenter implements MyInvitationsOutputBoundary {
 
     private final MyInvitationsViewModel viewModel;
     private final MyInvitationsView view;
@@ -22,7 +24,11 @@ public class MyInvitationsPresenter {
         this.view = view;
     }
 
-    public void present(List<Invitation> owned, List<Invitation> participating) {
+    @Override
+    public void presentMyInvitations(MyInvitationsOutputData myInvitationsOutputData) {
+
+        List<Invitation> owned = myInvitationsOutputData.getOwned();
+        List<Invitation> participating = myInvitationsOutputData.getParticipating();
 
         List<InvitationItemViewModel> ownedVM = new ArrayList<>();
         for (Invitation inv : owned) {
