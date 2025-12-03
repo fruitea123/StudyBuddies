@@ -157,12 +157,16 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addMakeInvitationNavigation() {
-        MakeInvitationBackController backController =
-                new MakeInvitationBackController(viewManagerModel, profileViewModel);
-        makeInvitationView.setBackController(backController);
-        return this;
-    }
+  public AppBuilder addMakeInvitationNavigation() {
+    MakeInvitationBackController backController =
+      new MakeInvitationBackController(
+        viewManagerModel,
+        makeInvitationViewModel,
+        "MyInvitations"
+      );
+    makeInvitationView.setBackController(backController);
+    return this;
+  }
 
     public AppBuilder addNotificationsView() {
         notificationsViewModel = new NotificationsViewModel();
@@ -396,7 +400,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(loginView.getViewName());
+        viewManagerModel.setState(makeInvitationView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
