@@ -2,6 +2,7 @@ package view;
 
 import entity.Invitation;
 import interface_adapter.accept.AcceptInvitationController;
+import interface_adapter.myinvitations.MyInvitationsController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 
@@ -18,13 +19,16 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
     private final JButton accept;
     private final ProfileViewModel profileViewModel;
     private final AcceptInvitationController acceptController;
+    private final MyInvitationsController myInvitationsController;
 
-    public InvitationCardAcceptPanel(Invitation invitation, ProfileViewModel profileViewModel, AcceptInvitationController acceptController) {
+    public InvitationCardAcceptPanel(Invitation invitation, ProfileViewModel profileViewModel,
+                                     AcceptInvitationController acceptController, MyInvitationsController myInvitationsController) {
         this.invitation = invitation;
 
         this.description_area = new JTextArea(invitation.getDescription());
         this.profileViewModel = profileViewModel;
         this.acceptController = acceptController;
+        this.myInvitationsController = myInvitationsController;
 
         String title_string = "(" + invitation.getCourse() + ")" + " " + "(" + invitation.getDate().toString() + ")" +
                 " " + "(" + invitation.getStartTime().toString() + " - " + invitation.getEndTime().toString() + ")";
@@ -47,6 +51,7 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
                             final ProfileState currentState = profileViewModel.getState();
                             acceptController.acceptInvitation(invitation.getInvitationID(),
                                     currentState.getUsername());
+                            myInvitationsController.load();
                         }
                     }
                 }
