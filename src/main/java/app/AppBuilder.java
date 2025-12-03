@@ -350,6 +350,7 @@ public class AppBuilder {
                 new FilterController(filterInteractor);
 
         filterView.setFilterController(filterController);
+        profileView.setFilterController(filterController);
 
         return this;
     }
@@ -397,7 +398,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(profileView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
