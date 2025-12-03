@@ -33,7 +33,7 @@ public class SignupPresenter implements SignupOutputBoundary {
         state.setName(response.getFirstName() + " " + response.getLastName());
         state.setPrograms(Collections.singletonList(String.join(", ", response.getPrograms())));
         state.setDescription(response.getDescription());
-        state.setIcon(response.getIcon());
+        state.setIcon("/icons/" + response.getIcon() + ".png");
 
         profileViewModel.firePropertyChange();
 

@@ -1,6 +1,7 @@
 package interface_adapter.profile;
 
-import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class ProfileState {
 
@@ -16,6 +17,7 @@ public class ProfileState {
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    private List<String> programsList = new ArrayList<>();
     public java.util.List<String> getPrograms() { return programs; }
     public void setPrograms(java.util.List<String> programs) { this.programs = programs; }
 
