@@ -47,6 +47,7 @@ public class FilterPresenter implements FilterOutputBoundary {
     }
 
     public void movetohome() {
+
         this.viewManagerModel.setState(myInvitationsViewModel.getViewName());
         this.viewManagerModel.firePropertyChange();
     }

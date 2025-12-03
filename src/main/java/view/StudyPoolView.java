@@ -3,6 +3,7 @@ package view;
 import entity.Invitation;
 import interface_adapter.accept.AcceptInvitationController;
 import interface_adapter.filter.FilterController;
+import interface_adapter.myinvitations.MyInvitationsController;
 import interface_adapter.profile.ProfileState;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.study_pool.StudyPoolState;
@@ -31,6 +32,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
 
     private AcceptInvitationController acceptController;
     private FilterController filterController;
+    private MyInvitationsController myInvitationsController;
 
 
     public StudyPoolView(StudyPoolViewModel studyPoolViewModel, ProfileViewModel profileViewModel) {
@@ -90,7 +92,7 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
         for (Invitation invitation : result_list) {
             if (!invitation.getParticipants().contains(user)) {   // instead of placeholder it will be user
                 InvitationCardAcceptPanel invitationCardAcceptPanel = new InvitationCardAcceptPanel(invitation,
-                        profileViewModel, acceptController);
+                        profileViewModel, acceptController, myInvitationsController);
                 scroll_list.add(invitationCardAcceptPanel);
             }
         }
@@ -107,6 +109,9 @@ public class StudyPoolView extends JPanel implements ActionListener, PropertyCha
 
     public void setFilterController(FilterController controller) {
         this.filterController = controller;
+    }
+    public void setMyInvitationController(MyInvitationsController controller) {
+        this.myInvitationsController = controller;
     }
 
 
