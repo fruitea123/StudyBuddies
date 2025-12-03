@@ -1,9 +1,10 @@
-package use_case.signup;
+package usecase.signup;
 
-import data_access.InMemoryUserDataAccessObject;
+import data_access.ForTestingUserDAO;
 import entity.User;
 import entity.UserFactory;
 import org.junit.jupiter.api.Test;
+import use_case.signup.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -40,7 +41,7 @@ class SignupInteractorTest {
 
     @Test
     void successTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = baseValidInput();
 
         SignupOutputBoundary presenter = new SignupOutputBoundary() {
@@ -67,7 +68,7 @@ class SignupInteractorTest {
 
     @Test
     void emptyEmailTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "",                    // email
                 "Password1",
@@ -104,7 +105,7 @@ class SignupInteractorTest {
 
     @Test
     void emptyPasswordTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "",               // password
@@ -141,7 +142,7 @@ class SignupInteractorTest {
 
     @Test
     void emptyRepeatPasswordTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -178,7 +179,7 @@ class SignupInteractorTest {
 
     @Test
     void emptyFirstNameTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -215,7 +216,7 @@ class SignupInteractorTest {
 
     @Test
     void emptyLastNameTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -252,7 +253,7 @@ class SignupInteractorTest {
 
     @Test
     void emptyDobTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -289,7 +290,7 @@ class SignupInteractorTest {
 
     @Test
     void numProgramsLessThanOneTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -326,7 +327,7 @@ class SignupInteractorTest {
 
     @Test
     void program1EmptyWhenRequiredTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -363,7 +364,7 @@ class SignupInteractorTest {
 
     @Test
     void program2EmptyWhenNumPrograms2Test() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -400,7 +401,7 @@ class SignupInteractorTest {
 
     @Test
     void program3EmptyWhenNumPrograms3Test() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -437,7 +438,7 @@ class SignupInteractorTest {
 
     @Test
     void userAlreadyExistsTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         UserFactory factory = new UserFactory();
 
         // Pre-save a user
@@ -475,7 +476,7 @@ class SignupInteractorTest {
 
     @Test
     void invalidEmailDomainTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@gmail.com",      // not @utoronto.ca
                 "Password1",
@@ -512,7 +513,7 @@ class SignupInteractorTest {
 
     @Test
     void shortPasswordTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Pw1",             // too short
@@ -549,7 +550,7 @@ class SignupInteractorTest {
 
     @Test
     void missingUppercaseInPasswordTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "password1",       // no uppercase
@@ -586,7 +587,7 @@ class SignupInteractorTest {
 
     @Test
     void missingLowercaseInPasswordTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "PASSWORD1",       // no lowercase
@@ -623,7 +624,7 @@ class SignupInteractorTest {
 
     @Test
     void missingNumberInPasswordTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password",        // no number
@@ -660,7 +661,7 @@ class SignupInteractorTest {
 
     @Test
     void passwordMismatchTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         SignupInputData input = new SignupInputData(
                 "test@utoronto.ca",
                 "Password1",
@@ -697,7 +698,7 @@ class SignupInteractorTest {
 
     @Test
     void underageUserTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
         LocalDate dob = LocalDate.now().minusYears(10); // < 16
 
         SignupInputData input = new SignupInputData(
@@ -736,7 +737,7 @@ class SignupInteractorTest {
 
     @Test
     void switchToProfileViewTest() {
-        InMemoryUserDataAccessObject repo = new InMemoryUserDataAccessObject();
+        SignupUserDataAccessInterface repo = new ForTestingUserDAO();
 
         final boolean[] called = {false};
 
