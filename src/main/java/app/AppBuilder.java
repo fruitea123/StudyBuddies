@@ -398,7 +398,6 @@ public class AppBuilder {
         application.add(cardPanel);
 
         viewManagerModel.setState(signupView.getViewName());
-        viewManagerModel.setState(MyInvitationsView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
