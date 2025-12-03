@@ -6,6 +6,8 @@ import interface_adapter.profile.ProfileViewModel;
 import use_case.signup.SignupOutputBoundary;
 import use_case.signup.SignupOutputData;
 
+import java.util.Collections;
+
 /**
  * The Presenter for the Signup Use Case.
  */
@@ -26,8 +28,13 @@ public class SignupPresenter implements SignupOutputBoundary {
     @Override
     public void prepareSuccessView(SignupOutputData response) {
         // On success, switch to the profile view.
-        final ProfileState profileState = profileViewModel.getState();
-        profileState.setUsername(response.getEmail());
+        final ProfileState state = profileViewModel.getState();
+        state.setUsername(response.getEmail());
+        state.setName(response.getFirstName() + " " + response.getLastName());
+        state.setPrograms(Collections.singletonList(String.join(", ", response.getPrograms())));
+        state.setDescription(response.getDescription());
+        state.setIcon(response.getIcon());
+
         profileViewModel.firePropertyChange();
 
         viewManagerModel.setState(profileViewModel.getViewName());
@@ -46,4 +53,5 @@ public class SignupPresenter implements SignupOutputBoundary {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
+
 }
