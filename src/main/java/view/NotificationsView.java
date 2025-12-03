@@ -24,6 +24,7 @@ public class NotificationsView extends JPanel implements PropertyChangeListener 
     private JButton allFilterButton;
     private JButton unreadFilterButton;
     private JButton refreshButton;
+    private JButton homeButton;
     private JPanel listPanel;
 
     public NotificationsView(NotificationsViewModel viewModel) {
@@ -54,6 +55,7 @@ public class NotificationsView extends JPanel implements PropertyChangeListener 
         allFilterButton = new JButton("All");
         unreadFilterButton = new JButton("Unread");
         refreshButton = new JButton("Refresh");
+        homeButton = new JButton("Home");
 
         listPanel = new JPanel();
         listPanel.setLayout(new BoxLayout(listPanel, BoxLayout.Y_AXIS));
@@ -68,6 +70,7 @@ public class NotificationsView extends JPanel implements PropertyChangeListener 
         btnPanel.add(allFilterButton);
         btnPanel.add(unreadFilterButton);
         btnPanel.add(refreshButton);
+        btnPanel.add(homeButton);
         top.add(btnPanel, BorderLayout.EAST);
 
         add(top, BorderLayout.NORTH);
@@ -94,6 +97,11 @@ public class NotificationsView extends JPanel implements PropertyChangeListener 
 
         refreshButton.addActionListener(e -> {
             controller.loadNotifications(viewModel.getCurrentFilter());
+        });
+
+        // ✅ Home 按钮：让 controller 负责跳转
+        homeButton.addActionListener(e -> {
+            controller.goHome();
         });
     }
 
