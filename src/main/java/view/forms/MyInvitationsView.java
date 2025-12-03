@@ -6,7 +6,7 @@ import interface_adapter.myinvitations.MyInvitationsViewModel;
 
 import javax.swing.*;
 
-public class MyInvitationsView extends JFrame {
+public class MyInvitationsView extends JPanel {
 
     // Swing
     private JPanel PagePanel;
@@ -18,20 +18,18 @@ public class MyInvitationsView extends JFrame {
 
     private JPanel ParticipatingInvitations;
     private JPanel OwnedInvitations;
-
     private JLabel OwnedInvitationsHeader;
     private JLabel ParticipatingInvitationsHeader;
 
     // Controller injected by AppBuilder
     private MyInvitationsController controller;
 
+    public static final String VIEW_NAME = "MyInvitations";
 
     public MyInvitationsView() {
-        setContentPane(PagePanel);
-        setTitle("My Invitations");
-        setSize(500, 500);
-        setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(PagePanel);
 
         ParticipatingInvitations.setLayout(
                 new BoxLayout(ParticipatingInvitations, BoxLayout.Y_AXIS)
@@ -55,20 +53,25 @@ public class MyInvitationsView extends JFrame {
 
         // page navigation
         studyPoolButton.addActionListener(e -> {
-            if (controller != null) controller.onStudyPoolClicked();
+
         });
 
         profileButton.addActionListener(e -> {
-            if (controller != null) controller.onProfileClicked();
+
         });
 
         myInvitationsHomeButton.addActionListener(e -> {
-            // stays on myinvitations
+
         });
+    }
+
+    public static String getViewName() {
+        return VIEW_NAME;
     }
 
     public void setController(MyInvitationsController controller) {
         this.controller = controller;
+        controller.load();
     }
 
     public void update(MyInvitationsViewModel viewModel) {
