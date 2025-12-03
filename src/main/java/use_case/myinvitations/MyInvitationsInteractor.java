@@ -1,19 +1,20 @@
 package use_case.myinvitations;
 
-import com.mongodb.client.MongoDatabase;
-import data_access.DBAccess;
 import data_access.InvitationDAO;
 import entity.Invitation;
 import entity.User;
-
 import java.util.ArrayList;
 import java.util.List;
 
-public class MyInvitations {
-    private final InvitationDAO dao;
+public class MyInvitationsInteractor implements MyInvitationsInputBoundary {
 
-    public MyInvitations(InvitationDAO dao) {
+    private final InvitationDAO dao;
+    private final MyInvitationsOutputBoundary presenter;
+
+    public MyInvitationsInteractor(InvitationDAO dao,
+                                   MyInvitationsOutputBoundary presenter) {
         this.dao = dao;
+        this.presenter = presenter;
     }
 
     public List<Invitation> getStudyPool() {
@@ -22,8 +23,7 @@ public class MyInvitations {
 
     public List<Invitation> FilterByOwned(String userEmail) {
         List<Invitation> result = new ArrayList<>();
-        List<Invitation> invitations = dao.findAll();
-        for  (Invitation invitation : invitations) {
+        for (Invitation invitation : dao.findAll()) {
             if (invitation.getOwner().getEmail().equals(userEmail)) {
                 result.add(invitation);
             }
@@ -33,10 +33,8 @@ public class MyInvitations {
 
     public List<Invitation> FilterByParticipant(String userEmail) {
         List<Invitation> result = new ArrayList<>();
-        List<Invitation> invitations = dao.findAll();
-        for  (Invitation invitation : invitations) {
-            List<User> participants = invitation.getParticipants();
-            for (User participant : participants) {
+        for (Invitation invitation : dao.findAll()) {
+            for (User participant : invitation.getParticipants()) {
                 if (participant.getEmail().equals(userEmail)) {
                     result.add(invitation);
                     break;
@@ -44,5 +42,14 @@ public class MyInvitations {
             }
         }
         return result;
+    }
+
+    @Override
+    public void loadMyInvitations(String userEmail) {
+        List<Invitation> owned = FilterByOwned(userEmail);
+        List<Invitation> participating = FilterByParticipant(userEmail);
+
+        MyInvitationsOutputData outputData = new MyInvitationsOutputData(owned, participating);
+        presenter.presentMyInvitations(outputData);
     }
 }
