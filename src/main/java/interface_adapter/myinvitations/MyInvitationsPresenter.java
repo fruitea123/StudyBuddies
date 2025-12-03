@@ -28,7 +28,7 @@ public class MyInvitationsPresenter implements MyInvitationsOutputBoundary {
     public void presentMyInvitations(MyInvitationsOutputData myInvitationsOutputData) {
 
         List<Invitation> owned = myInvitationsOutputData.getOwned();
-        List<Invitation> participating = myInvitationsOutputData.getParticipating()
+        List<Invitation> participating = myInvitationsOutputData.getParticipating();
 
         List<InvitationItemViewModel> ownedVM = new ArrayList<>();
         for (Invitation inv : owned) {

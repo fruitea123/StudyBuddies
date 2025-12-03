@@ -28,6 +28,7 @@ import interface_adapter.signup.SignupViewModel;
 import interface_adapter.study_pool.StudyPoolViewModel;
 import use_case.calendar.InsertUserStudySessionsInteractor;
 import use_case.cancel.CancelInvitation;
+import use_case.cancel.CancelInvitationDataAccessInterface;
 import use_case.filter.FilterInputBoundary;
 import use_case.filter.FilterInteractor;
 import use_case.filter.FilterOutputBoundary;
@@ -99,6 +100,8 @@ public class AppBuilder {
             new InvitationDAO(DBAccess.getDatabase());
     private final NotificationDataAccessObject notificationDataAccessObject =
             new InMemoryNotificationDataAccessObject();
+    private final CancelInvitationDataAccessInterface cancelDAO =
+            new MongoCancelInvitationDAO();
 
     private final SessionCurrentUserGateway sessionCurrentUserGateway =
             new SessionCurrentUserGateway();
@@ -119,6 +122,7 @@ public class AppBuilder {
     private MyInvitationsViewModel myInvitationsViewModel;
     private MyInvitationsView myInvitationsView;
 
+    private InsertUserStudySessionsInteractor calendarUseCase;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -194,6 +198,7 @@ public class AppBuilder {
         return this;
     }
 
+
     public AppBuilder addMyInvitationsView() {
         myInvitationsViewModel = new MyInvitationsViewModel();
         myInvitationsView = new MyInvitationsView();
@@ -211,23 +216,45 @@ public class AppBuilder {
         MyInvitationsInputBoundary interactor =
                 new MyInvitationsInteractor(invitationDAO, presenter);
 
-        // 3. Cancel use case (you MUST already have this — otherwise add it)
-        CancelInvitation cancelUseCase = new CancelInvitation(invitationDAO);
-
-        // 4. Calendar use case (also must already exist)
-        InsertUserStudySessionsInteractor calendarUseCase =
-                new InsertUserStudySessionsInteractor(invitationDAO); // or whatever constructor is correct
+        CancelInvitation cancelInvitation = new CancelInvitation(cancelDAO);
 
         MyInvitationsController controller =
                 new MyInvitationsController(
                         interactor,
-                        cancelUseCase,
+                        cancelInvitation,
                         calendarUseCase,
                         viewManagerModel,
                         profileViewModel
                 );
 
         myInvitationsView.setController(controller);
+
+        return this;
+    }
+
+    public AppBuilder addCalendarUseCase() {
+        try {
+            // 1. Build CalendarService using your existing CalendarController class
+            use_case.calendar.CalendarController calendarController =
+                    new use_case.calendar.CalendarController();
+
+            use_case.calendar.CalendarService calendarService =
+                    calendarController.buildCalendarService();
+
+            // 2. Build Mongo StudySessionRepository
+            MongoStudySessionRepository repository =
+                    new MongoStudySessionRepository(
+                            DBAccess.getDatabase().getCollection("StudyPool")
+                    );
+
+            // 3. Build the interactor
+            calendarUseCase =
+                    new InsertUserStudySessionsInteractor(repository, calendarService);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Failed to initialize calendar use case", e);
+        }
 
         return this;
     }
@@ -286,7 +313,7 @@ public class AppBuilder {
     public AppBuilder addMakeInvitationUseCase() {
         // updates MakeInvitationViewModel
         MakeInvitationOutputBoundary invitationOutputBoundary =
-                new MakeInvitationPresenter (makeInvitationViewModel);
+                new MakeInvitationPresenter(makeInvitationViewModel);
         // add parameter viewManagerModel, loggedInViewModel so presenter can go back to profile later
 
         MakeInvitationInputBoundary invitationInteractor =

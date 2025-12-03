@@ -9,22 +9,22 @@ public class Main {
 // add views and use cases for all
                 .addLoginView()
                 .addSignupView()
-//                .addLoggedInView()
                 .addMakeInvitationView()
                 .addNotificationsView()
                 .addFilterView()
                 .addStudyPoolView()
                 .addProfileView()
-                .addSignupUseCase()
-                .addLoginUseCase()
-//                .addLogoutUseCase()
-//                .addChangePasswordUseCase()
-                .addMakeInvitationUseCase()
                 .addMyInvitationsView()
                 .addMakeInvitationNavigation()
+                .addSignupUseCase()
+                .addLoginUseCase()
+                .addMakeInvitationUseCase()
                 .addNotificationsUseCase()
                 .addFilterUseCase()
+                .addCalendarUseCase()
+                .addMyInvitationsUseCase()
                 .build();
+
 
         application.pack();
         application.setLocationRelativeTo(null);

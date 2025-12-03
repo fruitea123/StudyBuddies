@@ -59,7 +59,7 @@ public class MyInvitationsController {
             e.printStackTrace();
         }
     }
-
+/// //////
     public void onStudyPoolClicked() {
         System.out.println("Navigate: Study Pool");
     }
