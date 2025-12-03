@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.filter.FilterController;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.profile.ProfileState;
 
@@ -18,6 +19,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     private JLabel nameLabel;
     private JLabel programsLabel;
     private JLabel descriptionLabel;
+    private FilterController filterController;
 
     public ProfileView(ProfileViewModel profileViewModel) {
         this.profileViewModel = profileViewModel;
@@ -42,7 +44,14 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
         update(profileViewModel.getState());
 
+        JButton homeButton = new JButton("Home");
+        panel.add(homeButton, BorderLayout.SOUTH);
+        homeButton.addActionListener(e -> filterController.movetohome());
+
     }
+
+
+
 // make list of programs p1,p2,p3
     private void update(ProfileState state) {
         usernameLabel.setText(ProfileViewModel.USERNAME_LABEL + ":   " + state.getUsername());
@@ -67,5 +76,9 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
+    }
+
+    public void setFilterController(FilterController filterController) {
+        this.filterController = filterController;
     }
 }

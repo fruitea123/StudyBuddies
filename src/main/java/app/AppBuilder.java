@@ -163,12 +163,16 @@ public class AppBuilder {
         return this;
     }
 
-    public AppBuilder addMakeInvitationNavigation() {
-        MakeInvitationBackController backController =
-                new MakeInvitationBackController(viewManagerModel, profileViewModel);
-        makeInvitationView.setBackController(backController);
-        return this;
-    }
+  public AppBuilder addMakeInvitationNavigation() {
+    MakeInvitationBackController backController =
+      new MakeInvitationBackController(
+        viewManagerModel,
+        makeInvitationViewModel,
+        "MyInvitations"
+      );
+    makeInvitationView.setBackController(backController);
+    return this;
+  }
 
     public AppBuilder addNotificationsView() {
         notificationsViewModel = new NotificationsViewModel();
@@ -357,6 +361,7 @@ public class AppBuilder {
                 new FilterController(filterInteractor);
 
         filterView.setFilterController(filterController);
+        profileView.setFilterController(filterController);
         studyPoolView.setFilterController(filterController);
 
         return this;
@@ -416,7 +421,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(filterView.getViewName());
+        viewManagerModel.setState(profileView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
