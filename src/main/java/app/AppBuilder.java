@@ -132,7 +132,7 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
 //        signupView = new SignUpView(signupViewModel);
         signupView = new SignUpView(signupViewModel);
-//        cardPanel.add(signupView, signupView.getViewName());
+        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
 
@@ -265,8 +265,8 @@ public class AppBuilder {
         final SignupInputBoundary userSignupInteractor = new SignupInteractor(
                 signupUserDataAccessObject, signupOutputBoundary, userFactory);
 
-        SignupController controller = new SignupController(userSignupInteractor);
-//        signupView.setSignupController(controller);
+        SignupController controller = new SignupController(userSignupInteractor, viewManagerModel, loginView);
+        signupView.setSignupController(controller);
         return this;
     }
 
@@ -276,7 +276,8 @@ public class AppBuilder {
         final LoginInputBoundary loginInteractor = new LoginInteractor(
                 signupUserDataAccessObject, loginOutputBoundary, sessionCurrentUserGateway);
 
-        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel);
+        LoginController loginController = new LoginController(loginInteractor, viewManagerModel, signupViewModel,
+                signupView);
         loginView.setLoginController(loginController);
         return this;
     }
@@ -395,6 +396,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.setState(MyInvitationsView.getViewName());
         viewManagerModel.firePropertyChange();
 
