@@ -361,6 +361,7 @@ public class AppBuilder {
                 new FilterController(filterInteractor);
 
         filterView.setFilterController(filterController);
+        profileView.setFilterController(filterController);
         studyPoolView.setFilterController(filterController);
 
         return this;
@@ -420,7 +421,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(makeInvitationView.getViewName());
+        viewManagerModel.setState(profileView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
