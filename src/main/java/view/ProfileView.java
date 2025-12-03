@@ -19,6 +19,7 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
     private JLabel nameLabel;
     private JLabel programsLabel;
     private JLabel descriptionLabel;
+    private JLabel iconLabel;
     private FilterController filterController;
 
     public ProfileView(ProfileViewModel profileViewModel) {
@@ -32,9 +33,11 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
         nameLabel = new JLabel();
         programsLabel = new JLabel();
         descriptionLabel = new JLabel();
+        iconLabel = new JLabel();
 
         JPanel panel = new JPanel(new GridBagLayout());
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
+        panel.add(iconLabel);
         panel.add(usernameLabel);
         panel.add(nameLabel);
         panel.add(programsLabel);
@@ -50,14 +53,15 @@ public class ProfileView extends JPanel implements PropertyChangeListener {
 
     }
 
-
-
-// make list of programs p1,p2,p3
     private void update(ProfileState state) {
-        usernameLabel.setText(ProfileViewModel.USERNAME_LABEL + ":   " + state.getUsername());
-        nameLabel.setText(ProfileViewModel.NAME_LABEL + ":   " + state.getName());
-        programsLabel.setText(ProfileViewModel.PROGRAM_LABEL + ":   " + state.getPrograms());
-        descriptionLabel.setText(ProfileViewModel.DESCRIPTION_LABEL + ":   " + state.getDescription());
+        if (state.getIcon() != null) {
+            iconLabel.setIcon(new ImageIcon(state.getIcon()));
+        }
+
+        usernameLabel.setText("username: " +  state.getUsername());
+        nameLabel.setText("Name: " + state.getName());
+        programsLabel.setText("Programs: " + state.getPrograms());
+        descriptionLabel.setText("Description: " + state.getDescription());
     }
 
     @Override
