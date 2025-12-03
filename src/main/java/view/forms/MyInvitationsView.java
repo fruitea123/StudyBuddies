@@ -69,6 +69,7 @@ public class MyInvitationsView extends JFrame {
 
     public void setController(MyInvitationsController controller) {
         this.controller = controller;
+        controller.load();
     }
 
     public void update(MyInvitationsViewModel viewModel) {

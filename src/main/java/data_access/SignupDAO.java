@@ -15,6 +15,8 @@ import static com.mongodb.client.model.Filters.eq;
         public class SignupDAO implements SignupUserDataAccessInterface, LoginUserDataAccessInterface {
 
             private final MongoCollection<Document> usersCollection;
+            private String currentUsername;
+
 
             public SignupDAO() {
 
@@ -54,7 +56,7 @@ import static com.mongodb.client.model.Filters.eq;
 
         Document doc = new Document()
                 // username is the email
-                .append("username", user.getEmail())
+                .append("email", user.getEmail())
                 .append("passwordHash", user.getPassword())
                 .append("firstName", user.getFirstName())
                 .append("lastName", user.getLastName())
@@ -63,6 +65,36 @@ import static com.mongodb.client.model.Filters.eq;
                 .append("icon", user.getIcon());
 
         usersCollection.insertOne(doc);
+    }
+
+
+    @Override
+    public User get(String email) {
+        Document userDoc = usersCollection.find(eq("email", email)).first();
+        if (userDoc == null) {
+            return null;
+        }
+
+        return new User(
+                userDoc.getString("email"),
+                userDoc.getString("passwordHash"),
+                userDoc.getString("firstName"),
+                userDoc.getString("lastName"),
+                userDoc.getList("programs", String.class),
+                userDoc.getString("description"),
+                userDoc.getString("icon")
+        );
+    }
+
+
+    @Override
+    public void setCurrentUsername(String name) {
+        this.currentUsername = name;
+    }
+
+    @Override
+    public String getCurrentUsername() {
+        return this.currentUsername;
     }
 
 }
