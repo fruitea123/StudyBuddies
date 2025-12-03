@@ -415,7 +415,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(loginView.getViewName());
+        viewManagerModel.setState(filterView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
