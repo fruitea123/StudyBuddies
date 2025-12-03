@@ -1,7 +1,10 @@
 package interface_adapter.signup;
 
+import interface_adapter.ViewManagerModel;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInputData;
+import view.SignUpView;
+import view.LoginView;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -12,9 +15,14 @@ import java.util.List;
 public class SignupController {
 
     private final SignupInputBoundary userSignupUseCaseInteractor;
+    private final ViewManagerModel viewManagerModel;
+    private final LoginView loginView;
 
-    public SignupController(SignupInputBoundary userSignupUseCaseInteractor) {
+    public SignupController(SignupInputBoundary userSignupUseCaseInteractor, ViewManagerModel viewManagerModel,
+                            LoginView loginView) {
         this.userSignupUseCaseInteractor = userSignupUseCaseInteractor;
+        this.viewManagerModel = viewManagerModel;
+        this.loginView = loginView;
     }
 
 //    /**
@@ -57,5 +65,13 @@ public class SignupController {
      */
     public void switchToProfileView() {
         userSignupUseCaseInteractor.switchToProfileView();
+    }
+
+    /**
+     * Executes the "switch to LoginView" Use Case.
+     */
+    public void switchToLoginView() {
+        viewManagerModel.setState(loginView.getViewName());
+        viewManagerModel.firePropertyChange();
     }
 }
