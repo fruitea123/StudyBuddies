@@ -223,7 +223,8 @@ public class AppBuilder {
                         cancelInvitation,
                         calendarUseCase,
                         viewManagerModel,
-                        profileViewModel
+                        profileViewModel,
+                        filterViewModel
                 );
 
         myInvitationsView.setController(controller);
@@ -390,12 +391,12 @@ public class AppBuilder {
 
 
     public JFrame build() {
-        final JFrame application = new JFrame("User Login Example");
+        final JFrame application = new JFrame("Study Buddies");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(MyInvitationsView.getViewName());
+        viewManagerModel.setState(myInvitationsView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;

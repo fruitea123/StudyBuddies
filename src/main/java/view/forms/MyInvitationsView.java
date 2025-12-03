@@ -53,15 +53,21 @@ public class MyInvitationsView extends JPanel {
 
         // page navigation
         studyPoolButton.addActionListener(e -> {
-
+            if (controller != null) {
+                controller.onStudyPoolClicked();
+            }
         });
 
         profileButton.addActionListener(e -> {
-
+            if (controller != null) {
+                controller.onProfileClicked();
+            }
         });
 
         myInvitationsHomeButton.addActionListener(e -> {
-
+            if (controller != null) {
+                controller.onMyInvitationClicked();
+            }
         });
     }
 
