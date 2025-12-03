@@ -23,6 +23,7 @@ public class Main {
                 .addFilterUseCase()
                 .addCalendarUseCase()
                 .addMyInvitationsUseCase()
+                .addAcceptUseCase()
                 .build();
 
 
