@@ -53,4 +53,5 @@ public class SignupPresenter implements SignupOutputBoundary {
         viewManagerModel.setState(profileViewModel.getViewName());
         viewManagerModel.firePropertyChange();
     }
+
 }

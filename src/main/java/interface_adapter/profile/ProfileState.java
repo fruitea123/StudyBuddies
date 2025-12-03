@@ -26,5 +26,4 @@ public class ProfileState {
 
     public String getIcon() { return profileImagePath; }
     public void setIcon(String profileImagePath) { this.profileImagePath = profileImagePath; }
-
 }
