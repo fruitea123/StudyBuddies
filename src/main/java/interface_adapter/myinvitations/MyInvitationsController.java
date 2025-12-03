@@ -1,7 +1,10 @@
 package interface_adapter.myinvitations;
 
 import interface_adapter.ViewManagerModel;
+import interface_adapter.ViewModel;
 import interface_adapter.filter.FilterViewModel;
+import interface_adapter.makeinvitation.MakeInvitationController;
+import interface_adapter.makeinvitation.MakeInvitationViewModel;
 import interface_adapter.notifications.NotificationsViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import use_case.cancel.CancelInvitation;
@@ -60,7 +63,7 @@ public class MyInvitationsController {
 
     public void onCreateInvitation() {
         System.out.println("Navigate: Create Invitation");
-        viewManagerModel.setState("MakeInvitation");
+        viewManagerModel.setState("make invitation");
         viewManagerModel.firePropertyChange();
     }
 
