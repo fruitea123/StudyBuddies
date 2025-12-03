@@ -239,6 +239,7 @@ public class AppBuilder {
                 );
 
         myInvitationsView.setController(controller);
+        studyPoolView.setMyInvitationController(controller);
 
         return this;
     }
@@ -421,7 +422,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(profileView.getViewName());
+        viewManagerModel.setState(loginView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
