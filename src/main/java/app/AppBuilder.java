@@ -396,7 +396,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(myInvitationsView.getViewName());
+        viewManagerModel.setState(MyInvitationsView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
