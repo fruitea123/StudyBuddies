@@ -1,5 +1,8 @@
 package interface_adapter.myinvitations;
 
+import interface_adapter.ViewModel;
+import view.forms.MyInvitationsView;
+
 import java.util.Collections;
 import java.util.List;
 
@@ -8,10 +11,15 @@ import java.util.List;
  * - Owned invitations
  * - Participating invitations
  */
-public class MyInvitationsViewModel {
+public class MyInvitationsViewModel extends ViewModel<MyInvitationsState> {
 
     private List<InvitationItemViewModel> ownedInvitations;
     private List<InvitationItemViewModel> participatingInvitations;
+
+    public MyInvitationsViewModel() {
+        super(MyInvitationsView.VIEW_NAME);
+        this.setState(new MyInvitationsState());
+    }
 
     public List<InvitationItemViewModel> getOwnedInvitations() {
         return ownedInvitations == null
@@ -19,8 +27,9 @@ public class MyInvitationsViewModel {
                 : Collections.unmodifiableList(ownedInvitations);
     }
 
-    public void setOwnedInvitations(List<InvitationItemViewModel> ownedInvitations) {
-        this.ownedInvitations = ownedInvitations;
+    public void setOwnedInvitations(java.util.List<InvitationItemViewModel> list) {
+        this.getState().ownedInvitations = list;
+        firePropertyChange();
     }
 
     public List<InvitationItemViewModel> getParticipatingInvitations() {
@@ -29,7 +38,8 @@ public class MyInvitationsViewModel {
                 : Collections.unmodifiableList(participatingInvitations);
     }
 
-    public void setParticipatingInvitations(List<InvitationItemViewModel> participatingInvitations) {
-        this.participatingInvitations = participatingInvitations;
+    public void setParticipatingInvitations(java.util.List<InvitationItemViewModel> list) {
+        this.getState().participatingInvitations = list;
+        firePropertyChange();
     }
 }
