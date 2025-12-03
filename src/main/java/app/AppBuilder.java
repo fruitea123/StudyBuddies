@@ -390,7 +390,7 @@ public class AppBuilder {
 
         // 4. Controller
         final NotificationsController notificationsController =
-                new NotificationsController(notificationsInteractor);
+                new NotificationsController(notificationsInteractor, viewManagerModel, myInvitationsView);
 
         // 5. 把 controller 塞进 view
         notificationsView.setNotificationsController(notificationsController);
