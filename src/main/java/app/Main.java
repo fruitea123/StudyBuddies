@@ -20,6 +20,7 @@ public class Main {
 //                .addLogoutUseCase()
 //                .addChangePasswordUseCase()
                 .addMakeInvitationUseCase()
+                .addMyInvitationsView()
                 .addMakeInvitationNavigation()
                 .addNotificationsUseCase()
                 .addFilterUseCase()

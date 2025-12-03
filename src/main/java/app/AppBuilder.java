@@ -15,6 +15,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 //import interface_adapter.logout.LogoutController;
 //import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.myinvitations.MyInvitationsController;
+import interface_adapter.myinvitations.MyInvitationsPresenter;
+import interface_adapter.myinvitations.MyInvitationsViewModel;
 import interface_adapter.profile.ProfileViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -23,6 +26,8 @@ import interface_adapter.signup.SignupViewModel;
 //import use_case.change_password.ChangePasswordInteractor;
 //import use_case.change_password.ChangePasswordOutputBoundary;
 import interface_adapter.study_pool.StudyPoolViewModel;
+import use_case.calendar.InsertUserStudySessionsInteractor;
+import use_case.cancel.CancelInvitation;
 import use_case.filter.FilterInputBoundary;
 import use_case.filter.FilterInteractor;
 import use_case.filter.FilterOutputBoundary;
@@ -32,6 +37,8 @@ import use_case.login.LoginOutputBoundary;
 //import use_case.logout.LogoutInputBoundary;
 //import use_case.logout.LogoutInteractor;
 //import use_case.logout.LogoutOutputBoundary;
+import use_case.myinvitations.MyInvitationsInputBoundary;
+import use_case.myinvitations.MyInvitationsInteractor;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -55,6 +62,7 @@ import use_case.notifications.ViewNotificationsOutputBoundary;
 import use_case.notifications.CurrentUserIdProvider;
 
 import view.NotificationsView;
+import view.forms.MyInvitationsView;
 
 
 import javax.swing.*;
@@ -108,7 +116,8 @@ public class AppBuilder {
     private ProfileView profileView;
     private ProfileViewModel poolViewModel;
 
-
+    private MyInvitationsViewModel myInvitationsViewModel;
+    private MyInvitationsView myInvitationsView;
 
 
     public AppBuilder() {
@@ -150,6 +159,7 @@ public class AppBuilder {
         makeInvitationView.setBackController(backController);
         return this;
     }
+
     public AppBuilder addNotificationsView() {
         notificationsViewModel = new NotificationsViewModel();
         notificationsView = new NotificationsView(notificationsViewModel);
@@ -184,11 +194,43 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addMyInvitationsView() {
+        myInvitationsViewModel = new MyInvitationsViewModel();
+        myInvitationsView = new MyInvitationsView();
 
+        cardPanel.add(myInvitationsView, "MyInvitations");
 
+        return this;
+    }
 
+    public AppBuilder addMyInvitationsUseCase() {
 
+        MyInvitationsPresenter presenter =
+                new MyInvitationsPresenter(myInvitationsViewModel, myInvitationsView);
 
+        MyInvitationsInputBoundary interactor =
+                new MyInvitationsInteractor(invitationDAO, presenter);
+
+        // 3. Cancel use case (you MUST already have this — otherwise add it)
+        CancelInvitation cancelUseCase = new CancelInvitation(invitationDAO);
+
+        // 4. Calendar use case (also must already exist)
+        InsertUserStudySessionsInteractor calendarUseCase =
+                new InsertUserStudySessionsInteractor(invitationDAO); // or whatever constructor is correct
+
+        MyInvitationsController controller =
+                new MyInvitationsController(
+                        interactor,
+                        cancelUseCase,
+                        calendarUseCase,
+                        viewManagerModel,
+                        profileViewModel
+                );
+
+        myInvitationsView.setController(controller);
+
+        return this;
+    }
 
 
     public AppBuilder addSignupUseCase() {

@@ -1,90 +1,70 @@
 package interface_adapter.myinvitations;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.makeinvitation.MakeInvitationViewModel;
-import use_case.calendar.InsertUserStudySessionsInteractor;
+import interface_adapter.profile.ProfileViewModel;
 import use_case.cancel.CancelInvitation;
-import use_case.myinvitations.MyInvitations;
+import use_case.calendar.InsertUserStudySessionsInteractor;
+import use_case.myinvitations.MyInvitationsInputBoundary;
 
-/**
- * Controller for the MyInvitations screen.
- * Talks to the use case and presenter, but not to Swing directly.
- */
 public class MyInvitationsController {
 
-    private final MyInvitations interactor;
-    private final MyInvitationsPresenter presenter;
+    private final MyInvitationsInputBoundary interactor;
     private final CancelInvitation cancelUseCase;
-    private final String currentUserEmail;
     private final InsertUserStudySessionsInteractor calendarUseCase;
     private final ViewManagerModel viewManagerModel;
+    private final ProfileViewModel profileViewModel;
 
-
-    public MyInvitationsController(MyInvitations interactor,
-                                   MyInvitationsPresenter presenter,
-                                   String currentUserEmail,
+    public MyInvitationsController(MyInvitationsInputBoundary interactor,
                                    CancelInvitation cancelUseCase,
                                    InsertUserStudySessionsInteractor calendarUseCase,
-                                   ViewManagerModel viewManagerModel) {
+                                   ViewManagerModel viewManagerModel,
+                                   ProfileViewModel profileViewModel) {
         this.interactor = interactor;
-        this.presenter = presenter;
-        this.currentUserEmail = currentUserEmail;
         this.cancelUseCase = cancelUseCase;
         this.calendarUseCase = calendarUseCase;
         this.viewManagerModel = viewManagerModel;
+        this.profileViewModel = profileViewModel;
     }
 
-
-    public void refresh() {
-        var owned = interactor.FilterByOwned(currentUserEmail);
-        var participating = interactor.FilterByParticipant(currentUserEmail);
-        presenter.present(owned, participating);
+    public void load() {
+        String userEmail = profileViewModel.getState().getUsername();
+        interactor.loadMyInvitations(userEmail);
     }
 
     public void onLeaveClicked(String invitationId) {
-        System.out.println("[MyInvitationsController] Leaving invitation: " + invitationId);
-
-        cancelUseCase.setUsername(currentUserEmail);
+        String userEmail = profileViewModel.getState().getUsername();
+        cancelUseCase.setUsername(userEmail);
         cancelUseCase.leave();
-
-        refresh();
+        load();
     }
 
     public void onDeleteClicked(String invitationId) {
-        System.out.println("[MyInvitationsController] Deleting invitation: " + invitationId);
-
-        cancelUseCase.setOwnerName(currentUserEmail);
+        String userEmail = profileViewModel.getState().getUsername();
+        cancelUseCase.setOwnerName(userEmail);
         cancelUseCase.delete();
-
-        refresh();
+        load();
     }
 
     public void onCreateInvitation() {
         System.out.println("Navigate: Create Invitation");
-        viewManagerModel.setState(MakeInvitationViewModel.VIEW_NAME);
+        viewManagerModel.setState("MakeInvitation");
         viewManagerModel.firePropertyChange();
-
     }
 
     public void onCalendarClicked() {
-        System.out.println("[MyInvitationsController] Calendar button clicked");
-
+        String userEmail = profileViewModel.getState().getUsername();
         try {
-            calendarUseCase.execute(currentUserEmail);
-            System.out.println("Study sessions inserted into calendar for user: " + currentUserEmail);
+            calendarUseCase.execute(userEmail);
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("Calendar operation failed: " + e.getMessage());
         }
     }
 
     public void onStudyPoolClicked() {
         System.out.println("Navigate: Study Pool");
-        // TODO: viewManager.goTo("study_pool")
     }
 
     public void onProfileClicked() {
         System.out.println("Navigate: Profile");
-        // TODO: viewManager.goTo("profile")
     }
 }
