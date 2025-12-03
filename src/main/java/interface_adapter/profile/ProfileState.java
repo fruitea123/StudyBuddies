@@ -24,7 +24,7 @@ public class ProfileState {
     public String getDescription() { return description; }
     public void setDescription(String description) { this.description = description; }
 
-    public String getProfileImagePath() { return profileImagePath; }
-    public void setProfileImagePath(String profileImagePath) { this.profileImagePath = profileImagePath; }
+    public String getIcon() { return profileImagePath; }
+    public void setIcon(String profileImagePath) { this.profileImagePath = profileImagePath; }
 
 }
