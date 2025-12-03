@@ -39,49 +39,49 @@ public class DBUserDataAccessObject implements SignupUserDataAccessInterface,
         this.userFactory = userFactory;
     }
 
-    @Override
-    public User get(String email) {
-        // Make an API call to get the user object.
-        final OkHttpClient client = new OkHttpClient().newBuilder().build();
-        final Request request = new Request.Builder()
-                .url(String.format("http://vm003.teach.cs.toronto.edu:20112/user?email=%s", email))
-                .addHeader("Content-Type", CONTENT_TYPE_JSON)
-                .build();
-        try {
-            final Response response = client.newCall(request).execute();
+//    @Override
+//    public User get(String email) {
+//        // Make an API call to get the user object.
+//        final OkHttpClient client = new OkHttpClient().newBuilder().build();
+//        final Request request = new Request.Builder()
+//                .url(String.format("http://vm003.teach.cs.toronto.edu:20112/user?email=%s", email))
+//                .addHeader("Content-Type", CONTENT_TYPE_JSON)
+//                .build();
+//        try {
+//            final Response response = client.newCall(request).execute();
+//
+//            final JSONObject responseBody = new JSONObject(response.body().string());
+//
+//            if (responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE) {
+//                final JSONObject userJSONObject = responseBody.getJSONObject("user");
+//                final String emailDB = userJSONObject.getString(EMAIL);
+//                final String password = userJSONObject.getString(PASSWORD);
+//                final String firstName = userJSONObject.getString(FIRST_NAME);
+//                final String lastName = userJSONObject.getString(LAST_NAME);
+//                final List<String> programs = Collections.singletonList(userJSONObject.getString(PROGRAMS));
+//                final String pfpIndex = String.valueOf(Integer.parseInt(userJSONObject.getString(PFPINDEX)));
+//                final String description = userJSONObject.getString(DESCRIPTION);
+//
+//                return userFactory.create(emailDB, password, firstName, lastName, programs, pfpIndex, description);
+//            }
+//            else {
+//                throw new RuntimeException(responseBody.getString(MESSAGE));
+//            }
+//        }
+//        catch (IOException | JSONException ex) {
+//            throw new RuntimeException(ex);
+//        }
+//    }
 
-            final JSONObject responseBody = new JSONObject(response.body().string());
-
-            if (responseBody.getInt(STATUS_CODE_LABEL) == SUCCESS_CODE) {
-                final JSONObject userJSONObject = responseBody.getJSONObject("user");
-                final String emailDB = userJSONObject.getString(EMAIL);
-                final String password = userJSONObject.getString(PASSWORD);
-                final String firstName = userJSONObject.getString(FIRST_NAME);
-                final String lastName = userJSONObject.getString(LAST_NAME);
-                final List<String> programs = Collections.singletonList(userJSONObject.getString(PROGRAMS));
-                final String pfpIndex = String.valueOf(Integer.parseInt(userJSONObject.getString(PFPINDEX)));
-                final String description = userJSONObject.getString(DESCRIPTION);
-
-                return userFactory.create(emailDB, password, firstName, lastName, programs, pfpIndex, description);
-            }
-            else {
-                throw new RuntimeException(responseBody.getString(MESSAGE));
-            }
-        }
-        catch (IOException | JSONException ex) {
-            throw new RuntimeException(ex);
-        }
-    }
-
-    @Override
-    public void setCurrentUsername(String email) {
-        currentUsername = email;
-    }
-
-    @Override
-    public String getCurrentUsername() {
-        return currentUsername;
-    }
+//    @Override
+//    public void setCurrentUsername(String email) {
+//        currentUsername = email;
+//    }
+//
+//    @Override
+//    public String getCurrentUsername() {
+//        return currentUsername;
+//    }
 
     @Override
     public boolean existsByEmail(String email) {
