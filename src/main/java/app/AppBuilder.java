@@ -119,7 +119,7 @@ public class AppBuilder {
         signupViewModel = new SignupViewModel();
 //        signupView = new SignUpView(signupViewModel);
         signupView = new SignUpView(signupViewModel);
-//        cardPanel.add(signupView, signupView.getViewName());
+        cardPanel.add(signupView, signupView.getViewName());
         return this;
     }
 
@@ -327,7 +327,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(filterView.getViewName());
+        viewManagerModel.setState(signupView.getViewName());
         viewManagerModel.firePropertyChange();
 
         return application;
