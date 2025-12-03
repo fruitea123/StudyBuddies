@@ -92,9 +92,5 @@ public class MyInvitationsController {
         viewManagerModel.firePropertyChange();
     }
 
-    public void onNotificationsClicked() {
-        viewManagerModel.setState(notificationsView.getViewName());
-        viewManagerModel.firePropertyChange();
-    }
 
 }
