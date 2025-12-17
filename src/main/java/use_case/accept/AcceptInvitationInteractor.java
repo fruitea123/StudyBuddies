@@ -22,25 +22,25 @@ public class AcceptInvitationInteractor implements AcceptInvitationInputBoundary
   @Override
   public void acceptInvitation(AcceptInvitationInputData inputData) {
     String username = inputData.getUsername();
-    String sessionOwner = inputData.getSessionOwner();
+    String ownername = inputData.getOwnerName();
+
+
+
+    // 2. Find target session (by invitationId here; you could also use owner name)
+    Document session = dataAccess.findInvitationByOwner(ownername);
+    if (session == null) {
+      outputBoundary.prepareFailureView("No session found for owner: " + ownername);
+      return;
+    }
 
     // 1. Check for time conflicts
-    if (hasTimeConflict(username, sessionOwner)) {
-      outputBoundary.prepareFailureView("time conflicts");
-      return;
-    }
-
-    // 2. Find target session (by owner here; you could also use invitationId)
-    Document session = dataAccess.findInvitationByOwner(sessionOwner);
-    if (session == null) {
-      outputBoundary.prepareFailureView("No session found for owner: " + sessionOwner);
-      return;
-    }
-
+    if (hasTimeConflict(username, session)) {
+        outputBoundary.prepareFailureView("time conflicts");
+          return;
+      }
     // 3. Add user to participants
     dataAccess.addParticipantToInvitation(session, username);
-
-    // Silent success
+    outputBoundary.prepareSuccessView("Invitation Accepted");
   }
 
   /**
@@ -48,12 +48,7 @@ public class AcceptInvitationInteractor implements AcceptInvitationInputBoundary
      * - the target session (owner = sessionOwner)
      * - any sessions the user is already participating in.
   */
-  boolean hasTimeConflict(String username, String sessionOwner) {
-    // target session
-    Document targetSession = dataAccess.findInvitationByOwner(sessionOwner);
-    if (targetSession == null) {
-      return false;
-    }
+  boolean hasTimeConflict(String username, Document targetSession) {
 
     Date targetStart = targetSession.getDate("startTime");
     Date targetEnd = targetSession.getDate("endTime");
