@@ -49,13 +49,14 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
                     public void actionPerformed(ActionEvent e) {
                         if (e.getSource().equals(accept)) {
                             final ProfileState currentState = profileViewModel.getState();
-                            acceptController.acceptInvitation(invitation.getInvitationID(),
-                                    currentState.getUsername());
+                            acceptController.acceptInvitation(currentState.getUsername(),
+                                    invitation.getInvitationID());
                             myInvitationsController.load();
                         }
                     }
                 }
         );
+
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -65,7 +66,8 @@ public class InvitationCardAcceptPanel extends JPanel implements ActionListener 
 
     }
     public void actionPerformed(ActionEvent evt) {
-        System.out.println("Click " + evt.getActionCommand());
+        System.out.println("Click " +
+                evt.getActionCommand());
     }
 
 }

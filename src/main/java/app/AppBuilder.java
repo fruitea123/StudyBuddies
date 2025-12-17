@@ -405,7 +405,8 @@ public class AppBuilder {
 
     public AppBuilder addAcceptUseCase () {
 
-        AcceptInvitationOutputBoundary acceptPresenter = new AcceptPresenter();
+        AcceptInvitationOutputBoundary acceptPresenter = new AcceptPresenter(studyPoolViewModel,
+                viewManagerModel);
         AcceptInvitationInputBoundary acceptInteractor =
                 new AcceptInvitationInteractor(acceptPresenter, mongoAcceptInvitationDataAccessObject);
         AcceptInvitationController acceptInvitationController =
