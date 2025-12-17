@@ -17,7 +17,7 @@ public class AcceptPresenter implements AcceptInvitationOutputBoundary {
     }
 
     @Override
-    public void prepareSuccessView() {
+    public void prepareSuccessView(String successMessage) {
         // After the use case has updated the repository,
         // reload invitations into StudyPoolState before calling this.
         StudyPoolState studyPoolState = studyPoolViewModel.getState();

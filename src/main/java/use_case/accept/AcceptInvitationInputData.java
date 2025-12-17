@@ -5,24 +5,24 @@ package use_case.accept;
  */
 public class AcceptInvitationInputData {
   private final String username;
-  private final String sessionOwner;
+  private final String ownerName;
 
   /**
      * Creates a new input data object with the given username and sessionOwner.
      *
      * @param username user's username.
-     * @param sessionOwner owner's username.
+     * @param ownerName invitation's ID.
   */
-  public AcceptInvitationInputData(String username, String sessionOwner) {
+  public AcceptInvitationInputData(String ownerName, String username) {
     this.username = username;
-    this.sessionOwner = sessionOwner;
+    this.ownerName = ownerName;
   }
 
   public String getUsername() {
     return username;
   }
 
-  public String getSessionOwner() {
-    return sessionOwner;
+  public String getOwnerName() {
+    return ownerName;
   }
 }
